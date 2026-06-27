@@ -118,6 +118,12 @@ You need Neo4j, Qdrant, and your local LLM running.
    ```bash
    docker run -d -p 6333:6333 -p 6334:6334 -v qdrant_storage:/qdrant/storage qdrant/qdrant
    ```
+   - there is no need to run this complex commands if you know how to start the docker containers, let me tell you one thing, if you have the qdrant and neo4j directly in one yml file, then running the command: 
+   ```bash
+   docker compose up -d 
+   ```
+      - be aware of where you are running the command, as in my case, I got different way to work with this containers but, one basic thing to notice is, the yml script is inside the folder naming docker, so 
+
 3. **Start Local LLM:**
    Make sure you have an OpenAI-compatible API server (e.g., Llamafile, Ollama, LM Studio, llama.cpp or vLLM) running on port `8080` serving the target model (`raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF`). 
    - Here is some information you need to know about the local llm procedure, its not like you are directly starting the local model here, i've used llama.cpp to run local models, if you don't have idea about that, there will be a dedicated file which explains the procedure, so that you can also run local models efficiently even on low end systems.
@@ -139,3 +145,19 @@ python -m backend.graph_builder
 > **Note:** The script has a built-in rate-limiting delay of 15 seconds per chunk to prevent hitting Groq rate limits. 
 - same here too, run the command and wait for a while
 ---
+
+### Step 4: Run the Backend API
+Start the FastAPI backend server using Uvicorn:
+```bash
+uvicorn backend.main:app --reload
+```
+The API documentation will be available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+---
+
+### Step 5: Run the Streamlit Frontend Client
+In a new terminal window (with the virtual environment activated), start the Streamlit web application:
+```bash
+streamlit run frontend/app.py
+```
+Open [http://localhost:8501](http://localhost:8501) in your browser to chat with your Hybrid GraphRAG Chatbot.
