@@ -24,21 +24,21 @@ Below is the complete file structure of the repository:
 ```text
 graph_rag/
 ├── backend/                  # FastAPI Application Core
-│   ├── core/                 # Configurations, logging, and 
+│   ├── core/                 # Configurations, logging, and middleware
 │   │   ├── config.py
 │   │   ├── logging.py
 │   │   └── middleware.py
-│   ├── database/             # Database client 
+│   ├── database/             # Database client initializations
 │   │   ├── neo4j.py          # Neo4j Graph Database client
 │   │   └── qdrant.py         # Qdrant Vector Database client
-│   ├── evaluations/          # Evaluation scripts and 
+│   ├── evaluations/          # Evaluation scripts and stored results
 │   │   ├── deepeval_evaluation.py
 │   │   ├── deepeval_results.csv
 │   │   ├── evaluation_dataset.py
 │   │   ├── graph_rag_deepeval_results.csv
 │   │   ├── graph_rag_ragas_results.csv
 │   │   └── ragas_evaluation.py
-│   ├── pipelines/            # Main RAG Pipeline 
+│   ├── pipelines/            # Main RAG Pipeline coordination
 │   │   └── rag_pipeline.py
 │   ├── retrievals/           # Retrieval strategies
 │   │   ├── bm25_retrieval.py
@@ -47,14 +47,14 @@ graph_rag/
 │   │   ├── reranker.py
 │   │   └── semantic_retrieval.py
 │   ├── embedding_model.py    # Embedding model configuration
-│   ├── entity_extractor.py   # LLM entity extraction for 
-│   ├── graph_builder.py      # Knowledge graph construction 
-│   ├── injest_documents.py   # Semantic chunking and vector 
+│   ├── entity_extractor.py   # LLM entity extraction for graph queries
+│   ├── graph_builder.py      # Knowledge graph construction script
+│   ├── injest_documents.py   # Semantic chunking and vector database ingestion
 │   ├── main.py               # FastAPI App entry point
 │   ├── test_models.py        # API connectivity test helper
 │   └── text_chunker.py       # Semantic text splitter setup
-├── data/                     # Plain-text source documents 
-├── docker/                   # Docker environment 
+├── data/                     # Plain-text source documents for ingestion
+├── docker/                   # Docker environment configurations
 │   └── docker-compose.yml    # Runs Neo4j instance
 ├── frontend/                 # Streamlit UI Client
 │   └── app.py                # Streamlit chatbot interface
@@ -129,4 +129,13 @@ Run the ingestion script to semantically chunk all `.txt` documents inside the `
 python -m backend.injest_documents
 ```
 - Run this command and wait for some time, don't do anything as it takes time to get the ingestion done.
+---
+
+### Step 3: Build the Knowledge Graph
+Extract entity-relationship triplets from your ingested chunks using Groq (`llama-3.1-8b-instant`) and populate your Neo4j database:
+```bash
+python -m backend.graph_builder
+```
+> **Note:** The script has a built-in rate-limiting delay of 15 seconds per chunk to prevent hitting Groq rate limits. 
+- same here too, run the command and wait for a while
 ---
