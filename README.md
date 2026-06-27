@@ -63,3 +63,23 @@ graph_rag/
 ```
 
 ---
+
+## Prerequisites & Installation
+
+Ensure you have Python 3.10+ and Docker installed on your system.
+
+### 1. Set Up the Virtual Environment
+Clone this repository, navigate to the folder, and run:
+```bash
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+# On Windows (Command Prompt):
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
