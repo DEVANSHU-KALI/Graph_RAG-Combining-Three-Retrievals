@@ -100,5 +100,5 @@ LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=your_langsmith_api_key
 LANGCHAIN_PROJECT=your_langsmith_project_name
 ```
-
+- There is no specific rule to go with groq llm provider, you can also go with openrouter or nvidia or any other providers, but if you go with other providers you also need to make changes in the codes.
 ---
