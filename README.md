@@ -16,3 +16,50 @@ Standard RAG systems rely purely on semantic search, which can miss exact keywor
 6. so, in simple words, we are combining all the three retrievals, if you are learning rag systems, I recommend you to start with the semantic rag implementation of mine, which is available in my git account, later comes the hybrid rag and then this graph rag, so this way you can understand how different retrievals show real changes.
 
 ---
+
+## File Structure
+
+Below is the complete file structure of the repository:
+
+```text
+graph_rag/
+├── backend/                  # FastAPI Application Core
+│   ├── core/                 # Configurations, logging, and 
+│   │   ├── config.py
+│   │   ├── logging.py
+│   │   └── middleware.py
+│   ├── database/             # Database client 
+│   │   ├── neo4j.py          # Neo4j Graph Database client
+│   │   └── qdrant.py         # Qdrant Vector Database client
+│   ├── evaluations/          # Evaluation scripts and 
+│   │   ├── deepeval_evaluation.py
+│   │   ├── deepeval_results.csv
+│   │   ├── evaluation_dataset.py
+│   │   ├── graph_rag_deepeval_results.csv
+│   │   ├── graph_rag_ragas_results.csv
+│   │   └── ragas_evaluation.py
+│   ├── pipelines/            # Main RAG Pipeline 
+│   │   └── rag_pipeline.py
+│   ├── retrievals/           # Retrieval strategies
+│   │   ├── bm25_retrieval.py
+│   │   ├── graph_retrieval.py
+│   │   ├── hybrid_retrieval.py
+│   │   ├── reranker.py
+│   │   └── semantic_retrieval.py
+│   ├── embedding_model.py    # Embedding model configuration
+│   ├── entity_extractor.py   # LLM entity extraction for 
+│   ├── graph_builder.py      # Knowledge graph construction 
+│   ├── injest_documents.py   # Semantic chunking and vector 
+│   ├── main.py               # FastAPI App entry point
+│   ├── test_models.py        # API connectivity test helper
+│   └── text_chunker.py       # Semantic text splitter setup
+├── data/                     # Plain-text source documents 
+├── docker/                   # Docker environment 
+│   └── docker-compose.yml    # Runs Neo4j instance
+├── frontend/                 # Streamlit UI Client
+│   └── app.py                # Streamlit chatbot interface
+├── requirements.txt          # Python project dependencies
+└── README.md                 # Project documentation
+```
+
+---
