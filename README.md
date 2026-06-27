@@ -123,3 +123,10 @@ You need Neo4j, Qdrant, and your local LLM running.
    - Here is some information you need to know about the local llm procedure, its not like you are directly starting the local model here, i've used llama.cpp to run local models, if you don't have idea about that, there will be a dedicated file which explains the procedure, so that you can also run local models efficiently even on low end systems.
 
 ---
+### Step 2: Ingest Source Documents
+Run the ingestion script to semantically chunk all `.txt` documents inside the `/data` directory and upload their vector embeddings to Qdrant:
+```bash
+python -m backend.injest_documents
+```
+- Run this command and wait for some time, don't do anything as it takes time to get the ingestion done.
+---
