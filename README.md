@@ -83,3 +83,22 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+### 2. Configure Environment Variables
+Create a `.env` file in the root directory and populate it with your API keys and credentials:
+```env
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=password
+NEO4J_URL=bolt://localhost:7687
+
+# Required for Entity Extraction & Graph Building
+GROQ_API_KEY=your_groq_api_key
+
+# Optional (for evaluations and testing)
+GEMINI_API_KEY=your_gemini_api_key
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_langsmith_api_key
+LANGCHAIN_PROJECT=your_langsmith_project_name
+```
+
+---
