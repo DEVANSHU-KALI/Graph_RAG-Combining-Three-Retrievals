@@ -100,5 +100,5 @@ LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=your_langsmith_api_key
 LANGCHAIN_PROJECT=your_langsmith_project_name
 ```
-- There is no specific rule to go with groq llm provider, you can also go with openrouter or nvidia or any other providers, but if you go with other providers you also need to make changes in the codes.
+- There is no specific rule to go with groq llm provider, you can also go with openrouter or nvidia or any other providers, but if you go with other providers you also need to make changes in the codes, starting from graph building and its retrievals to evaluations. at those places I used this specific model from that provider, so that I can get a good knowledged model with a descent RPM rate and TPm rate. I'll explain the reason more briefly in a dedicated file related to graph database. go check it out.
 ---
