@@ -119,7 +119,7 @@ You need Neo4j, Qdrant, and your local LLM running.
    docker run -d -p 6333:6333 -p 6334:6334 -v qdrant_storage:/qdrant/storage qdrant/qdrant
    ```
 3. **Start Local LLM:**
-   Make sure you have an OpenAI-compatible API server (e.g., Llamafile, Ollama, LM Studio, or vLLM) running on port `8080` serving the target model (`raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF`). 
+   Make sure you have an OpenAI-compatible API server (e.g., Llamafile, Ollama, LM Studio, llama.cpp or vLLM) running on port `8080` serving the target model (`raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF`). 
    - Here is some information you need to know about the local llm procedure, its not like you are directly starting the local model here, i've used llama.cpp to run local models, if you don't have idea about that, there will be a dedicated file which explains the procedure, so that you can also run local models efficiently even on low end systems.
 
 ---
