@@ -4,3 +4,5 @@
 #### llama.cpp:
 - It's like a piece of software or its like a some box which takes something inside and makes some tweaks to it and let it work more efficiently. let me guide you thorough the process:
 1) go to git hub, if you search this `llama.cpp`, you'll get some repo, and from there you need to downloads the latest version of it. you'll 
+2) you'll see a folder got downloaded into your system, open that folder.
+3) with that folder path open the cmd prompt. for example: it may look something like: `D:\llama` this llama is the folder which gets installed, and i stored that folder in my d drive, you may have another too, no worries.
