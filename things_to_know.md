@@ -13,3 +13,9 @@
 > Note: this command work only with models available in the hugging face, as this command contains the term 'hf'. if you want to change the model,  replace this: 'raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF' with any other model available on hugging face. 
 5) wait for some time, there will be some process going on, then you'll see the model exposed to some port, by default its 8080. 
 6) for testing purpose you can ctrl+click on that link, you'll see a webpage naming llama.cpp. you'll see a chat box to enter query. all set, we'll use that model in the project to structure the final response.
+
+### 2) related to the qroq llm provider, model used and rate limiting.
+- Now, see these days getting a well knowledge model for free is easy if you are just working with it for some time, so I choose this qroq llm provider, for my use case.
+- and the reason to get that provider is, the model ive choose to use, which is some llama model, which is only available in that llm provider at that time, so I choose that.
+#### why to take that specific model:
+- I'll try not to go much deeper about this but 
