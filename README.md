@@ -122,7 +122,7 @@ You need Neo4j, Qdrant, and your local LLM running.
    ```bash
    docker compose up -d 
    ```
-      - be aware of where you are running the command, as in my case, I got different way to work with this containers but, one basic thing to notice is, the yml script is inside the folder naming docker, so 
+      - be aware of where you are running the command, as in my case, I got different way to work with this containers but, one basic thing to notice is, the yml script is inside the folder naming docker in my case, so I go into that folder path and run this command to start the neo4j database. if you have two databases listed in that one yml file, you'll start two database at same time.
 
 3. **Start Local LLM:**
    Make sure you have an OpenAI-compatible API server (e.g., Llamafile, Ollama, LM Studio, llama.cpp or vLLM) running on port `8080` serving the target model (`raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF`). 
