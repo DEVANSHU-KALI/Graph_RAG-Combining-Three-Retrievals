@@ -25,4 +25,5 @@
 - so thats all the reason to go with this model specifically.
 - all the info related to that graph building, the whole concept of that graphs will be listed in another file.
 #### why not local model to build graph.
-- 
+- not only the local model im using, but most of the local models dont have much knowledge like understanding data and query well, but they work better in rag systems to structure the final answer, as they dont have much knowledge on the topic, they relay a lot of provided context so simply saying the model to just answer from the provided context will trigger that event, but if in that place, we use a very large model using api, we need to prompt harder to tell the model to get info only from the context provided.
+- its not like, im saying this simply, Ive gone through that process, tried both the models and saw local model's response has the same information as its in my database.
