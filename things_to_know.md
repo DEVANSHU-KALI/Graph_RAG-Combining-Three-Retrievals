@@ -6,3 +6,7 @@
 1) go to git hub, if you search this `llama.cpp`, you'll get some repo, and from there you need to downloads the latest version of it. you'll 
 2) you'll see a folder got downloaded into your system, open that folder.
 3) with that folder path open the cmd prompt. for example: it may look something like: `D:\llama` this llama is the folder which gets installed, and i stored that folder in my d drive, you may have another too, no worries.
+4) now after getting the cmd prompt, you need to type a command there, which is available in the page of that git repo, but i'll tell you mine to get this model.
+```bash
+.\llama-server.exe -hf raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF -ngl 25
+``` 
