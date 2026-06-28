@@ -10,3 +10,6 @@
 ```bash
 .\llama-server.exe -hf raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF -ngl 25
 ``` 
+> Note: this command work only with models available in the hugging face, as this command contains the term 'hf'. if you want to change the model,  replace this: 'raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF' with any other model available on hugging face. 
+5) wait for some time, there will be some process going on, then you'll see the model exposed to some port, by default its 8080. 
+6) for testing purpose you can ctrl+click on that link, you'll see a webpage naming llama.cpp. you'll see a chat box to enter query. all set, we'll use that model in the project to structure the final response.
