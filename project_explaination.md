@@ -10,3 +10,6 @@
 - In ingestion stage, which is done only once, data is broke down into chunks (small pieces), converted into embeddings, and stored in the database with some metadata, including chunk text, chunk id mainly.
 - while in the stage of passing query, the query is converted into embeddings again, compared with the stored embeddings, find some relevant chunks, and retrieve the chunks text. 
 - In this single concept there are sub concepts again. chunking, embeddings, database to store embeddings, and one concept which is not that visible is that comparison between the query embeddings and store embeddings. all these will be explained in more detail.
+
+#### 2) **keyword retrieval**:
+- as we just got know about semantic retrieval, but the reason to also add this retrieval is important here. semantic understanding fails when there are rare keywords in the data and the system starts hallucinating. to avoid this issues we get this retrieval.
