@@ -1,0 +1,87 @@
+# =========================
+# API
+# =========================
+fastapi
+uvicorn
+
+# =========================
+# Frontend
+# =========================
+streamlit
+
+# =========================
+# HTTP Requests
+# =========================
+httpx
+
+# =========================
+# Environment Variables
+# =========================
+python-dotenv
+
+# =========================
+# Qdrant
+# =========================
+qdrant-client
+
+# =========================
+# Neo4j
+# =========================
+neo4j
+
+# =========================
+# Embeddings
+# =========================
+sentence-transformers
+
+# =========================
+# OpenAI Compatible Client
+# =========================
+openai
+
+# =========================
+# BM25
+# =========================
+rank-bm25
+
+# =========================
+# LangSmith
+# =========================
+langsmith
+
+# =========================
+# RAGAS
+# =========================
+ragas
+
+# =========================
+# DeepEval
+# =========================
+deepeval
+
+# =========================
+# Data Handling
+# =========================
+pandas
+numpy
+
+# =========================
+# Excel Output
+# =========================
+openpyxl
+
+# =========================
+# LangChain
+# =========================
+langchain
+# Pin langchain-community to <0.3.0 because ragas (0.4.3) tries to import ChatVertexAI from langchain_community, which was removed in version >=0.3.0
+langchain-community<0.3.0
+langchain-huggingface<0.1.0
+langchain-experimental
+
+# Pin langchain-openai to <0.2.0 to match langchain-core 0.2.x compatibility requirements
+langchain-openai<0.2.0
+
+
+
+
