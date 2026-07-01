@@ -19,4 +19,6 @@
 - one point to mention here is, unlike the semantic retrieval or the graph retrieval we dont need a specific database to store the index or anything related keyword retrieval. to make this retrieval possible, we just need the bm25 index which makes some statistics and text corpus, which is simply the chunk text which is available in the qdrant database where we store the chunk text in each point, we just collect all that text into one place and do that work.
 
 #### 3) **graph retrieval**:
-- 
+- to make this graph retrieval possible we need a database, which is `neo4j`, one of the most trusted and used database to store the graphs, there are also some other but this is widely used.
+- in simple words we build graphs which contains node which is some data and there will be the edges which connects the nodes with some connection name. store them in the neo4j database.
+- there is a language called cypher for the neo4j database which is like sql for normal data. here there are two thing to remember, `entities` and `relationships`, when we build graphs we store both of these related to the dat in the database.  
