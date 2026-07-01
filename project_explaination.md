@@ -16,3 +16,7 @@
 - the concept of keyword retrieval is possible by `bm25 index`, its a library which simply some information related to each word we got in the data, for example, we have a word 'red', bm25 index gets info like, how many times this is word is present in the data, all the file which has this word from the data, and some more. and store them on the ram at run time according to this project, or another way is to store that information in .pkl file and add that to run time when we are executing this project. 
 - now when the system is on execution, the query is broke into tokens, done some comparision, like seeing which chunk has the most of the word which the query contains, how many time each word is present in that chunks, etc. based on this type of information, the bm25 index will give some score to the chunks, and later we sort the chunks based on that score and retrieve the top 3 chunks for that query.
 - this was as simple explanation of how the keyword retrieval works generally.
+- one point to mention here is, unlike the semantic retrieval or the graph retrieval we dont need a specific database to store the index or anything related keyword retrieval. to make this retrieval possible, we just need the bm25 index which makes some statistics and text corpus, which is simply the chunk text which is available in the qdrant database where we store the chunk text in each point, we just collect all that text into one place and do that work.
+
+#### 3) **graph retrieval**:
+- 
