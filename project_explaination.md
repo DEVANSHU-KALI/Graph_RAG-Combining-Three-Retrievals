@@ -14,4 +14,3 @@
 #### 2) **keyword retrieval**:
 - as we just got know about semantic retrieval, but the reason to also add this retrieval is important here. semantic understanding fails when there are rare keywords in the data and the system starts hallucinating. to avoid this issues we get this retrieval.
 - the concept of keyword retrieval is possible by `bm25 index`, its simply some information related to each word we got in the data, for example, we have a word 'red', bm25 index gets info like, how many times this is word is present in the data, all the file which has this word from the data, and some more. and store them on the ram at run time according to this project, or another way is to store that information in .pkl file and add that to run time when we are executing this project. 
-- as semantic search understands all possible aspects of the data you sent according to the dimension it has, similarly not much but 
