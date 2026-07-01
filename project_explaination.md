@@ -22,3 +22,4 @@
 - to make this graph retrieval possible we need a database, which is `neo4j`, one of the most trusted and used database to store the graphs, there are also some other but this is widely used.
 - in simple words we build graphs which contains node which is some data and there will be the edges which connects the nodes with some connection name. store them in the neo4j database.
 - there is a language called cypher for the neo4j database which is like sql for normal data. here there are two thing to remember, `entities` and `relationships`, when we build graphs we store both of these related to the dat in the database.  
+- when it comes to retrieval stage, we extract the entitites from the query and search the database for the relationships using this cypher language.
