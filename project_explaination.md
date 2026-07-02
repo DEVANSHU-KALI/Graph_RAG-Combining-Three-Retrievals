@@ -24,3 +24,6 @@
 - there is a language called `cypher` for the neo4j database which is like `sql` for normal data. here there are two thing to remember, `entities` and `relationships`, when we build graphs we store both of these related to the data in the database.  
 - when it comes to retrieval stage, we extract the entities from the query and search the database for the relationships using this cypher language.
 - llm is used to extract that entities from the query when retrieval time. thats the reason why we tried to use a well knowledged model using the api from the `Qroq llm provider`. 
+
+#### Reranker:
+- these are models which check whether all the retrieved chunks are answer the query correctly or not!, and rerankes the chunks, which simply means filter the most relevant chunks to answer the query. 
