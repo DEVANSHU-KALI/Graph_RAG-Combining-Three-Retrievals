@@ -75,3 +75,20 @@ sequenceDiagram
   * **Timeout:** Set to `60.0` seconds to accommodate deep retrieval, network calls to Groq, and local LLM generation.
 
 ---
+
+### 2. Backend Entry Point
+* **File:** [main.py](file:///d:/projects/graph_rag/backend/main.py)
+* **Mechanics:**
+  The FastAPI application receives the HTTP request at the `/chat` route. 
+  1. The request payload is validated against a Pydantic schema:
+     ```python
+     class QueryRequest(BaseModel):
+         query: str = Field(min_length=1)
+     ```
+  2. The validated query is forwarded to the main execution pipeline:
+     ```python
+     result = await generate_answer(request.query, bm25_index, documents)
+     ```
+     *(Note: `bm25_index` and `documents` are global objects loaded in memory during FastAPI's startup lifespan event).*
+
+---
