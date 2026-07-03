@@ -149,3 +149,20 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
   3. **Fact Structuring:** The query results are transformed into plain-language statements (e.g., `"FastAPI USED_WITH Qdrant"`) and tagged with a generic source `"graph"`. The pipeline takes the top 5 relationship statements.
 
 ---
+
+### 5. Hybrid Retrieval Fusion
+* **File:** [hybrid_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/hybrid_retrieval.py)
+* **Underlying Concept:** Semantic scores (typically cosine similarities $[0, 1]$) and BM25 scores (open-ended positive values) are on completely different scales and cannot be compared or added directly.
+* **Process:**
+  1. **Min-Max Normalization:** Scores for both retrieval sets are normalized to a $[0.0, 1.0]$ range:
+     $$\text{Normalized Score} = \frac{\text{Score} - \text{Min Score}}{\text{Max Score} - \text{Min Score}}$$
+  2. **Score Aggregation:** The results are combined. If a document chunk is retrieved by both semantic and lexical searches, its normalized scores are summed:
+     $$\text{Final Score} = \text{Normalized Semantic Score} + \text{Normalized BM25 Score}$$
+     If it only appeared in one, the missing score is treated as $0.0$.
+  3. **Trimming:** The fused results are sorted descending, and the top 5 chunks are selected.
+  4. **Graph Context Appending:** The top 5 hybrid text chunks are combined with the top 5 relational triplets from the Graph Retrieval.
+     ```python
+     retrieved_chunks = hybrid_results + graph_results
+     ```
+
+---
