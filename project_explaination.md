@@ -60,3 +60,18 @@ sequenceDiagram
 ```
 
 ---
+
+## Detailed Step-by-Step Flow
+
+### 1. Frontend Interaction
+* **File:** [app.py](file:///d:/projects/graph_rag/frontend/app.py)
+* **Mechanics:** 
+  The entry point is a Streamlit application. The user types a question into a text input widget:
+  ```python
+  query = st.text_input("Ask a Question")
+  ```
+  Upon submission, Streamlit initiates an HTTP POST request to the FastAPI backend API endpoint `/chat` on port 8000 using `httpx.post`.
+  * **Payload:** `{"query": "<user_query>"}`
+  * **Timeout:** Set to `60.0` seconds to accommodate deep retrieval, network calls to Groq, and local LLM generation.
+
+---
