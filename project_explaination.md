@@ -179,3 +179,24 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
   4. The top 3 highest-scoring chunks are kept for prompt generation.
 
 ---
+
+### 7. Response Generation
+* **File:** [rag_pipeline.py](file:///d:/projects/graph_rag/backend/pipelines/rag_pipeline.py)
+* **Process:**
+  1. **Context Construction:** The text content from the top 3 reranked chunks is merged:
+     ```python
+     context = "\n\n".join(chunk["text"] for chunk in reranked_chunks)
+     ```
+  2. **Strict Instruction Prompting:** A system template bounds the LLM to only answer based on the provided context, outputting a fallback message if the answer is missing.
+  3. **Local Inference Call:** An asynchronous API request is sent to the local model endpoint (`http://localhost:8080/v1`) using `AsyncOpenAI`:
+     ```python
+     response = await client.chat.completions.create(
+         model="raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF",
+         messages=[{"role": "user", "content": prompt}],
+     )
+     ```
+  4. **Citation Extraction:** The system compiles a list of unique source filenames from the payload of the winning chunks:
+     ```python
+     citations = list(set(chunk["source"] for chunk in reranked_chunks))
+     ```
+  5. The generated answer, sources, and raw contexts are packaged in a JSON response and returned to the Streamlit UI.
