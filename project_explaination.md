@@ -130,3 +130,22 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
      ```
   3. The index ranks all document texts based on TF-IDF-like statistics.
   4. The top 10 text chunks with the highest lexical match scores are returned.
+
+#### C. Knowledge Graph Retrieval (Relational Search)
+* **File:** [graph_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/graph_retrieval.py) and [entity_extractor.py](file:///d:/projects/graph_rag/backend/entity_extractor.py)
+* **Underlying Concept:** Normal vector search retrieves isolated text blocks. Knowledge Graph retrieval extracts structured facts (Entity $\rightarrow$ Relation $\rightarrow$ Entity) that connect disparate parts of a corpus, which is ideal for multi-hop reasoning.
+* **Process:**
+  1. **Entity Extraction:** The raw query is passed to an LLM (`llama-3.1-8b-instant` via the Groq API) with instructions to output a JSON list of key concepts in Title Case:
+     ```python
+     # Example: "How does Qdrant connect with FastAPI?" 
+     # Returns: {"entities": ["Qdrant", "FastAPI"]}
+     ```
+  2. **Neo4j Graph Query:** The extracted entity list is utilized to execute a Cypher query on the Neo4j instance:
+     ```cypher
+     MATCH (source)-[r]->(target)
+     WHERE source.name IN $entities OR target.name IN $entities
+     RETURN source.name AS source, type(r) AS relationship, target.name AS target
+     ```
+  3. **Fact Structuring:** The query results are transformed into plain-language statements (e.g., `"FastAPI USED_WITH Qdrant"`) and tagged with a generic source `"graph"`. The pipeline takes the top 5 relationship statements.
+
+---
