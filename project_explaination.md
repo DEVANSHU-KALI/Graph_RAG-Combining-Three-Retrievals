@@ -92,3 +92,29 @@ sequenceDiagram
      *(Note: `bm25_index` and `documents` are global objects loaded in memory during FastAPI's startup lifespan event).*
 
 ---
+
+### 3. Pipeline Coordination: `generate_answer`
+* **File:** [rag_pipeline.py](file:///d:/projects/graph_rag/backend/pipelines/rag_pipeline.py)
+* **Mechanics:**
+  This function orchestrates the three distinct retrieval pathways, merges their results, routes them through a reranking model, and invokes the final LLM generator.
+
+---
+
+### 4. The Three Retrieval Pipelines
+
+Once inside the pipeline, the system initiates three retrieval runs to collect evidence for the query:
+
+#### A. Semantic Retrieval (Dense Vector Search)
+* **File:** [semantic_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/semantic_retrieval.py)
+* **Underlying Concept:** Dense retrieval represents text as numerical vectors in a continuous space where distance corresponds to semantic similarity.
+* **Process:**
+  1. The user's text query is converted into a 768-dimensional vector embedding using the same model configured during document ingestion: `sentence-transformers/all-mpnet-base-v2`.
+  2. A vector query is sent to Qdrant using the async Qdrant client:
+     ```python
+     results = await qdrant_client.query_points(
+         collection_name=COLLECTION_NAME,
+         query=query_embedding,
+         limit=10,
+     )
+     ```
+  3. Qdrant performs a fast vector search (typically utilizing HNSW graphs) and returns the top 10 matching document chunks with their respective cosine similarity scores.
