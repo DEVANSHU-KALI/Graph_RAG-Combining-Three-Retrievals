@@ -118,3 +118,15 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
      )
      ```
   3. Qdrant performs a fast vector search (typically utilizing HNSW graphs) and returns the top 10 matching document chunks with their respective cosine similarity scores.
+
+#### B. Keyword Retrieval (Sparse Lexical Search)
+* **File:** [bm25_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/bm25_retrieval.py)
+* **Underlying Concept:** Lexical retrieval relies on word-frequency statistics. We use the **BM25 (Best Match 25)** formula, which ranks documents based on the occurrences of query terms in each document, adjusted for document length.
+* **Process:**
+  1. The query string is normalized and tokenized into words: `query.lower().split()`.
+  2. The query tokens are evaluated against the BM25 index pre-computed during server startup:
+     ```python
+     scores = bm25_index.get_scores(tokenized_query)
+     ```
+  3. The index ranks all document texts based on TF-IDF-like statistics.
+  4. The top 10 text chunks with the highest lexical match scores are returned.
