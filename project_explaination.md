@@ -166,3 +166,16 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
      ```
 
 ---
+
+### 6. Cross-Encoder Reranking
+* **File:** [reranker.py](file:///d:/projects/graph_rag/backend/retrievals/reranker.py)
+* **Underlying Concept:** 
+  Standard vector retrievers are **Bi-encoders**—they embed the query and the documents separately, allowing fast vector comparisons but missing fine-grained cross-token attention. 
+  A **Cross-encoder** feeds the query and document *together* into the transformer model, allowing self-attention layers to compute interactions between every query word and every document word. This is computationally heavier but significantly more accurate.
+* **Process:**
+  1. The pipeline feeds pairs of `(query, chunk_text)` to the `CrossEncoder("BAAI/bge-reranker-base")`.
+  2. The cross-encoder predicts a relevance score for each pair.
+  3. The combined collection of 10 contexts is re-sorted according to the reranker scores.
+  4. The top 3 highest-scoring chunks are kept for prompt generation.
+
+---
