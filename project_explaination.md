@@ -5,3 +5,58 @@ This document details the step-by-step technical execution flow of the Hybrid Gr
 For details on the offline data preparation, chunking, and database ingestion, refer to [things_to_know.md](file:///d:/projects/graph_rag/things_to_know.md).
 
 ---
+
+## High-Level Runtime Architecture
+
+Below is a sequence chart illustrating how a query travels through the system:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant Frontend as Streamlit App (frontend/app.py)
+    participant Backend as FastAPI Server (backend/main.py)
+    participant Pipeline as RAG Pipeline (backend/pipelines/rag_pipeline.py)
+    participant Semantic as Semantic Retrieval (Qdrant)
+    participant BM25 as BM25 Retrieval (RAM)
+    participant Graph as Graph Retrieval (Neo4j)
+    participant Reranker as Reranker (Cross-Encoder)
+    participant LocalLLM as Local LLM Server (llama.cpp)
+
+    User->>Frontend: Input Query
+    activate Frontend
+    Frontend->>Backend: HTTP POST /chat {"query": "..."}
+    activate Backend
+    Backend->>Pipeline: generate_answer(query)
+    activate Pipeline
+    
+    Note over Pipeline: Parallel/Sequential Retrievals
+    Pipeline->>Semantic: semantic_retrieval(query)
+    Semantic-->>Pipeline: Top 10 Semantic Chunks
+    
+    Pipeline->>BM25: bm25_retrieval(query)
+    BM25-->>Pipeline: Top 10 BM25 Chunks
+    
+    Pipeline->>Graph: graph_retrieval(query)
+    Note over Graph: 1. Extract entities using Groq API<br/>2. Query Neo4j Cypher
+    Graph-->>Pipeline: Top 5 Relationship Triplets
+    
+    Note over Pipeline: Hybrid Score Fusion
+    Note over Pipeline: Combine Chunks: (Semantic + BM25) + Graph
+    
+    Pipeline->>Reranker: rerank_results(query, combined_chunks)
+    Note over Reranker: Joint attention via Cross-Encoder
+    Reranker-->>Pipeline: Top 3 Reranked Chunks
+    
+    Pipeline->>LocalLLM: Chat completion request (Context + Query)
+    LocalLLM-->>Pipeline: Generated Answer
+    
+    Pipeline-->>Backend: JSON Response {"answer", "citations", "contexts"}
+    deactivate Pipeline
+    Backend-->>Frontend: HTTP 200 OK Response
+    deactivate Backend
+    Frontend-->>User: Display Answer & Citations
+    deactivate Frontend
+```
+
+---
