@@ -93,3 +93,13 @@ Running a 7-billion parameter model in full 16-bit floating-point precision (FP1
 **Quantization** is a deep-learning optimization technique that shrinks model weights.
 * **How it works:** It maps high-precision floating-point numbers to lower-precision representations (e.g., 4-bit integers). 
 * **The Result:** The model size is reduced from 14 GB down to **~4.7 GB** with negligible loss in reasoning ability. This allows the model to run comfortably on standard consumer GPUs or system RAM.
+
+### Running the Local Llama Server
+We launch `llama.cpp` in server mode, exposing an OpenAI-compatible endpoint:
+```bash
+.\llama-server.exe -hf raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF -ngl 25
+```
+* **`-hf` Parameter:** Downloads the specified repository directly from Hugging Face if it is not cached locally.
+* **`-ngl 25` (Number of GPU Layers to Offload):** Offloads 25 of the model's layers directly to your graphics card (CUDA/Metal) while running the remaining layers on your CPU. Adjusting this value higher or lower helps tune performance based on your system's VRAM capacity.
+
+---
