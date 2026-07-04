@@ -64,3 +64,19 @@ graph LR
        ]
    }
    ```
+   
+4. **Neo4j Cypher Injection:**
+   The script iterates over the returned JSON. It sanitizes relationship names into uppercase, snake-case strings and executes Cypher commands:
+   * **Node Creation:** `MERGE (e:Entity {name: $entity_name})` (Ensures unique nodes).
+   * **Relationship Creation:** `MERGE (source)-[:RELATIONSHIP]->(target)` (Connects nodes).
+
+### Groq API Rate Limiting & The 15-Second Sleep
+Building graphs via LLM extraction is highly token-intensive. Free-tier API providers like Groq impose strict **Requests Per Minute (RPM)** and **Tokens Per Minute (TPM)** limits.
+To prevent script failures due to `429 Too Many Requests` status codes, `graph_builder.py` sleeps for **15 seconds** after processing each chunk:
+```python
+# Rate Limiting Guard
+time.sleep(15)
+```
+This rate-limiting buffer is crucial for script stability during batch parsing.
+
+---
