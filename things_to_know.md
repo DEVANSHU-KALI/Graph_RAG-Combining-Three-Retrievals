@@ -80,3 +80,16 @@ time.sleep(15)
 This rate-limiting buffer is crucial for script stability during batch parsing.
 
 ---
+
+## 3. Local LLM Setup & Quantization
+
+The final generation stage uses a locally hosted LLM to guarantee privacy, security, and eliminate API call costs during conversation.
+
+* **Model Used:** `raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF`
+* **Local Hosting Framework:** `llama.cpp` (specifically `llama-server.exe`)
+
+### Model Quantization
+Running a 7-billion parameter model in full 16-bit floating-point precision (FP16) requires roughly **14 GB of VRAM** just to load the model weights, which is out of range for average consumer hardware.
+**Quantization** is a deep-learning optimization technique that shrinks model weights.
+* **How it works:** It maps high-precision floating-point numbers to lower-precision representations (e.g., 4-bit integers). 
+* **The Result:** The model size is reduced from 14 GB down to **~4.7 GB** with negligible loss in reasoning ability. This allows the model to run comfortably on standard consumer GPUs or system RAM.
