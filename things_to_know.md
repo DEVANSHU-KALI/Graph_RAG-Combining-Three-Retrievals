@@ -47,3 +47,20 @@ graph LR
         E1 -- "USED_WITH" --> E2
     end
 ```
+
+### The LLM Extraction Loop
+1. The script fetches all ingested text chunks from the Qdrant database payload.
+2. For each chunk, it builds a prompt instructing a powerful LLM (`llama-3.1-8b-instant` via the Groq API) to extract entity-relationship triplets.
+3. To enforce strict format validation, the request uses JSON mode:
+   ```json
+   {
+       "entities": ["FastAPI", "Qdrant"],
+       "relationships": [
+           {
+               "source": "FastAPI",
+               "target": "Qdrant",
+               "relation": "USED_WITH"
+           }
+       ]
+   }
+   ```
