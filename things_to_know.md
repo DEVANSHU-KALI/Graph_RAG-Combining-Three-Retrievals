@@ -21,3 +21,29 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
 3. It evaluates the semantic distance (similarity) between consecutive sentences.
 4. If the distance between two consecutive sentences exceeds a set threshold (configured at the **75th percentile** of similarity differences), it inserts a boundary.
 5. This ensures each chunk represents a semantically coherent topic or paragraph rather than an arbitrary segment.
+
+### Embeddings & Vector Storage
+* **Embedding Model:** `sentence-transformers/all-mpnet-base-v2`
+* **Dimensions:** 768 dimensions (meaning every chunk is mapped to a vector containing 768 floating-point values representing its semantic features).
+* **Storage in Qdrant:** The chunks are uploaded to Qdrant as points containing:
+  * An ID.
+  * The 768-dimensional float vector.
+  * A payload dictionary containing the source filename, chunk ID, and raw chunk text.
+
+---
+
+## 2. Knowledge Graph Construction (The Graph DB Stage)
+
+* **Script:** [graph_builder.py](file:///d:/projects/graph_rag/backend/graph_builder.py)
+* **Target Database:** Neo4j (runs in a Docker container on port `7687`)
+
+The Knowledge Graph (KG) captures structured, relational context which dense vectors might miss. Building it involves parsing text chunks into nodes and edges.
+
+```mermaid
+graph LR
+    subgraph Neo4j Database
+        E1[Entity Node: "FastAPI"]
+        E2[Entity Node: "Qdrant"]
+        E1 -- "USED_WITH" --> E2
+    end
+```
