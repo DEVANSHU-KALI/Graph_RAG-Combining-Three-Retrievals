@@ -103,3 +103,13 @@ We launch `llama.cpp` in server mode, exposing an OpenAI-compatible endpoint:
 * **`-ngl 25` (Number of GPU Layers to Offload):** Offloads 25 of the model's layers directly to your graphics card (CUDA/Metal) while running the remaining layers on your CPU. Adjusting this value higher or lower helps tune performance based on your system's VRAM capacity.
 
 ---
+
+## 4. API LLM (Groq) vs. Local LLM (Qwen)
+
+You might wonder why we use a cloud-based API model for building the graph but a local model for answering questions:
+
+| Feature / Task | Graph Building (Groq Llama 3.1 8B) | RAG Question Answering (Local Qwen 2.5 7B) |
+| :--- | :--- | :--- |
+| **Task Complexity** | **High:** Requires structured entity extraction, strict JSON compliance, and high semantic parsing logic. | **Moderate:** Needs to synthesize an answer from a provided context under strict constraints. |
+| **Execution Frequency** | **Low:** Done only once offline during the initial setup/ingestion phase. | **High:** Executed every time a user types a message in the chat. |
+| **LLM Requirement** | **API Cloud Model:** A large, highly capable model is necessary to avoid extraction errors and JSON schema breaks. | **Local Model:** Cost-free, private, and highly context-loyal. Local models are easily constrained to only answer from provided text. |
