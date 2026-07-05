@@ -29,7 +29,7 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
 * **Storage in Qdrant:** The chunks are uploaded to Qdrant as points containing:
   * An ID.
   * The 768-dimensional float vector.
-  * A payload dictionary containing the source filename, chunk ID, and raw chunk text.
+  * A payload dictionary containing the source filename, chunk ID, and raw chunk text, as these are the only things we needed to make the system work, and you can also add other things to metadata.
 
 ---
 
