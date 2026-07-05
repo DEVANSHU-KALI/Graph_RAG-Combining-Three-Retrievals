@@ -21,7 +21,8 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
 3. It evaluates the semantic distance (similarity) between consecutive sentences.
 4. If the distance between two consecutive sentences exceeds a set threshold (configured at the **75th percentile** of similarity differences), it inserts a boundary.
 5. This ensures each chunk represents a semantically coherent topic or paragraph rather than an arbitrary segment.
-- semantic chunking works based on embedding mode you choose. Better embedding model, better split as it understand the data well.
+- Semantic chunking works based on embedding mode you choose. Better embedding model, better split as it understand the data well.
+- If you observer the code, you can see that we import the embedding model from the embedding model script into this chunking script to use that here instead of again initializing the embedding model in the chunking script.
 ### Embeddings & Vector Storage
 * **Embedding Model:** `sentence-transformers/all-mpnet-base-v2`
 * **Dimensions:** 768 dimensions (meaning every chunk is mapped to a vector containing 768 floating-point values representing its semantic features).
