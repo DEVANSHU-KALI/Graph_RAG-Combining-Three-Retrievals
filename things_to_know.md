@@ -23,6 +23,7 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
 5. This ensures each chunk represents a semantically coherent topic or paragraph rather than an arbitrary segment.
 - Semantic chunking works based on embedding mode you choose. Better embedding model, better split as it understand the data well.
 - If you observer the code, you can see that we import the embedding model from the embedding model script into this chunking script to use that here instead of again initializing the embedding model in the chunking script.
+- Info related to the chunking will be explained more deeply in the [key_concepts.md]
 ### Embeddings & Vector Storage
 * **Embedding Model:** `sentence-transformers/all-mpnet-base-v2`
 * **Dimensions:** 768 dimensions (meaning every chunk is mapped to a vector containing 768 floating-point values representing its semantic features).
