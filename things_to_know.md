@@ -8,7 +8,7 @@ For the step-by-step query runtime execution flow, refer to [project_explainatio
 
 ## 1. Document Chunking & Vector Ingestion (The Vector DB Stage)
 
-* **Script:** [injest_documents.py](file:///d:/projects/graph_rag/backend/injest_documents.py)
+* **Script:** [injest_documents.py](file:graph_rag/backend/injest_documents.py)
 * **Target Database:** Qdrant (runs locally on port `6333`)
 
 Before text documents can be searched semantically, they must undergo preprocessing. This consists of **Semantic Chunking** and **Dense Vector Generation**.
