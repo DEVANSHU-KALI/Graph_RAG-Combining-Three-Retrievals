@@ -30,8 +30,7 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
   * An ID.
   * The 768-dimensional float vector.
   * A payload dictionary containing the source filename, chunk ID, and raw chunk text, as these are the only things we needed to make the system work, and you can also add other things to metadata.
-- In simple words, ` Embeddings is a way of understand a pice of data in a very very deeper level, for computers mainly`, as its not that hard for humans, but for computers numbers is the only things they understand.
-- 
+- All the info related to the embeddings will be explained more deeply in the [key_concepts.md]
 ---
 
 ## 2. Knowledge Graph Construction (The Graph DB Stage)
