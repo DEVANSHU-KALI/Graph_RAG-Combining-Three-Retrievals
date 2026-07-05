@@ -36,12 +36,12 @@ This project utilizes a **Semantic Chunker** (`langchain_experimental.text_split
 
 ## 2. Knowledge Graph Construction (The Graph DB Stage)
 
-* **Script:** [graph_builder.py](file:///d:/projects/graph_rag/backend/graph_builder.py)
+* **Script:** [graph_builder.py](file:graph_rag/backend/graph_builder.py)
 * **Target Database:** Neo4j (runs in a Docker container on port `7687`)
 
 The Knowledge Graph (KG) captures structured, relational context which dense vectors might miss. Building it involves parsing text chunks into nodes and edges.
 
-```mermaid
+``` m
 graph LR
     subgraph Neo4j Database
         E1[Entity Node: "FastAPI"]
