@@ -200,3 +200,6 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
      citations = list(set(chunk["source"] for chunk in reranked_chunks))
      ```
   5. The generated answer, sources, and raw contexts are packaged in a JSON response and returned to the Streamlit UI.
+
+#### Other thing working in the query phase
+- Middleware, this concept implementation is for learning purpose and doesn't help much, rather than just counting how many times did we connected with the backend server. 
