@@ -132,7 +132,7 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
   4. The top 10 text chunks with the highest lexical match scores are returned.
 
 #### C. Knowledge Graph Retrieval (Relational Search)
-* **File:** [graph_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/graph_retrieval.py) and [entity_extractor.py](file:///d:/projects/graph_rag/backend/entity_extractor.py)
+* **File:** [graph_retrieval.py](file:graph_rag/backend/retrievals/graph_retrieval.py) and [entity_extractor.py](file:///d:/projects/graph_rag/backend/entity_extractor.py)
 * **Underlying Concept:** Normal vector search retrieves isolated text blocks. Knowledge Graph retrieval extracts structured facts (Entity $\rightarrow$ Relation $\rightarrow$ Entity) that connect disparate parts of a corpus, which is ideal for multi-hop reasoning.
 * **Process:**
   1. **Entity Extraction:** The raw query is passed to an LLM (`llama-3.1-8b-instant` via the Groq API) with instructions to output a JSON list of key concepts in Title Case:
@@ -151,7 +151,7 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
 ---
 
 ### 5. Hybrid Retrieval Fusion
-* **File:** [hybrid_retrieval.py](file:///d:/projects/graph_rag/backend/retrievals/hybrid_retrieval.py)
+* **File:** [hybrid_retrieval.py](file:graph_rag/backend/retrievals/hybrid_retrieval.py)
 * **Underlying Concept:** Semantic scores (typically cosine similarities $[0, 1]$) and BM25 scores (open-ended positive values) are on completely different scales and cannot be compared or added directly.
 * **Process:**
   1. **Min-Max Normalization:** Scores for both retrieval sets are normalized to a $[0.0, 1.0]$ range:
