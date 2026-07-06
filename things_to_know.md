@@ -91,11 +91,8 @@ The final generation stage uses a locally hosted LLM to guarantee privacy, secur
 * **Local Hosting Framework:** `llama.cpp` (specifically `llama-server.exe`)
 
 ### Model Quantization
-Running a 7-billion parameter model in full 16-bit floating-point precision (FP16) requires roughly **14 GB of VRAM** just to load the model weights, which is out of range for average consumer hardware.
-**Quantization** is a deep-learning optimization technique that shrinks model weights.
-* **How it works:** It maps high-precision floating-point numbers to lower-precision representations (e.g., 4-bit integers). 
-* **The Result:** The model size is reduced from 14 GB down to **~4.7 GB** with negligible loss in reasoning ability. This allows the model to run comfortably on standard consumer GPUs or system RAM.
-
+- Its a process of reducing the model size so that, it can run on low end computers.
+- This concept will be covered in the [key_concepts.md] 
 ### Running the Local Llama Server
 We launch `llama.cpp` in server mode, exposing an OpenAI-compatible endpoint:
 ```bash
