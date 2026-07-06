@@ -202,5 +202,5 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
   5. The generated answer, sources, and raw contexts are packaged in a JSON response and returned to the Streamlit UI.
 
 #### Other thing working in the query phase
-- Middleware, this concept implementation is for learning purpose and doesn't help much, rather than just counting how many times did we connected with the backend server. 
+- Middleware, this concept implementation is for learning purpose and doesn't help much, rather than just measuring how much time did the backend server took to process a request.
 - This concept is regarded to the fastapi backend, which will be explained more briefly in the key [key_concepts.md] file.
