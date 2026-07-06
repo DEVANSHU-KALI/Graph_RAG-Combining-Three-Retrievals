@@ -168,7 +168,7 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
 ---
 
 ### 6. Cross-Encoder Reranking
-* **File:** [reranker.py](file:///d:/projects/graph_rag/backend/retrievals/reranker.py)
+* **File:** [reranker.py](file:graph_rag/backend/retrievals/reranker.py)
 * **Underlying Concept:** 
   Standard vector retrievers are **Bi-encoders**—they embed the query and the documents separately, allowing fast vector comparisons but missing fine-grained cross-token attention. 
   A **Cross-encoder** feeds the query and document *together* into the transformer model, allowing self-attention layers to compute interactions between every query word and every document word. This is computationally heavier but significantly more accurate.
