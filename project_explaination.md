@@ -203,3 +203,4 @@ Once inside the pipeline, the system initiates three retrieval runs to collect e
 
 #### Other thing working in the query phase
 - Middleware, this concept implementation is for learning purpose and doesn't help much, rather than just counting how many times did we connected with the backend server. 
+- This concept is regarded to the fastapi backend, which will be explained more briefly in the key [key_concepts.md] file.
