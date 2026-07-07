@@ -33,3 +33,5 @@ This is the method we are using in this project. Instead of counting characters 
 This is the most advanced (and expensive) method. You pass the text to an LLM and literally ask it: "Read this text and tell me where the logical breaks are." 
 * **The Catch:** It gives amazing quality, but it's very slow and costs a lot in API usage because you're calling an LLM just to chunk the data.
 * **When to use it:** Best for high-value, complex documents (like legal contracts or financial statements) where missing a topic boundary could lead to severe reasoning errors, and cost/latency are not major concerns.
+
+--- 
