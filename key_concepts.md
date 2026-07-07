@@ -14,3 +14,9 @@ This is the most basic approach. You just split the text every N characters (lik
 * **How it works:** It’s a simple sliding window that counts characters and cuts the text.
 * **The Catch:** It's super fast, but it's completely blind to structure. It will split right in the middle of a word or sentence, which breaks the semantic meaning.
 * **When to use it:** Best for highly uniform data, raw logs, or structured strings where formatting and sentence structures are not important, or when you need a super-fast, low-compute baseline.
+
+#### B. Recursive Character Chunking
+This is a much smarter step up (like LangChain's `RecursiveCharacterTextSplitter`). Instead of splitting blindly, it looks at a list of separators in order—usually double newlines (`\n\n`), single newlines (`\n`), spaces (` `), and finally characters.
+* **How it works:** It tries to split paragraphs first. If a paragraph is still too big, it tries to split on sentences, then words, and so on. 
+* **When to use it:** This is the default go-to for general, unstructured text (like articles, blog posts, or standard reports) where you want to keep paragraphs and sentences intact without needing heavy computation.
+
