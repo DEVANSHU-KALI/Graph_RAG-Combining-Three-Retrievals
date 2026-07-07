@@ -29,3 +29,7 @@ If you're dealing with markdown or code files, you can split based on the docume
 This is the method we are using in this project. Instead of counting characters or looking at static separators, it looks at the *meaning* of the text.
 * **How it works:** It splits the document into sentences first, generates embeddings for each, calculates the similarity between consecutive sentences, and splits when the similarity drops below a threshold (like the 75th percentile).
 * **When to use it:** Best when your documents contain complex narrative flows, transitions between different topics, or varying paragraph lengths, and you need highly cohesive context chunks where every line relates to the same core topic.
+#### E. Agentic Chunking
+This is the most advanced (and expensive) method. You pass the text to an LLM and literally ask it: "Read this text and tell me where the logical breaks are." 
+* **The Catch:** It gives amazing quality, but it's very slow and costs a lot in API usage because you're calling an LLM just to chunk the data.
+* **When to use it:** Best for high-value, complex documents (like legal contracts or financial statements) where missing a topic boundary could lead to severe reasoning errors, and cost/latency are not major concerns.
