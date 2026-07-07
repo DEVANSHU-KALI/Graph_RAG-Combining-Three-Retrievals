@@ -20,3 +20,7 @@ This is a much smarter step up (like LangChain's `RecursiveCharacterTextSplitter
 * **How it works:** It tries to split paragraphs first. If a paragraph is still too big, it tries to split on sentences, then words, and so on. 
 * **When to use it:** This is the default go-to for general, unstructured text (like articles, blog posts, or standard reports) where you want to keep paragraphs and sentences intact without needing heavy computation.
 
+#### C. Structure-Aware Chunking (Markdown/HTML/Code)
+If you're dealing with markdown or code files, you can split based on the document's native structure. For example, you can split markdown files at H1, H2, or H3 headings, or split code files at class/function boundaries.
+* **Why it's good:** It ensures that a code block or markdown section stays together as a single logical unit.
+* **When to use it:** Essential when building a codebase assistant or indexing documentation that relies heavily on hierarchy, code blocks, or HTML layout structures.
