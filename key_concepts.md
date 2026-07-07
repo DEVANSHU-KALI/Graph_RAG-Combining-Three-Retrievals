@@ -24,3 +24,8 @@ This is a much smarter step up (like LangChain's `RecursiveCharacterTextSplitter
 If you're dealing with markdown or code files, you can split based on the document's native structure. For example, you can split markdown files at H1, H2, or H3 headings, or split code files at class/function boundaries.
 * **Why it's good:** It ensures that a code block or markdown section stays together as a single logical unit.
 * **When to use it:** Essential when building a codebase assistant or indexing documentation that relies heavily on hierarchy, code blocks, or HTML layout structures.
+
+#### D. Semantic Chunking
+This is the method we are using in this project. Instead of counting characters or looking at static separators, it looks at the *meaning* of the text.
+* **How it works:** It splits the document into sentences first, generates embeddings for each, calculates the similarity between consecutive sentences, and splits when the similarity drops below a threshold (like the 75th percentile).
+* **When to use it:** Best when your documents contain complex narrative flows, transitions between different topics, or varying paragraph lengths, and you need highly cohesive context chunks where every line relates to the same core topic.
