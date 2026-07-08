@@ -59,3 +59,4 @@ Instead of compressing text into a dense array of abstract numbers, sparse model
 #### C. Late Interaction / Multi-Vector Models (like ColBERT)
 Instead of squashing an entire document chunk into one single vector, late interaction models generate a separate embedding vector for *every single token* (word) in the text.
 * **How it works:** During search, the query's individual word vectors are compared directly against all the individual word vectors of the documents, aligning them dynamically.
+* **When to use it:** Best for high-precision search where word order, fine-grained details, and token-level relationships are extremely critical, though it requires significantly more memory and storage space.
