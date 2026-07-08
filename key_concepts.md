@@ -69,3 +69,5 @@ If you have thousands of chunks, finding the closest match using a standard data
 Vector databases like **Qdrant** are built specifically to solve this problem:
 * **HNSW Indexing (Hierarchical Navigable Small World):** Qdrant builds a multi-layered graph of the vectors (similar to a skip-list or a social network map). When a query comes in, it navigates this graph to quickly find the **Approximate Nearest Neighbors (ANN)** without scanning every single record. It's incredibly fast.
 * **Payload Storage:** Along with the vector, Qdrant allows you to store a "payload"—which is just metadata like the raw text, the chunk ID, and the source file. This allows the backend to retrieve the actual text to feed to the LLM immediately after a vector match is found.
+
+--- 
