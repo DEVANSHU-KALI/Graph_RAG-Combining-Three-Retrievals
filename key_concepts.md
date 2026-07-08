@@ -50,3 +50,6 @@ Not all embedding models work the same way. Depending on your search requirement
 This is the most common type and the one we are using in this project (specifically `sentence-transformers/all-mpnet-base-v2`).
 * **How it works:** It processes a text chunk as a single unit and outputs a single dense vector representing the overall meaning of that text.
 * **When to use it:** Perfect for general semantic search, finding conceptually similar topics, and building standard RAG pipelines.
+
+#### B. Sparse Embedding Models (like SPLADE or BM25-based vectors)
+Instead of compressing text into a dense array of abstract numbers, sparse models output vectors that are mostly zeros, with non-zero values representing specific vocabulary words and their relative importance.
