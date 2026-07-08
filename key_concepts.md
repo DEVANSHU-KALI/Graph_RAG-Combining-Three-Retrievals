@@ -64,3 +64,7 @@ Instead of squashing an entire document chunk into one single vector, late inter
 ### The Qdrant Vector Database
 Why can't we just store these lists of 768 numbers in a standard SQL or NoSQL database? 
 If you have thousands of chunks, finding the closest match using a standard database would require running a heavy math operation (like Cosine Similarity) against every single row, one by one. This is called a flat scan, and it completely grinds to a halt as your data grows.
+
+
+Vector databases like **Qdrant** are built specifically to solve this problem:
+* **HNSW Indexing (Hierarchical Navigable Small World):** Qdrant builds a multi-layered graph of the vectors (similar to a skip-list or a social network map). When a query comes in, it navigates this graph to quickly find the **Approximate Nearest Neighbors (ANN)** without scanning every single record. It's incredibly fast.
