@@ -35,3 +35,6 @@ This is the most advanced (and expensive) method. You pass the text to an LLM an
 * **When to use it:** Best for high-value, complex documents (like legal contracts or financial statements) where missing a topic boundary could lead to severe reasoning errors, and cost/latency are not major concerns.
 
 --- 
+
+## 2) Embeddings and qdrant database.
+Once we have our chunks, how does the system actually "understand" and search through them? This is where embeddings and vector databases come into play.
