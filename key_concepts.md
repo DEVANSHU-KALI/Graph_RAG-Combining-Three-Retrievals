@@ -53,3 +53,5 @@ This is the most common type and the one we are using in this project (specifica
 
 #### B. Sparse Embedding Models (like SPLADE or BM25-based vectors)
 Instead of compressing text into a dense array of abstract numbers, sparse models output vectors that are mostly zeros, with non-zero values representing specific vocabulary words and their relative importance.
+* **How it works:** It maps text directly to a huge vocabulary dictionary, scoring the importance of individual words in the text.
+* **When to use it:** Best when you need exact matches for product serial numbers, legal codes, specific naming conventions, or highly technical jargon where semantic search might get confused by similar-sounding words.
