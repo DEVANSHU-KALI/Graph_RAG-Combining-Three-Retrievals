@@ -48,3 +48,5 @@ Not all embedding models work the same way. Depending on your search requirement
 
 #### A. Dense Embedding Models (Bi-Encoders)
 This is the most common type and the one we are using in this project (specifically `sentence-transformers/all-mpnet-base-v2`).
+* **How it works:** It processes a text chunk as a single unit and outputs a single dense vector representing the overall meaning of that text.
+* **When to use it:** Perfect for general semantic search, finding conceptually similar topics, and building standard RAG pipelines.
