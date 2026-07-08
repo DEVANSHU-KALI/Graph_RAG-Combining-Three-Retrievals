@@ -45,3 +45,6 @@ If you think of a 2D graph, you can map points using `(x, y)` coordinates. In a 
 
 ### Types of Embedding Models
 Not all embedding models work the same way. Depending on your search requirements, you generally choose between three main types:
+
+#### A. Dense Embedding Models (Bi-Encoders)
+This is the most common type and the one we are using in this project (specifically `sentence-transformers/all-mpnet-base-v2`).
