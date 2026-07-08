@@ -38,3 +38,5 @@ This is the most advanced (and expensive) method. You pass the text to an LLM an
 
 ## 2) Embeddings and qdrant database.
 Once we have our chunks, how does the system actually "understand" and search through them? This is where embeddings and vector databases come into play.
+
+Let's demystify what an embedding actually is. Human language is full of nuance, double meanings, and context, which computers are terrible at processing. An embedding is basically a translator: it converts raw text into a long list of numbers (a high-dimensional vector) that represents its semantic meaning. 
