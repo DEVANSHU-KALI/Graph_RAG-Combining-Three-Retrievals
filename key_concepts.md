@@ -60,3 +60,7 @@ Instead of compressing text into a dense array of abstract numbers, sparse model
 Instead of squashing an entire document chunk into one single vector, late interaction models generate a separate embedding vector for *every single token* (word) in the text.
 * **How it works:** During search, the query's individual word vectors are compared directly against all the individual word vectors of the documents, aligning them dynamically.
 * **When to use it:** Best for high-precision search where word order, fine-grained details, and token-level relationships are extremely critical, though it requires significantly more memory and storage space.
+
+### The Qdrant Vector Database
+Why can't we just store these lists of 768 numbers in a standard SQL or NoSQL database? 
+If you have thousands of chunks, finding the closest match using a standard database would require running a heavy math operation (like Cosine Similarity) against every single row, one by one. This is called a flat scan, and it completely grinds to a halt as your data grows.
