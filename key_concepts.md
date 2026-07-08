@@ -40,3 +40,5 @@ This is the most advanced (and expensive) method. You pass the text to an LLM an
 Once we have our chunks, how does the system actually "understand" and search through them? This is where embeddings and vector databases come into play.
 
 Let's demystify what an embedding actually is. Human language is full of nuance, double meanings, and context, which computers are terrible at processing. An embedding is basically a translator: it converts raw text into a long list of numbers (a high-dimensional vector) that represents its semantic meaning. 
+
+If you think of a 2D graph, you can map points using `(x, y)` coordinates. In a vector space, we do the same thing, but instead of 2 dimensions, we use hundreds or thousands. For example, in this project, we use a 768-dimensional model. That means every single text chunk is converted into a list of 768 floating-point numbers.
