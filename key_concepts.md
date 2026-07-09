@@ -82,3 +82,9 @@ To understand BM25, think of it as a highly optimized version of TF-IDF. When yo
 3. **Document Length Normalization:** Long documents naturally contain more words. BM25 penalizes longer chunks so that short, highly-concentrated chunks matching the query are ranked higher.
 
 In our project, we fetch the texts of all document chunks from Qdrant on startup, tokenize them (`text.lower().split()`), and build a `BM25Okapi` index that runs directly in RAM.
+
+### Alternative Keyword Search Methods
+Depending on your project's scale and search requirements, there are different ways to set up keyword search:
+#### A. TF-IDF (Term Frequency-Inverse Document Frequency)
+This is the mathematical predecessor to BM25.
+* **How it works:** It simply multiplies how often a word appears in a document by how rare it is in the corpus.
