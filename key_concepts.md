@@ -71,3 +71,4 @@ Vector databases like **Qdrant** are built specifically to solve this problem:
 * **Payload Storage:** Along with the vector, Qdrant allows you to store a "payload"—which is just metadata like the raw text, the chunk ID, and the source file. This allows the backend to retrieve the actual text to feed to the LLM immediately after a vector match is found.
 
 --- 
+
