@@ -79,3 +79,4 @@ In this project, we use the industry standard algorithm for keyword search: **BM
 To understand BM25, think of it as a highly optimized version of TF-IDF. When you search for terms, BM25 scores each document chunk based on three main factors:
 1. **Term Frequency (TF):** How many times a query word appears in a chunk. The more it appears, the higher the score. However, BM25 uses "term frequency saturation"—once a word appears 3 or 4 times, repeating it 100 more times won't keep inflating the score indefinitely.
 2. **Inverse Document Frequency (IDF):** How common is this word across all your documents? Common filler words like "the" or "is" are ignored, while rare words like "FastAPI" or "Neo4j" are given massive priority.
+3. **Document Length Normalization:** Long documents naturally contain more words. BM25 penalizes longer chunks so that short, highly-concentrated chunks matching the query are ranked higher.
