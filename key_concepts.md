@@ -91,7 +91,6 @@ This is the mathematical predecessor to BM25.
 * **The Catch:** It doesn't normalize for document length, meaning long documents are heavily favored. It also lacks term frequency saturation, meaning a document that repeats a keyword 50 times gets an unnaturally high score.
 * **When to use it:** Mostly legacy projects, simple text classification tasks, or quick scripts where you need a super lightweight search without configuring extra libraries.
 
-#### B. BM25 (Best Match 25)
-The algorithm we are using in this project (via the `rank-bm25` library).
-* **How it works:** It refines TF-IDF by adding parameters to scale down the impact of repetitive keywords and normalize document lengths.
-* **When to use it:** The gold standard for general RAG systems. It is extremely robust, requires no database hosting (runs in python memory), and serves as the perfect baseline for keyword matching.
+#### C. Full-Text Search Engines (like Elasticsearch, OpenSearch, or Meilisearch)
+These are standalone, external databases designed purely for search.
+* **How it works:** They build an inverted index (mapping every word to the documents it appears in) and store it on disk. They use BM25 under the hood but add extra search features.
