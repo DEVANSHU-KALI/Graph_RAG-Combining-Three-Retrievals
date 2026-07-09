@@ -74,3 +74,6 @@ Vector databases like **Qdrant** are built specifically to solve this problem:
 
 ## 3) BM25 Index and Keyword Retrieval:
 While semantic search is great at understanding conceptual meaning (like mapping "dog" to "puppy"), it has a major blind spot. It can completely miss exact keywords, serial numbers, variable names, or specific jargon, and start hallucinating. To prevent this, RAG systems run a parallel track called **Keyword Retrieval** (or Lexical Search). 
+
+In this project, we use the industry standard algorithm for keyword search: **BM25 (Best Match 25)**. 
+To understand BM25, think of it as a highly optimized version of TF-IDF. When you search for terms, BM25 scores each document chunk based on three main factors:
