@@ -94,3 +94,6 @@ This is the mathematical predecessor to BM25.
 #### C. Full-Text Search Engines (like Elasticsearch, OpenSearch, or Meilisearch)
 These are standalone, external databases designed purely for search.
 * **How it works:** They build an inverted index (mapping every word to the documents it appears in) and store it on disk. They use BM25 under the hood but add extra search features.
+
+* **Why they are powerful:** They support fuzzy matching (finding "FastAPI" even if you type "FatsAPI"), language stemming (treating "running" and "run" as the same word), and advanced filtering.
+* **When to use it:** When your data scales to millions of documents, you need typo tolerance, or you want to update documents in real-time without recalculating the entire index in Python RAM.
