@@ -88,3 +88,5 @@ Depending on your project's scale and search requirements, there are different w
 #### A. TF-IDF (Term Frequency-Inverse Document Frequency)
 This is the mathematical predecessor to BM25.
 * **How it works:** It simply multiplies how often a word appears in a document by how rare it is in the corpus.
+* **The Catch:** It doesn't normalize for document length, meaning long documents are heavily favored. It also lacks term frequency saturation, meaning a document that repeats a keyword 50 times gets an unnaturally high score.
+* **When to use it:** Mostly legacy projects, simple text classification tasks, or quick scripts where you need a super lightweight search without configuring extra libraries.
