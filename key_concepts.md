@@ -127,3 +127,7 @@ Instead of compressing the model after training, the model is trained with quant
 * **Why it's good:** It retains almost 99% of the original model's accuracy, even at very low bitrates.
 
 * **When to use it:** Used when you are developing custom models for low-power edge devices (like mobile phones, smart cameras, or microcontrollers) where every bit of accuracy and hardware efficiency counts.
+
+#### C. Dynamic vs. Static Quantization
+This refers to whether the activations (the intermediate math calculations inside the model during inference) are compressed along with the model weights.
+* **Dynamic Quantization:** The model weights are quantized offline, but the activations are converted to lower precision dynamically during runtime. 
