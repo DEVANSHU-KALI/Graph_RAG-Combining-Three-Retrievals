@@ -106,3 +106,6 @@ When you want to run a Large Language Model (LLM) locally, the first obstacle yo
 This is where **Quantization** comes to the rescue. It is a compression technique that shrinks model weights, allowing massive LLMs to run on consumer-grade hardware.
 
 To understand quantization, imagine trying to measure a room. Instead of measuring down to the millimeter (which requires a lot of decimals and data), you round it to the nearest centimeter.  In deep learning, model weights are originally stored as highly precise decimal numbers (like `FP32` or `FP16`). Quantization maps these continuous high-precision decimals to a discrete,  lower-precision range—most commonly **8-bit (INT8)** or **4-bit (INT4)** integers.
+
+
+For this project, we use a **4-bit quantized version** of the Qwen model (`Q4_K_M-GGUF`). This reduces the model's memory footprint from **14 GB down to roughly 4.7 GB**, allowing it to load easily and run quickly on standard CPU/GPU setups.
