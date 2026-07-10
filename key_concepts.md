@@ -122,3 +122,6 @@ This is the standard approach used for local LLM deployment (and the one used fo
 * **When to use it:** This is the go-to for running open-source models (Llama, Qwen, Mistral) locally using frameworks like `llama.cpp` or `Ollama`. It requires no retraining and is ready to use instantly.
 #### B. Quantization-Aware Training (QAT)
 Instead of compressing the model after training, the model is trained with quantization in mind.
+
+* **How it works:** During the training process, the system simulates the effects of quantization. The model "learns" to adjust its weights to compensate for the lower precision limits.
+* **Why it's good:** It retains almost 99% of the original model's accuracy, even at very low bitrates.
