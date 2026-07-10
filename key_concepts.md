@@ -115,3 +115,6 @@ There are different ways to quantize a model depending on when you compress it a
 
 #### A. Post-Training Quantization (PTQ)
 This is the standard approach used for local LLM deployment (and the one used for our GGUF model).
+
+* **How it works:** The model is fully trained at high precision (FP16). Once training is complete, the weights are mapped and compressed to lower precision (like 4-bit or 8-bit) as a one-time conversion step.
+* **The Catch:** Because the conversion happens after training, there is a minor loss in the model's reasoning accuracy (called quantization loss).
