@@ -112,3 +112,6 @@ For this project, we use a **4-bit quantized version** of the Qwen model (`Q4_K_
 
 ### Types of Quantization
 There are different ways to quantize a model depending on when you compress it and the level of accuracy you need:
+
+#### A. Post-Training Quantization (PTQ)
+This is the standard approach used for local LLM deployment (and the one used for our GGUF model).
