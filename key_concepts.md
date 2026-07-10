@@ -109,3 +109,6 @@ To understand quantization, imagine trying to measure a room. Instead of measuri
 
 
 For this project, we use a **4-bit quantized version** of the Qwen model (`Q4_K_M-GGUF`). This reduces the model's memory footprint from **14 GB down to roughly 4.7 GB**, allowing it to load easily and run quickly on standard CPU/GPU setups.
+
+### Types of Quantization
+There are different ways to quantize a model depending on when you compress it and the level of accuracy you need:
