@@ -118,3 +118,7 @@ This is the standard approach used for local LLM deployment (and the one used fo
 
 * **How it works:** The model is fully trained at high precision (FP16). Once training is complete, the weights are mapped and compressed to lower precision (like 4-bit or 8-bit) as a one-time conversion step.
 * **The Catch:** Because the conversion happens after training, there is a minor loss in the model's reasoning accuracy (called quantization loss).
+
+* **When to use it:** This is the go-to for running open-source models (Llama, Qwen, Mistral) locally using frameworks like `llama.cpp` or `Ollama`. It requires no retraining and is ready to use instantly.
+#### B. Quantization-Aware Training (QAT)
+Instead of compressing the model after training, the model is trained with quantization in mind.
