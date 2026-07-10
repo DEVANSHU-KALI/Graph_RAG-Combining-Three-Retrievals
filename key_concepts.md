@@ -99,3 +99,6 @@ These are standalone, external databases designed purely for search.
 * **When to use it:** When your data scales to millions of documents, you need typo tolerance, or you want to update documents in real-time without recalculating the entire index in Python RAM.
 
 --- 
+
+## 4) Quantization:
+When you want to run a Large Language Model (LLM) locally, the first obstacle you run into is memory (VRAM or RAM). A standard 7-billion parameter model (like Qwen2.5-7B) running at standard 16-bit floating-point precision (FP16) requires about **14 GB of memory** just to load. If you try to run it on a normal laptop, it will either crash or run at a painful speed of 1 token per second.
