@@ -131,3 +131,7 @@ Instead of compressing the model after training, the model is trained with quant
 #### C. Dynamic vs. Static Quantization
 This refers to whether the activations (the intermediate math calculations inside the model during inference) are compressed along with the model weights.
 * **Dynamic Quantization:** The model weights are quantized offline, but the activations are converted to lower precision dynamically during runtime. 
+
+  * *When to use it:* Best for LLMs, where the main bottleneck is the time it takes to load massive weights from memory into the processor.
+* **Static Quantization:** Both weights and activations are quantized offline beforehand by running a small sample dataset (calibration data) through the model to determine the active ranges.
+  * *When to use it:* Best for Computer Vision models (like CNNs) where raw compute speed on the activations is the main bottleneck.
