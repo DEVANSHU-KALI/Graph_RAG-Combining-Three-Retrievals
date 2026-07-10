@@ -104,3 +104,5 @@ These are standalone, external databases designed purely for search.
 When you want to run a Large Language Model (LLM) locally, the first obstacle you run into is memory (VRAM or RAM). A standard 7-billion parameter model (like Qwen2.5-7B) running at standard 16-bit floating-point precision (FP16) requires about **14 GB of memory** just to load. If you try to run it on a normal laptop, it will either crash or run at a painful speed of 1 token per second.
 
 This is where **Quantization** comes to the rescue. It is a compression technique that shrinks model weights, allowing massive LLMs to run on consumer-grade hardware.
+
+To understand quantization, imagine trying to measure a room. Instead of measuring down to the millimeter (which requires a lot of decimals and data), you round it to the nearest centimeter.
