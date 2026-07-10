@@ -125,3 +125,5 @@ Instead of compressing the model after training, the model is trained with quant
 
 * **How it works:** During the training process, the system simulates the effects of quantization. The model "learns" to adjust its weights to compensate for the lower precision limits.
 * **Why it's good:** It retains almost 99% of the original model's accuracy, even at very low bitrates.
+
+* **When to use it:** Used when you are developing custom models for low-power edge devices (like mobile phones, smart cameras, or microcontrollers) where every bit of accuracy and hardware efficiency counts.
