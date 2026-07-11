@@ -161,3 +161,6 @@ To interact with Neo4j, we use **Cypher**, a declarative query language. Cypher 
 MATCH (s:Entity)-[r:USED_WITH]->(t:Entity)
 RETURN s.name, t.name
 ```
+#### Alternative graph database
+
+Depending on your project infrastructure and database requirements, there are different graph solutions available:
