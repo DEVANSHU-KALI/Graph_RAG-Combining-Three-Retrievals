@@ -175,3 +175,6 @@ Depending on your project infrastructure and database requirements, there are di
 3) Multi-Model Databases (like ArangoDB or OrientDB)
 - How it works: Databases designed to store documents (JSON), key-value pairs, and graphs all inside a single database engine.
 - When to use it: Ideal when your project already uses JSON documents heavily, and you want to query relations between those documents without the operational overhead of hosting both MongoDB and Neo4j.
+4) Relational Databases with Graph Extensions (like PostgreSQL with Apache AGE)
+- How it works: An extension that adds graph database functionality (including Cypher query support) directly on top of a standard PostgreSQL instance.
+- When to use it: Best when you already have a mature PostgreSQL setup and want to experiment with graph features without introducing new database engines into your production stack.
