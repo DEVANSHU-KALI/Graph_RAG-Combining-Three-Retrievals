@@ -138,3 +138,6 @@ This refers to whether the activations (the intermediate math calculations insid
 
 ---
 
+## 5) Graphs and Neo4j Database:
+When we work with standard databases, we are used to storing data in grids (SQL tables) or document trees (NoSQL JSON). While these work great for isolated items, they struggle with connections. If you want to find out how various concepts are connected across several steps (multi-hop search), a relational database has to run highly resource-intensive `JOIN` operations that slow down quickly.
+A **Graph Database** solves this by treating the relationships between data as first-class citizens, storing them directly alongside the data itself. 
