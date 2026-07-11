@@ -154,3 +154,10 @@ Neo4j is the most popular Labeled Property Graph (LPG) database. It is structure
 In a traditional database, if you want to find a connection, the system has to scan a central index table. 
 Neo4j uses **Index-Free Adjacency**. This means every node acts as a micro-index, holding direct memory pointers to its neighboring nodes. Traversing the graph is simply a matter of chasing memory pointers. Because of this, query performance depends only on the size of the subgraph you are searching, not the overall size of the entire database.
 #### Cypher Query Language
+
+To interact with Neo4j, we use **Cypher**, a declarative query language. Cypher is designed to be visual, using ASCII-art to represent graph patterns:
+```cypher
+// Matching a pattern: Source Node pointing to Target Node
+MATCH (s:Entity)-[r:USED_WITH]->(t:Entity)
+RETURN s.name, t.name
+```
