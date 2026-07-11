@@ -149,3 +149,7 @@ Neo4j is the most popular Labeled Property Graph (LPG) database. It is structure
 2. **Relationships (Edges):** The directed connections between nodes (e.g., `FastAPI` -> `[USED_WITH]` -> `Qdrant`). In Neo4j, relationships always have a direction and a type.
 
 3. **Properties:** Key-value pairs stored inside nodes or relationships (e.g., a node might have `{version: "0.110.0"}`, and a relationship might have `{difficulty: "easy"}`).
+
+#### Index-Free Adjacency (The Core Engine)
+In a traditional database, if you want to find a connection, the system has to scan a central index table. 
+Neo4j uses **Index-Free Adjacency**. This means every node acts as a micro-index, holding direct memory pointers to its neighboring nodes.
