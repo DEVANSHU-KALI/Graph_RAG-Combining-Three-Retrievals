@@ -172,3 +172,6 @@ Depending on your project infrastructure and database requirements, there are di
 2) RDF Triple Stores (like GraphDB, Amazon Neptune, or Apache Jena)
 - How it works: Stores data as strict "triples" (Subject -> Predicate -> Object) using web URIs instead of plain strings. It uses SPARQL as its query language and supports logical reasoning engines.
 - When to use it: Best for academic projects, semantic web integrations, public knowledge bases (like Wikidata), or metadata management where formal logic rules and globally standardized web ontologies are required.
+3) Multi-Model Databases (like ArangoDB or OrientDB)
+- How it works: Databases designed to store documents (JSON), key-value pairs, and graphs all inside a single database engine.
+- When to use it: Ideal when your project already uses JSON documents heavily, and you want to query relations between those documents without the operational overhead of hosting both MongoDB and Neo4j.
