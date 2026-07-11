@@ -135,3 +135,6 @@ This refers to whether the activations (the intermediate math calculations insid
   * *When to use it:* Best for LLMs, where the main bottleneck is the time it takes to load massive weights from memory into the processor.
 * **Static Quantization:** Both weights and activations are quantized offline beforehand by running a small sample dataset (calibration data) through the model to determine the active ranges.
   * *When to use it:* Best for Computer Vision models (like CNNs) where raw compute speed on the activations is the main bottleneck.
+
+---
+
