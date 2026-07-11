@@ -164,3 +164,7 @@ RETURN s.name, t.name
 #### Alternative graph database
 
 Depending on your project infrastructure and database requirements, there are different graph solutions available:
+
+1) Labeled Property Graph (LPG) Databases (like Neo4j)
+How it works: Nodes and relationships can have properties, and queries are optimized for fast traversals and updates.
+When to use it: The gold standard for general GraphRAG, fraud detection, recommendation engines, and social network analysis where you need fast, intuitive, property-rich graphs.
