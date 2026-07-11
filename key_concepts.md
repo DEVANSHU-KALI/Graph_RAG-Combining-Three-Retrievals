@@ -166,5 +166,9 @@ RETURN s.name, t.name
 Depending on your project infrastructure and database requirements, there are different graph solutions available:
 
 1) Labeled Property Graph (LPG) Databases (like Neo4j)
-How it works: Nodes and relationships can have properties, and queries are optimized for fast traversals and updates.
-When to use it: The gold standard for general GraphRAG, fraud detection, recommendation engines, and social network analysis where you need fast, intuitive, property-rich graphs.
+- How it works: Nodes and relationships can have properties, and queries are optimized for fast traversals and updates.
+- When to use it: The gold standard for general GraphRAG, fraud detection, recommendation engines, and social network analysis where you need fast, intuitive, property-rich graphs.
+
+2) RDF Triple Stores (like GraphDB, Amazon Neptune, or Apache Jena)
+- How it works: Stores data as strict "triples" (Subject -> Predicate -> Object) using web URIs instead of plain strings. It uses SPARQL as its query language and supports logical reasoning engines.
+- When to use it: Best for academic projects, semantic web integrations, public knowledge bases (like Wikidata), or metadata management where formal logic rules and globally standardized web ontologies are required.
