@@ -147,3 +147,5 @@ A **Graph Database** solves this by treating the relationships between data as f
 Neo4j is the most popular Labeled Property Graph (LPG) database. It is structured around three core concepts:
 1. **Nodes (Entities):** The actual objects or concepts in your graph (e.g., a node representing `FastAPI` or `Qdrant`).
 2. **Relationships (Edges):** The directed connections between nodes (e.g., `FastAPI` -> `[USED_WITH]` -> `Qdrant`). In Neo4j, relationships always have a direction and a type.
+
+3. **Properties:** Key-value pairs stored inside nodes or relationships (e.g., a node might have `{version: "0.110.0"}`, and a relationship might have `{difficulty: "easy"}`).
