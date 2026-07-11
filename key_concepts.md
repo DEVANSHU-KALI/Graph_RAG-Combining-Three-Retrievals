@@ -178,3 +178,5 @@ Depending on your project infrastructure and database requirements, there are di
 4) Relational Databases with Graph Extensions (like PostgreSQL with Apache AGE)
 - How it works: An extension that adds graph database functionality (including Cypher query support) directly on top of a standard PostgreSQL instance.
 - When to use it: Best when you already have a mature PostgreSQL setup and want to experiment with graph features without introducing new database engines into your production stack.
+
+--- 
