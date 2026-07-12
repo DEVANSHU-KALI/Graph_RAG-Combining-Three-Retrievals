@@ -590,3 +590,6 @@ You feed a highly capable LLM (like GPT-4 or Llama 3.1 70B) a test case containi
 2. **The Actual Output:** What the chatbot answered.
 3. **The Retrieved Context:** The source documents retrieved to answer the query.
 4. **The Ground Truth (Optional):** The gold-standard correct answer written by a human.
+
+
+The judge LLM is prompted with strict mathematical scoring guidelines to analyze these parameters and output a normalized score between `0.0` (failing) and `1.0` (perfect).
