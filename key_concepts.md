@@ -186,3 +186,9 @@ Depending on your project infrastructure and database requirements, there are di
 When you first start coding, you are taught to use `print()` statements to debug your code and check if variables hold the right values. However, in production-grade systems, `print()` is practically useless. It prints directly to the standard output, gets mixed up with other terminal stdout, doesn't record timestamps, has no concept of severity (e.g., warning vs. critical crash), and won't write to log files automatically.
 
 **Logging** is the structured practice of recording runtime events, system states, warnings, and errors during an application's execution. It acts as the "black box flight recorder" for your code.
+
+
+### How Logging Works (The Core Concepts)
+A standard logging system relies on three main components:
+1. **Loggers:** The entry point. You call a logger in your code to submit a log record.
+2. **Handlers:** Decide *where* the log record goes. It can send logs to the console (StreamHandler), write them to a local file (FileHandler), or ship them over the network to a central server.
