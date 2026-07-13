@@ -321,3 +321,40 @@ We import `logger` to track:
 Successfully connected to Neo4j
 ```
 
+- Text chunking progression.
+
+  Example:
+
+```text
+Generated 144 chunks
+```
+
+- Qdrant database status.
+
+---
+
+### Alternative Logging Libraries in Python
+
+While Python's standard `logging` library is solid, the industry often turns to modern alternatives.
+
+#### A. Loguru
+
+- **How it works**
+  - A modern Python library designed to make logging fun.
+  - It requires zero configuration boilerplate.
+
+- **Why it's great**
+  - Supports colorized terminal outputs by default.
+  - Handles file rotation and compression out of the box.
+  - Uses simplified syntax.
+
+```python
+from loguru import logger
+
+logger.info("Just import and write, no setup needed!")
+```
+
+- **When to use it**
+  - Highly recommended for scripts, fast prototypes, and mid-sized backend projects where you want rich console logging with zero setup.
+
+
