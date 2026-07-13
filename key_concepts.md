@@ -180,3 +180,6 @@ Depending on your project infrastructure and database requirements, there are di
 - When to use it: Best when you already have a mature PostgreSQL setup and want to experiment with graph features without introducing new database engines into your production stack.
 
 --- 
+
+## 6) Logging
+
