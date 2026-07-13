@@ -193,3 +193,9 @@ A standard logging system relies on three main components:
 1. **Loggers:** The entry point. You call a logger in your code to submit a log record.
 2. **Handlers:** Decide *where* the log record goes. It can send logs to the console (StreamHandler), write them to a local file (FileHandler), or ship them over the network to a central server.
 3. **Formatters:** Define *what* the logs look like. They dynamically add context, like timestamps, log levels, file names, and line numbers.
+
+
+#### The 5 Log Levels
+Logs are classified by severity so that you can filter out noise during normal operations:
+* `DEBUG` (10): Detailed diagnostic information, mostly useful for developers during local debugging.
+* `INFO` (20): Confirmation that things are working as expected (e.g., "Server started on port 8000").
