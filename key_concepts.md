@@ -224,7 +224,7 @@ logger.addHandler(console_handler)
 logger.info("This info log will NOT print (below WARNING level threshold)")
 logger.warning("This is a warning message!")
 ```
-#### Output
+**Output**
 ```bash
 2026-07-13 23:29:54 | WARNING | This is a warning message!
 ```
