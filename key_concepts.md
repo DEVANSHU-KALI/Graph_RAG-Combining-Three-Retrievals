@@ -192,3 +192,4 @@ When you first start coding, you are taught to use `print()` statements to debug
 A standard logging system relies on three main components:
 1. **Loggers:** The entry point. You call a logger in your code to submit a log record.
 2. **Handlers:** Decide *where* the log record goes. It can send logs to the console (StreamHandler), write them to a local file (FileHandler), or ship them over the network to a central server.
+3. **Formatters:** Define *what* the logs look like. They dynamically add context, like timestamps, log levels, file names, and line numbers.
