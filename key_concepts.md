@@ -213,3 +213,9 @@ import logging
 # 1. Get a logger instance
 logger = logging.getLogger("TestLogger")
 logger.setLevel(logging.WARNING) # Only log WARNING levels and higher
+
+# 2. Set up handler and formatter
+console_handler = logging.StreamHandler()
+log_formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+console_handler.setFormatter(log_formatter)
+logger.addHandler(console_handler)
