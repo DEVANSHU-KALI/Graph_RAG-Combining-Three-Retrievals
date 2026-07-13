@@ -358,3 +358,24 @@ logger.info("Just import and write, no setup needed!")
   - Highly recommended for scripts, fast prototypes, and mid-sized backend projects where you want rich console logging with zero setup.
 
 
+#### B. Structlog
+
+- **How it works**
+  - A logging engine designed specifically for structured (key-value / JSON) logging.
+
+- **Why it's great**
+  - Optimized for speed.
+  - Works by building nested contexts (e.g., binding a request ID to all downstream logs triggered by that request).
+
+- **When to use it**
+  - The default choice for production microservices deployed in Docker/Kubernetes environments where logs are forwarded to central systems like Datadog or ELK.
+
+---
+
+#### C. Application Performance Monitoring (APM) Agents (like Sentry or Datadog APM)
+
+- **How it works**
+  - Standalone agents integrated into your application code that automatically capture errors, print stack traces, and group repeating errors.
+
+- **When to use it**
+  - Used in production web apps alongside standard loggers to get detailed trace maps of user paths and automatic bug alerts.
