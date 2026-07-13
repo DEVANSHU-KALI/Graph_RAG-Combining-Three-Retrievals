@@ -258,3 +258,18 @@ In cloud architectures with dozens of servers, you cannot log into each machine 
 Companies configure triggers based on logs.
 
 For instance, if the system logs more than **10 `ERROR` events within 1 minute**, it immediately sends a notification to the engineering team via Slack or PagerDuty.
+
+### How Logging is Used in Our Project
+
+We have set up a custom logging system in our FastAPI backend to track requests and database operations.
+
+#### 1. The Custom Logger (`logging.py`)
+
+We initialize a custom logger named `HybridGraphRAG` and set the severity threshold to `INFO`.
+
+We configure a console handler with the structured format:
+
+```text
+%(asctime)s | %(levelname)s | %(name)s | %(message)s
+```
+
