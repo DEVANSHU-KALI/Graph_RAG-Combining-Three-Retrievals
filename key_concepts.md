@@ -246,3 +246,15 @@ Rather than writing logs as plain-text sentences, production systems log events 
   "error_msg": "Neo4j timeout"
 }
 ```
+
+This allows automated log parsers to easily index, search, and filter logs by keys (like searching logs where `latency_ms > 1000`).
+
+#### Centralized Log Management (The ELK Stack / Grafana Loki / Datadog)
+
+In cloud architectures with dozens of servers, you cannot log into each machine to view text files. Servers stream their logs to a central database (like Elasticsearch or Loki) where engineers can query them in one dashboard.
+
+#### Alerting Systems
+
+Companies configure triggers based on logs.
+
+For instance, if the system logs more than **10 `ERROR` events within 1 minute**, it immediately sends a notification to the engineering team via Slack or PagerDuty.
