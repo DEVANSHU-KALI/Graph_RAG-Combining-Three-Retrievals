@@ -273,3 +273,29 @@ We configure a console handler with the structured format:
 %(asctime)s | %(levelname)s | %(name)s | %(message)s
 ```
 
+We also set:
+
+```python
+logger.propagate = False
+```
+
+to prevent logs from propagating up to the default root logger, preventing duplicate outputs in the terminal.
+
+---
+
+#### 2. FastAPI Request Logging Middleware (`middleware.py`)
+
+We created a custom `LoggingMiddleware` class that intercepts every single incoming HTTP request.
+
+- When a request arrives, it logs:
+
+```text
+INFO | INFO request received at /chat
+```
+
+- It starts a timer, executes the route, and calculates the difference:
+
+```python
+process_time = time.time() - start_time
+```
+
