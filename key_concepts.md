@@ -219,3 +219,8 @@ console_handler = logging.StreamHandler()
 log_formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 console_handler.setFormatter(log_formatter)
 logger.addHandler(console_handler)
+
+# 3. Log messages
+logger.info("This info log will NOT print (below WARNING level threshold)")
+logger.warning("This is a warning message!")
+```
