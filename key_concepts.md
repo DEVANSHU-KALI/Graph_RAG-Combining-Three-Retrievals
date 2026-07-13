@@ -379,3 +379,5 @@ logger.info("Just import and write, no setup needed!")
 
 - **When to use it**
   - Used in production web apps alongside standard loggers to get detailed trace maps of user paths and automatic bug alerts.
+
+--- 
