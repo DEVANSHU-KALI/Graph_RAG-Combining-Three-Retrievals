@@ -228,3 +228,21 @@ logger.warning("This is a warning message!")
 ```bash
 2026-07-13 23:29:54 | WARNING | This is a warning message!
 ```
+
+### How Industry-Grade Systems Use Logging
+
+In professional software development, logging isn't just about printing to a console. It is a critical layer of **Observability**.
+
+#### Structured Logging (JSON format)
+
+Rather than writing logs as plain-text sentences, production systems log events as JSON objects.
+
+```json
+{
+  "timestamp": "2026-07-13T23:29:54Z",
+  "level": "ERROR",
+  "endpoint": "/chat",
+  "latency_ms": 1250,
+  "error_msg": "Neo4j timeout"
+}
+```
