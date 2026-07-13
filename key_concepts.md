@@ -204,3 +204,12 @@ Logs are classified by severity so that you can filter out noise during normal o
 * `WARNING` (30): An indication that something unexpected happened, but the software is still running (e.g., "Low disk space").
 * `ERROR` (40): A serious issue that prevented a specific function from executing (e.g., "Database connection timed out").
 * `CRITICAL` (50): A fatal error indicating the entire program cannot continue running (e.g., "Out of memory, server shutting down").
+
+
+### A Simple Python Example
+Here is how you set up a basic logger:
+```python
+import logging
+# 1. Get a logger instance
+logger = logging.getLogger("TestLogger")
+logger.setLevel(logging.WARNING) # Only log WARNING levels and higher
