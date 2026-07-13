@@ -299,3 +299,25 @@ INFO | INFO request received at /chat
 process_time = time.time() - start_time
 ```
 
+- On completion, it logs:
+
+```text
+INFO | POST /chat completed with status code 200 in 0.8423 seconds
+```
+
+This is critical for tracking API latency and identifying slow query retrievals.
+
+---
+
+#### 3. Background Operations Logging
+
+We import `logger` to track:
+
+- Database health.
+
+  Example:
+
+```text
+Successfully connected to Neo4j
+```
+
