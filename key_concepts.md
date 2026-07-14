@@ -487,3 +487,19 @@ to authorize specific domains.
 
 - Tracks how many requests come from a single IP address.
 - If a user exceeds a threshold (e.g., **60 requests per minute**), the middleware returns:
+
+
+```text
+429 Too Many Requests
+```
+
+to protect the backend from Denial-of-Service (DDoS) attacks.
+
+---
+
+#### Response Compression (Gzip)
+
+- Automatically compresses response payloads before sending them over the network.
+- Reduces:
+  - Bandwidth usage.
+  - Page load time.
