@@ -395,3 +395,32 @@ Middleware is a software layer (or a chain of layers) that sits between the inco
 ### How Middleware Works (The Dispatch Cycle)
 
 Think of middleware as a security checkpoint at an airport. It can inspect, modify, or block requests entirely.
+
+```text
+Incoming Request
+        │
+        ▼
+┌──────────────────────────────┐
+│ Middleware                   │
+│ • Start Timer                │
+│ • Logging                    │
+│ • Authentication             │
+└──────────────┬───────────────┘
+               │
+               ▼
+        FastAPI Router
+               │
+               ▼
+      Processes Request
+               │
+               ▼
+┌──────────────────────────────┐
+│ Middleware                   │
+│ • Stop Timer                 │
+│ • Log Status                 │
+│ • Modify Response            │
+└──────────────┬───────────────┘
+               │
+               ▼
+      Outgoing Response
+```
