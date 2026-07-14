@@ -199,8 +199,6 @@ A standard logging system relies on three main components:
 Logs are classified by severity so that you can filter out noise during normal operations:
 * `DEBUG` (10): Detailed diagnostic information, mostly useful for developers during local debugging.
 * `INFO` (20): Confirmation that things are working as expected (e.g., "Server started on port 8000").
-
-
 * `WARNING` (30): An indication that something unexpected happened, but the software is still running (e.g., "Low disk space").
 * `ERROR` (40): A serious issue that prevented a specific function from executing (e.g., "Database connection timed out").
 * `CRITICAL` (50): A fatal error indicating the entire program cannot continue running (e.g., "Out of memory, server shutting down").
