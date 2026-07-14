@@ -424,3 +424,28 @@ Incoming Request
                ▼
       Outgoing Response
 ```
+
+1. **Request Interception**
+   - The middleware receives the request first.
+   - It can:
+     - Add headers.
+     - Check authentication tokens.
+     - Start execution timers.
+
+2. **The `call_next` Function**
+   - If the request passes all checks, the middleware calls:
+
+   ```python
+   await call_next(request)
+   ```
+
+   - This passes the request down the chain to the actual FastAPI route handler (or the next middleware).
+
+3. **Response Interception**
+   - Once the endpoint finishes executing and returns a response, the middleware catches it on the way back out.
+   - It can:
+     - Inspect the response status code.
+     - Calculate execution time.
+     - Inject response headers.
+     - Compress the response.
+
