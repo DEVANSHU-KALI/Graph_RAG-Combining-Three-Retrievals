@@ -379,3 +379,13 @@ logger.info("Just import and write, no setup needed!")
   - Used in production web apps alongside standard loggers to get detailed trace maps of user paths and automatic bug alerts.
 
 --- 
+
+## 7) Middleware
+
+When a user submits a query from a frontend web app, the HTTP request doesn't just hit the database and return an answer immediately. Before the backend executes any route logic, several administrative tasks must occur:
+
+- Is the user authenticated?
+- Is the request payload safe?
+- Should we compress the response?
+
+Instead of writing this boilerplate logic inside **every single API endpoint**, we use **Middleware**.
