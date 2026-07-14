@@ -503,3 +503,35 @@ to protect the backend from Denial-of-Service (DDoS) attacks.
 - Reduces:
   - Bandwidth usage.
   - Page load time.
+
+
+### How Middleware is Used in Our Project
+
+In our backend, we use custom ASGI middleware to measure and log performance.
+
+- **File:** `middleware.py`
+- **Class Name:** `LoggingMiddleware` *(extends Starlette's `BaseHTTPMiddleware`)*
+
+#### The Implementation
+
+```python
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # 1. Intercept Request: Start a timer and log the incoming endpoint
+        start_time = time.time()
+        logger.info(f"{request.method} request received at {request.url.path}")
+
+        # 2. Pass down: Await the execution of the actual route
+        response = await call_next(request)
+
+        # 3. Intercept Response: Calculate time elapsed
+        process_time = time.time() - start_time
+
+        # 4. Log performance metrics and return response
+        logger.info(
+            f"{request.method} {request.url.path} "
+            f"completed with status code {response.status_code} "
+            f"in {process_time:.4f} seconds"
+        )
+        return response
+```
