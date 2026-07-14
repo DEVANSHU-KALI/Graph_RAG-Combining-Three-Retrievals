@@ -558,3 +558,19 @@ FastAPI has a native dependency injection framework (`Depends`).
     - `/health` → Public.
     - `/chat` → Public.
 
+
+#### B. Reverse Proxy (Nginx, Caddy, or Cloudflare)
+
+Handle request-level operations completely **outside** of your Python application.
+
+- **How it works**
+  - Place a web server (such as **Nginx**) or a CDN (such as **Cloudflare**) in front of your FastAPI server.
+  - Nginx handles:
+    - SSL decryption.
+    - Rate limiting.
+    - Gzip compression.
+  - It then forwards the clean request to Python.
+
+- **When to use it**
+  - This is the industry standard for production deployments.
+  - Offloading network-related work from Python allows the CPU to spend its time running the RAG pipeline instead.
