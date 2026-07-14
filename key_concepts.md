@@ -389,3 +389,9 @@ When a user submits a query from a frontend web app, the HTTP request doesn't ju
 - Should we compress the response?
 
 Instead of writing this boilerplate logic inside **every single API endpoint**, we use **Middleware**.
+
+Middleware is a software layer (or a chain of layers) that sits between the incoming request and your application's router. It intercepts the request **before** it reaches your endpoint, and intercepts the response **after** your endpoint finishes but **before** it is sent back to the client.
+
+### How Middleware Works (The Dispatch Cycle)
+
+Think of middleware as a security checkpoint at an airport. It can inspect, modify, or block requests entirely.
