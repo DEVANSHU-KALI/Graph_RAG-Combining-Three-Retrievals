@@ -458,3 +458,25 @@ Incoming Request
 In production web applications, middleware handles infrastructure-level tasks so developers don't have to repeat the same code in every endpoint.
 
 #### Authentication & Authorization
+ Authorization
+
+- Intercepts incoming requests.
+- Verifies JWT (JSON Web Tokens) or API keys.
+- If the token is invalid or expired, the middleware immediately aborts the request and returns:
+
+```text
+401 Unauthorized
+```
+
+before the router or database processes anything.
+
+---
+
+#### CORS (Cross-Origin Resource Sharing)
+
+- Browsers block frontend applications from requesting data from backends running on different ports or domains.
+- CORS middleware automatically injects headers such as:
+
+```text
+Access-Control-Allow-Origin
+```
