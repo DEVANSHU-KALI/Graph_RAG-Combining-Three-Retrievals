@@ -480,3 +480,10 @@ before the router or database processes anything.
 ```text
 Access-Control-Allow-Origin
 ```
+
+to authorize specific domains.
+
+#### Rate Limiting (IP Throttling)
+
+- Tracks how many requests come from a single IP address.
+- If a user exceeds a threshold (e.g., **60 requests per minute**), the middleware returns:
