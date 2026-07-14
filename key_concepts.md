@@ -535,3 +535,26 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         )
         return response
 ```
+
+This is registered globally in `main.py`.
+
+Because of this middleware, every query sent to the `/chat` endpoint is timed, allowing us to monitor how fast the combined RAG searches (**Semantic + BM25 + Graph**) execute in real time.
+
+### Alternative Request Interception Methods
+
+You don't always have to use global middleware. Depending on your needs, you can choose these alternatives.
+
+#### A. FastAPI Dependencies (Dependency Injection)
+
+FastAPI has a native dependency injection framework (`Depends`).
+
+- **How it works**
+  - You write an interception function and attach it directly to specific endpoints instead of applying it globally.
+
+- **When to use it**
+  - When you only want interception on **some** routes.
+  - Example:
+    - `/admin` → Check admin credentials.
+    - `/health` → Public.
+    - `/chat` → Public.
+
