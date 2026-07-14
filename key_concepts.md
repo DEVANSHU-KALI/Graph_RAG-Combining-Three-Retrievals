@@ -449,3 +449,12 @@ Incoming Request
      - Inject response headers.
      - Compress the response.
 
+
+4. **Final Return**
+   - The middleware forwards the finalized response to the client.
+
+### How Industry-Grade Systems Use Middleware
+
+In production web applications, middleware handles infrastructure-level tasks so developers don't have to repeat the same code in every endpoint.
+
+#### Authentication & Authorization
