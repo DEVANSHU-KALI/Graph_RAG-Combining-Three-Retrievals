@@ -622,3 +622,7 @@ We evaluate our system across a dataset of test cases using four core Ragas metr
 * **Answer Relevancy:** Measures if the generated response directly addresses the user's question, penalizing answers that are too vague, incomplete, or off-topic.
 * **Context Precision:** Evaluates the quality of our retrieval pipeline. It checks if the most relevant text chunks were ranked at the top of the context block.
 * **Context Recall:** Compares the retrieved context against a human-written Ground Truth to verify if the search channels actually gathered all the facts required to answer the question.
+
+#### 2. DeepEval Implementation ([deepeval_evaluation.py](file:///d:/projects/graph_rag/backend/evaluations/deepeval_evaluation.py))
+We wrote a custom `GroqEvaluator` class extending `DeepEvalBaseLLM` to run evaluations locally, focusing on a single high-fidelity metric:
+* **Hallucination Metric:** The judge model extracts individual factual statements from our chatbot's answer, checks them against the retrieved contexts one-by-one, and calculates a score. If the score exceeds `0.5`, the test case is flagged as a hallucination failure.
