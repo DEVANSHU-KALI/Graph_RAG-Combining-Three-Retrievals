@@ -614,3 +614,11 @@ There are several specialized libraries in the open-source ecosystem designed to
 
 ### How Evaluations are Implemented in Our Project
 In our project, we chose to use both **Ragas** and **DeepEval**. We run these evaluations using Groq's `llama-3.1-8b-instant` as our judge LLM. 
+
+Because we use Groq's free tier, we configured a LangChain `InMemoryRateLimiter` set to `0.2 requests per second` (1 call every 5 seconds) to ensure our evaluations do not crash from rate limit errors (`HTTP 429`).
+#### 1. Ragas Implementation ([ragas_evaluation.py](file:///d:/projects/graph_rag/backend/evaluations/ragas_evaluation.py))
+We evaluate our system across a dataset of test cases using four core Ragas metrics:
+* **Faithfulness:** Measures if the generated answer is grounded *only* in the retrieved context. It checks if the model introduced outside assumptions or hallucinated facts.
+* **Answer Relevancy:** Measures if the generated response directly addresses the user's question, penalizing answers that are too vague, incomplete, or off-topic.
+* **Context Precision:** Evaluates the quality of our retrieval pipeline. It checks if the most relevant text chunks were ranked at the top of the context block.
+* **Context Recall:** Compares the retrieved context against a human-written Ground Truth to verify if the search channels actually gathered all the facts required to answer the question.
