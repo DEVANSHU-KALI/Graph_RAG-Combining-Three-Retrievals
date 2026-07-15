@@ -576,3 +576,6 @@ Handle request-level operations completely **outside** of your Python applicatio
   - Offloading network-related work from Python allows the CPU to spend its time running the RAG pipeline instead.
 
 --- 
+
+## 8) RAG Evaluations:
+Building a retrieval-augmented chatbot is relatively easy, but proving that it actually works—and doesn't make things up—is notoriously difficult. In traditional software development, you write unit tests with exact assertions (e.g., `assert add(2, 2) == 4`). But LLM outputs are free-form, variable, and subjective, making standard assertions completely useless.
