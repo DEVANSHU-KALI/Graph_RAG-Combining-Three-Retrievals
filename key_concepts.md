@@ -582,3 +582,11 @@ Building a retrieval-augmented chatbot is relatively easy, but proving that it a
 
 
 **RAG Evaluation** is the systematic process of measuring the quality of your retrieval systems and the accuracy of your generated responses using mathematical metrics and test datasets.
+
+### How RAG Evaluation Works (LLM-as-a-Judge)
+Because humans cannot manually read and grade thousands of chatbot conversations every day, modern evaluation frameworks use a technique called **LLM-as-a-Judge**. 
+You feed a highly capable LLM (like GPT-4 or Llama 3.1 70B) a test case containing:
+1. **The User Query:** What was asked.
+2. **The Actual Output:** What the chatbot answered.
+3. **The Retrieved Context:** The source documents retrieved to answer the query.
+4. **The Ground Truth (Optional):** The gold-standard correct answer written by a human.
