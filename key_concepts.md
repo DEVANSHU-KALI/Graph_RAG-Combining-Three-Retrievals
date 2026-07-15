@@ -598,3 +598,5 @@ The judge LLM is prompted with strict mathematical scoring guidelines to analyze
 There are several specialized libraries in the open-source ecosystem designed to automate this process:
 #### A. Ragas (Retrieval Augmented Generation Assessment)
 * **What it is:** The industry-standard framework built specifically for testing RAG pipelines.
+
+* **Why we use it:** It focuses heavily on evaluating the relationship between the query, the retrieved contexts, and the final response. It calculates precise scores for retrieval accuracy.
