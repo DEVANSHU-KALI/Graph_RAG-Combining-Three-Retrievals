@@ -607,3 +607,10 @@ There are several specialized libraries in the open-source ecosystem designed to
 #### C. TruLens (by TruEra)
 * **What it is:** A testing framework built around the concept of the **RAG Triad**.
 * **Why we use it:** The RAG Triad breaks evaluation into three core relationships: Context Relevance (Did we get good docs?), Groundedness (Is the answer based *only* on those docs?), and Answer Relevance (Does the answer address the query?).
+
+#### D. Phoenix (by Arize)
+* **What it is:** An observability and evaluation tool designed to test models using in-memory datasets.
+* **Why we use it:** Excellent for real-time trace analysis and tracking down step-by-step failures in complex LLM agent chains.
+
+### How Evaluations are Implemented in Our Project
+In our project, we chose to use both **Ragas** and **DeepEval**. We run these evaluations using Groq's `llama-3.1-8b-instant` as our judge LLM. 
