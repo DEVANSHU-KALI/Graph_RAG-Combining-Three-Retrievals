@@ -626,3 +626,6 @@ We evaluate our system across a dataset of test cases using four core Ragas metr
 #### 2. DeepEval Implementation ([deepeval_evaluation.py](file:///d:/projects/graph_rag/backend/evaluations/deepeval_evaluation.py))
 We wrote a custom `GroqEvaluator` class extending `DeepEvalBaseLLM` to run evaluations locally, focusing on a single high-fidelity metric:
 * **Hallucination Metric:** The judge model extracts individual factual statements from our chatbot's answer, checks them against the retrieved contexts one-by-one, and calculates a score. If the score exceeds `0.5`, the test case is flagged as a hallucination failure.
+
+---
+
