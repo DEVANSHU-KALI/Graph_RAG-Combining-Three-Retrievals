@@ -593,3 +593,8 @@ You feed a highly capable LLM (like GPT-4 or Llama 3.1 70B) a test case containi
 
 
 The judge LLM is prompted with strict mathematical scoring guidelines to analyze these parameters and output a normalized score between `0.0` (failing) and `1.0` (perfect).
+
+### Evaluation Frameworks Available Online
+There are several specialized libraries in the open-source ecosystem designed to automate this process:
+#### A. Ragas (Retrieval Augmented Generation Assessment)
+* **What it is:** The industry-standard framework built specifically for testing RAG pipelines.
