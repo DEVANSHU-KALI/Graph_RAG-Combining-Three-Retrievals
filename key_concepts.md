@@ -600,3 +600,10 @@ There are several specialized libraries in the open-source ecosystem designed to
 * **What it is:** The industry-standard framework built specifically for testing RAG pipelines.
 
 * **Why we use it:** It focuses heavily on evaluating the relationship between the query, the retrieved contexts, and the final response. It calculates precise scores for retrieval accuracy.
+
+#### B. DeepEval (by Confident AI)
+* **What it is:** An open-source evaluation framework built to integrate directly with PyTest.
+* **Why we use it:** It is extremely developer-friendly, provides a clean dashboard to track test runs, and features robust, standalone metrics for hallucinations, bias, and toxic outputs.
+#### C. TruLens (by TruEra)
+* **What it is:** A testing framework built around the concept of the **RAG Triad**.
+* **Why we use it:** The RAG Triad breaks evaluation into three core relationships: Context Relevance (Did we get good docs?), Groundedness (Is the answer based *only* on those docs?), and Answer Relevance (Does the answer address the query?).
