@@ -629,3 +629,37 @@ We wrote a custom `GroqEvaluator` class extending `DeepEvalBaseLLM` to run evalu
 
 ---
 
+## 9) Langsmith Tracing: Observe anything 
+
+langsmith is a part of langchain, specifically built to let users inspect very deeply into their system whatever they got. 
+
+Few changes in your system lets you see whatever is passing in and out through a whatever function you want to inspect.
+
+langsmith give you the power of observability. 
+
+### now lets see how I implemented langsmith tracing, and also show you how can you enable it and get your tracing.
+
+All starts with adding some new lines in the `.env` file.
+
+```bash
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY='api_key'
+LANGCHAIN_PROJECT=hybrid-graphrag
+```
+  - The first line enable the tracing
+  - Go into the langsmith webpage, create a api key there, copy that and replace this term 'api_key' with that key.
+  - The third line, the name of tracing, choose whatever you want.
+
+The second change, which function you want to trace (observe)
+- In my case, I only wanted to peak into the `rag_pipeline` function from the "grah_rag/pipelines/rag_pipeline.py".
+- simply import traceable from the langsmith and add a decorator for above whatever function you want.
+- see the script and you can see there.
+
+Now normally run your project, execute the part of project which makes the `function tied with this traceable decorator` do some process, so that it shows its trace in the langsmith page.
+
+Finally, go and search **langsmith** in browser, login the page and open it.
+
+On the left panel, you can find a term `tracing`, click that you can see you tracing there.
+- click on that and see what all that function got and what did it gave as output.
+
+- use this for only specific function, which actually do some work. 
