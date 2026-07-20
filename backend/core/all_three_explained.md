@@ -50,3 +50,15 @@ Common uses include:
 - **Severity Levels:** Allows developers to categorize messages by importance (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`).
 - **Formatting & Metadata:** Automatically attaches timestamps, log levels, logger names, and line numbers to every message.
 - **Production Debugging:** When an app crashes on a remote server, logs are often the only way to inspect what went wrong.
+
+---
+### How is it Implemented in Our Project?
+In `backend/core/logging.py`, we set up a centralized logger named `HybridGraphRAG`:
+- **Logger Level:** Set to `INFO`, meaning it records standard operational messages, warnings, and errors.
+- **Console Handler:** Routes log output to the terminal/console (`StreamHandler`).
+- **Custom Formatter:** Formats every line as:
+  `YYYY-MM-DD HH:MM:SS | LEVEL | HybridGraphRAG | Message`
+- **Propagation Guard:** Sets `logger.propagate = False` and checks `if not logger.handlers:` to prevent duplicate log messages in the console.
+---
+### Is This Enough for Our Project?
+**Yes.**
