@@ -14,8 +14,6 @@ Common examples include:
 - AI model names
 - Feature flags
 
----
-
 ### Why Do Developers Use It?
 
 - Keeps configuration separate from business logic.
@@ -23,8 +21,6 @@ Common examples include:
 - Improves security by keeping secrets outside the source code.
 - Provides a **Single Source of Truth** for all configurable values.
 - Makes the project easier to maintain.
-
----
 
 ### Is This Enough for Our Project?
 
