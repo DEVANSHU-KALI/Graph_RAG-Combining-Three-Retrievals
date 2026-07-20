@@ -62,3 +62,15 @@ In `backend/core/logging.py`, we set up a centralized logger named `HybridGraphR
 ---
 ### Is This Enough for Our Project?
 **Yes.**
+aphRAG system, having a centralized logger that outputs structured operational messages to the console is sufficient to track pipeline operations, graph updates, and server events.
+> **Note:** Production microservices often stream logs in structured JSON format to centralized monitoring stacks (such as the ELK Stack, Grafana Loki, or Datadog) for enterprise alerting and multi-server log searching.
+---
+## Middleware File (`middleware.py`)
+### What is Middleware?
+**Middleware** is a software layer that sits between incoming HTTP requests and your application's route handlers. It intercepts every request before it reaches your API endpoint, and intercepts every response before it is returned to the client.
+Common uses include:
+- Timing execution latency for API endpoints
+- Validating authentication tokens (JWT/API Keys)
+- Handling CORS (Cross-Origin Resource Sharing) headers
+- Compressing response data (Gzip)
+- Rate limiting IP addresses to prevent DDoS attacks
