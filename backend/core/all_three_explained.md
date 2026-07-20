@@ -82,3 +82,14 @@ Common uses include:
 - **Performance Monitoring:** Helps identify slow endpoints by measuring processing time for every request.
 ---
 ### How is it Implemented in Our Project?
+
+In `backend/core/middleware.py`, we implement a custom Starlette/FastAPI middleware class called `LoggingMiddleware`:
+1. **Request Interception:** When a request hits the server, it logs the HTTP method and request path (e.g., `POST request received at /chat`).
+2. **Execution Timing:** It records a start timestamp (`time.time()`).
+3. **Route Execution:** It passes the request to the endpoint handler via `await call_next(request)`.
+4. **Response Interception:** Once the route finishes, it calculates total process time (`process_time = time.time() - start_time`).
+5. **Performance Logging:** It logs the status code and completion time (e.g., `POST /chat completed with status code 200 in 0.8423 seconds`) before returning the response.
+---
+### Is This Enough for Our Project?
+**Yes.**
+A custom performance logging middleware is perfect for this project because it lets us track exactly how long the hybrid retrieval pipeline takes to answer a user's query without cluttering our business logic.
