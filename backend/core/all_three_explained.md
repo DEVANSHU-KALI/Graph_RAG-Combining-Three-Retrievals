@@ -74,3 +74,11 @@ Common uses include:
 - Handling CORS (Cross-Origin Resource Sharing) headers
 - Compressing response data (Gzip)
 - Rate limiting IP addresses to prevent DDoS attacks
+
+---
+### Why Do Developers Use It?
+- **Avoids Code Duplication:** Instead of adding logging, timer, or authentication logic to every single route function, middleware executes it automatically for all routes.
+- **Request & Response Inspection:** Allows developers to inspect, modify, or reject requests *before* the application spends resources processing them.
+- **Performance Monitoring:** Helps identify slow endpoints by measuring processing time for every request.
+---
+### How is it Implemented in Our Project?
