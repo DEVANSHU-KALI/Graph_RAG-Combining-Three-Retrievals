@@ -44,14 +44,13 @@ Common uses include:
 - Recording system errors and stack traces
 - Monitoring performance and execution times
 - Providing runtime visibility without stopping the app
----
+
 ### Why Do Developers Use It?
 - **Persistence & Organization:** `print()` statements get lost in console spam, whereas loggers can format messages cleanly and write them to log files.
 - **Severity Levels:** Allows developers to categorize messages by importance (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`).
 - **Formatting & Metadata:** Automatically attaches timestamps, log levels, logger names, and line numbers to every message.
 - **Production Debugging:** When an app crashes on a remote server, logs are often the only way to inspect what went wrong.
 
----
 ### How is it Implemented in Our Project?
 In `backend/core/logging.py`, we set up a centralized logger named `HybridGraphRAG`:
 - **Logger Level:** Set to `INFO`, meaning it records standard operational messages, warnings, and errors.
@@ -59,7 +58,7 @@ In `backend/core/logging.py`, we set up a centralized logger named `HybridGraphR
 - **Custom Formatter:** Formats every line as:
   `YYYY-MM-DD HH:MM:SS | LEVEL | HybridGraphRAG | Message`
 - **Propagation Guard:** Sets `logger.propagate = False` and checks `if not logger.handlers:` to prevent duplicate log messages in the console.
----
+
 ### Is This Enough for Our Project?
 **Yes.**
 aphRAG system, having a centralized logger that outputs structured operational messages to the console is sufficient to track pipeline operations, graph updates, and server events.
@@ -75,12 +74,11 @@ Common uses include:
 - Compressing response data (Gzip)
 - Rate limiting IP addresses to prevent DDoS attacks
 
----
 ### Why Do Developers Use It?
 - **Avoids Code Duplication:** Instead of adding logging, timer, or authentication logic to every single route function, middleware executes it automatically for all routes.
 - **Request & Response Inspection:** Allows developers to inspect, modify, or reject requests *before* the application spends resources processing them.
 - **Performance Monitoring:** Helps identify slow endpoints by measuring processing time for every request.
----
+
 ### How is it Implemented in Our Project?
 
 In `backend/core/middleware.py`, we implement a custom Starlette/FastAPI middleware class called `LoggingMiddleware`:
@@ -89,7 +87,7 @@ In `backend/core/middleware.py`, we implement a custom Starlette/FastAPI middlew
 3. **Route Execution:** It passes the request to the endpoint handler via `await call_next(request)`.
 4. **Response Interception:** Once the route finishes, it calculates total process time (`process_time = time.time() - start_time`).
 5. **Performance Logging:** It logs the status code and completion time (e.g., `POST /chat completed with status code 200 in 0.8423 seconds`) before returning the response.
----
+
 ### Is This Enough for Our Project?
 **Yes.**
 A custom performance logging middleware is perfect for this project because it lets us track exactly how long the hybrid retrieval pipeline takes to answer a user's query without cluttering our business logic.
