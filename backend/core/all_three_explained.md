@@ -93,3 +93,5 @@ In `backend/core/middleware.py`, we implement a custom Starlette/FastAPI middlew
 ### Is This Enough for Our Project?
 **Yes.**
 A custom performance logging middleware is perfect for this project because it lets us track exactly how long the hybrid retrieval pipeline takes to answer a user's query without cluttering our business logic.
+
+> **Note:** Production applications typically use multiple stacked middleware layers to handle security headers, CORS origins, user session tracking, rate limiting, and automated error catching.
