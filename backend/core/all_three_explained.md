@@ -36,3 +36,17 @@ For this project, having a simple configuration file that manages environment va
 
 ---
 
+## Logging File (`logging.py`)
+### What is a Logging File?
+A **Logging File** (or logging module) sets up a system to record events, status messages, warnings, and errors that happen while an application is running, instead of relying on temporary `print()` statements.
+Common uses include:
+- Tracking API requests and database queries
+- Recording system errors and stack traces
+- Monitoring performance and execution times
+- Providing runtime visibility without stopping the app
+---
+### Why Do Developers Use It?
+- **Persistence & Organization:** `print()` statements get lost in console spam, whereas loggers can format messages cleanly and write them to log files.
+- **Severity Levels:** Allows developers to categorize messages by importance (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`).
+- **Formatting & Metadata:** Automatically attaches timestamps, log levels, logger names, and line numbers to every message.
+- **Production Debugging:** When an app crashes on a remote server, logs are often the only way to inspect what went wrong.
