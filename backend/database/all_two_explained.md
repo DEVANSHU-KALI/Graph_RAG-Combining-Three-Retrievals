@@ -34,3 +34,29 @@ COLLECTION_NAME = "hybrid_graphrag"
 - **`AsyncQdrantClient`**: An asynchronous Python client for Qdrant. Using an `async` client prevents network calls from blocking FastAPI's main event loop during high-concurrency requests.
 - **`host="localhost", port=6333`**: Connects to the local Qdrant instance (typically running in a Docker container exposing port `6333`).
 - **`COLLECTION_NAME`**: Standardizes the target vector collection name across ingestion and retrieval scripts.
+
+---
+
+#### B. Collection Initialization (`initialize_qdrant`)
+
+```python
+async def initialize_qdrant() -> None:
+    try:
+        # Get all existing collections
+        collections = await qdrant_client.get_collections()
+        collection_names = [collection.name for collection in collections.collections]
+
+        # Create collection if it does not exist
+        if COLLECTION_NAME not in collection_names:
+            await qdrant_client.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=VectorParams(size=768, distance=Distance.COSINE),
+            )
+            logger.info(f"Created Qdrant collection: {COLLECTION_NAME}")
+        else:
+            logger.info(f"Qdrant collection already exists: {COLLECTION_NAME}")
+
+    except Exception as error:
+        logger.error(f"Failed to initialize Qdrant: {error}")
+        raise
+```
