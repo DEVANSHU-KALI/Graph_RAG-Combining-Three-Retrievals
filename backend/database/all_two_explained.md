@@ -5,8 +5,6 @@ This directory contains the database client initializations, connectivity driver
 - **Qdrant** (Vector Database)
 - **Neo4j** (Graph Database)
 
----
-
 ## 1. Qdrant Database Script (`qdrant.py`)
 
 ### What Does This Script Do?
@@ -14,3 +12,16 @@ This directory contains the database client initializations, connectivity driver
 The `qdrant.py` script serves as the centralized interface for our **Vector Database**.
 
 Its primary responsibilities are:
+
+1. Instantiating an asynchronous client to communicate with the local Qdrant engine on port `6333`.
+2. Defining the global collection name (`hybrid_graphrag`) used across the entire application.
+3. Automatically checking for and creating the vector collection with the correct vector dimensions (**768D**) and distance metric (**Cosine Similarity**) on startup.
+
+### Block-by-Block Technical Breakdown
+
+#### A. Imports & Async Client Initialization
+
+```python
+from qdrant_client import AsyncQdrantClient
+from qdrant_client.models import Distance, VectorParams
+from backend.core.logging import logger
