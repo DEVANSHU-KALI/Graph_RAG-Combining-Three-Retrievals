@@ -35,7 +35,6 @@ COLLECTION_NAME = "hybrid_graphrag"
 - **`host="localhost", port=6333`**: Connects to the local Qdrant instance (typically running in a Docker container exposing port `6333`).
 - **`COLLECTION_NAME`**: Standardizes the target vector collection name across ingestion and retrieval scripts.
 
----
 
 #### B. Collection Initialization (`initialize_qdrant`)
 
@@ -82,8 +81,6 @@ Its primary responsibilities are:
 3. Creating individual entity nodes (`create_entity`).
 4. Sanitizing relationship strings and linking entities together into Graph Triplets (`create_relationship`).
 
----
-
 ### Block-by-Block Technical Breakdown
 
 #### A. Driver Setup & Connection Verification
@@ -109,7 +106,6 @@ def verify_connection() -> None:
 - **`bolt://localhost:7687`**: Uses Neo4j's binary protocol (**Bolt**) for high-performance database communication.
 - **`driver.verify_connectivity()`**: Sends a lightweight health check to confirm Neo4j is online and credentials are valid before performing graph operations.
 
----
 
 #### B. Entity Node Creation (`create_entity`)
 
@@ -127,7 +123,6 @@ def create_entity(entity_name: str) -> None:
 - **`MERGE` Clause**: In Cypher, `MERGE` acts like a **"Get or Create"** operation. If an `:Entity` node with `name: $entity_name` already exists, it leaves it intact; if not, it creates a new node.
 - **`with driver.session() as session`**: Manages the database session lifecycle, automatically opening connections and closing them when the operation completes.
 
----
 
 #### C. Relationship Creation & String Sanitization (`create_relationship`)
 
