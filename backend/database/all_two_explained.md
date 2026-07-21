@@ -76,3 +76,32 @@ async def initialize_qdrant() -> None:
 The `neo4j.py` script serves as the interface for our **Knowledge Graph Database**.
 
 Its primary responsibilities are:
+
+1. Initializing the Neo4j Bolt driver with authentication credentials from `config.py`.
+2. Providing a connectivity verification utility (`verify_connection`).
+3. Creating individual entity nodes (`create_entity`).
+4. Sanitizing relationship strings and linking entities together into Graph Triplets (`create_relationship`).
+
+---
+
+### Block-by-Block Technical Breakdown
+
+#### A. Driver Setup & Connection Verification
+
+```python
+import re
+from neo4j import GraphDatabase
+from backend.core.config import NEO4J_PASSWORD, NEO4J_USERNAME
+from backend.core.logging import logger
+
+driver = GraphDatabase.driver(
+    "bolt://localhost:7687", auth=(NEO4J_USERNAME, NEO4J_PASSWORD)
+)
+
+def verify_connection() -> None:
+    try:
+        driver.verify_connectivity()
+        logger.info("Successfully connected to Neo4j")
+    except Exception as error:
+        logger.error(f"Neo4j Connection Failed: {error}")
+```
