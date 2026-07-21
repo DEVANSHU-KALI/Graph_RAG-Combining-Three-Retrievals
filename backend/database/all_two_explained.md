@@ -25,3 +25,12 @@ Its primary responsibilities are:
 from qdrant_client import AsyncQdrantClient
 from qdrant_client.models import Distance, VectorParams
 from backend.core.logging import logger
+
+# Create async Qdrant client
+qdrant_client = AsyncQdrantClient(host="localhost", port=6333)
+COLLECTION_NAME = "hybrid_graphrag"
+```
+
+- **`AsyncQdrantClient`**: An asynchronous Python client for Qdrant. Using an `async` client prevents network calls from blocking FastAPI's main event loop during high-concurrency requests.
+- **`host="localhost", port=6333`**: Connects to the local Qdrant instance (typically running in a Docker container exposing port `6333`).
+- **`COLLECTION_NAME`**: Standardizes the target vector collection name across ingestion and retrieval scripts.
