@@ -155,3 +155,14 @@ def create_relationship(source: str, relationship: str, target: str) -> None:
     }})
     MERGE (source)-[:{clean_relation}]->(target)
     """
+
+    with driver.session() as session:
+        session.run(query, source=source, target=target)
+```
+
+- **Sanitization Steps**: Cypher relationship types (the label on the arrow `-[:RELATION]->`) do not support parameterization like `$relation` and must be embedded directly into the query string. Therefore, regex (`re.sub`) is used to sanitize raw LLM output:
+  1. Replaces special characters (`-`, `/`, spaces, commas) with `_`.
+  2. Strips out invalid non-alphanumeric characters.
+  3. Converts to uppercase (standard Cypher convention, e.g., `USED_WITH`).
+  4. Fixes leading digits (Cypher relationships cannot start with numbers, e.g., `1ST` becomes `REL_1ST`).
+- **Cypher Execution**: Merges the `source` entity node, merges the `target` entity node, and connects them with a directed edge `-[:CLEAN_RELATION]->`.
