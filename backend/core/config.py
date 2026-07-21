@@ -40,5 +40,3 @@ LANGCHAIN_API_KEY: str | None = os.getenv("LANGCHAIN_API_KEY")
 
 LANGCHAIN_PROJECT: str | None = os.getenv("LANGCHAIN_PROJECT")
 
-
-# kaushik and karthik gandu. MG
