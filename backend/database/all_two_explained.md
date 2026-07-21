@@ -60,3 +60,19 @@ async def initialize_qdrant() -> None:
         logger.error(f"Failed to initialize Qdrant: {error}")
         raise
 ```
+
+- **`await qdrant_client.get_collections()`**: Asynchronously fetches all existing vector collections currently hosted in Qdrant.
+- **Idempotency Check (`if COLLECTION_NAME not in collection_names`)**: Prevents trying to recreate a collection that already exists, which would throw an error.
+- **`VectorParams(size=768, distance=Distance.COSINE)`**:
+  - **`size=768`**: Configures vector slots to match the exact **768-dimensional** output of our embedding model (`sentence-transformers/all-mpnet-base-v2`).
+  - **`distance=Distance.COSINE`**: Sets **Cosine Similarity** as the mathematical formula used by Qdrant to score similarity between query vectors and document vectors.
+
+---
+
+## 2. Neo4j Graph Database Script (`neo4j.py`)
+
+### What Does This Script Do?
+
+The `neo4j.py` script serves as the interface for our **Knowledge Graph Database**.
+
+Its primary responsibilities are:
