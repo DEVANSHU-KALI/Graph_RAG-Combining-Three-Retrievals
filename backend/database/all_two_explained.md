@@ -105,3 +105,26 @@ def verify_connection() -> None:
     except Exception as error:
         logger.error(f"Neo4j Connection Failed: {error}")
 ```
+
+- **`bolt://localhost:7687`**: Uses Neo4j's binary protocol (**Bolt**) for high-performance database communication.
+- **`driver.verify_connectivity()`**: Sends a lightweight health check to confirm Neo4j is online and credentials are valid before performing graph operations.
+
+---
+
+#### B. Entity Node Creation (`create_entity`)
+
+```python
+def create_entity(entity_name: str) -> None:
+    query = """
+    MERGE (e:Entity {
+        name: $entity_name
+    })
+    """
+    with driver.session() as session:
+        session.run(query, entity_name=entity_name)
+```
+
+- **`MERGE` Clause**: In Cypher, `MERGE` acts like a **"Get or Create"** operation. If an `:Entity` node with `name: $entity_name` already exists, it leaves it intact; if not, it creates a new node.
+- **`with driver.session() as session`**: Manages the database session lifecycle, automatically opening connections and closing them when the operation completes.
+
+---
