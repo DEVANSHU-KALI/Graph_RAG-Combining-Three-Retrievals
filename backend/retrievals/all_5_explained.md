@@ -70,3 +70,17 @@ Qdrant Collection -> Scroll Points -> Tokenize Document Texts -> Build BM25 Stat
 ```
 * **Efficiency:** Building the BM25 index once on startup and keeping it in RAM avoids the computational overhead of recalculating corpus-wide word frequency statistics for every query request, ensuring fast retrieval times.
 * **Separation of Concerns:** The BM25 index belongs to the entire corpus (storing word frequencies and document stats), whereas individual documents contain the actual text, source name, and chunk ID.
+
+
+#### Phase 2: Query Execution (Runs for every user query)
+```text
+User Query -> Tokenize Query -> Calculate Score for Every Chunk -> Sort Scores -> Return Top 10 Chunks
+```
+* **Score Transience:** The BM25 scores calculated for each chunk are temporary results used for sorting. Once the query request finishes, the scores disappear and nothing is written back to Qdrant.
+
+### Under the Hood: How `BM25Okapi` Works
+
+To make keyword search fast and accurate, this project uses the `BM25Okapi` class from the `rank_bm25` library.
+
+#### What is `BM25Okapi`?
+It is a Python class implementing the standard BM25 formula. When you feed it a list of tokenized documents, it parses them, calculates the Term Frequency (TF) and Inverse Document Frequency (IDF) of every word, and stores this statistics database in RAM.
