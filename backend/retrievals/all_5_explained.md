@@ -59,3 +59,14 @@ Unlike semantic search (which uses Qdrant) or graph search (which uses Neo4j), k
 * **Why no database?** Because the document text corpus is relatively small, keeping the lightweight mathematical index in RAM is extremely fast, uses negligible memory, and eliminates the complexity of hosting and querying a third database server. 
 * **The Source of Truth:** Qdrant remains the primary database. On startup, the backend pulls the text payload from Qdrant, tokenizes it, and builds the RAM-based BM25 index on-the-fly.
 
+
+### Core Concept: Two-Phase Keyword Retrieval
+In simple terms, keyword search works by finding the exact words you type inside your document chunks. 
+Unlike semantic vector search (which searches for conceptual meaning), BM25 relies on exact matching and calculates relevancy scores based on keyword statistics across the entire corpus. In this project, we split the BM25 process into two clean phases to maximize performance:
+
+#### Phase 1: Startup Ingestion (Runs once on backend startup)
+```text
+Qdrant Collection -> Scroll Points -> Tokenize Document Texts -> Build BM25 Statistics -> Keep Index in RAM
+```
+* **Efficiency:** Building the BM25 index once on startup and keeping it in RAM avoids the computational overhead of recalculating corpus-wide word frequency statistics for every query request, ensuring fast retrieval times.
+* **Separation of Concerns:** The BM25 index belongs to the entire corpus (storing word frequencies and document stats), whereas individual documents contain the actual text, source name, and chunk ID.
