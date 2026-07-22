@@ -108,3 +108,46 @@ The `BM25Okapi` engine goes through every single token and maps where it appears
 - **`vector`** $\rightarrow$ Appears in Chunk 2
 
 Notice that **everything** is indexed; nothing is discarded.
+
+##### Step 3: Querying & Scoring
+Now, the user submits the query: *"What is embeddings"*
+1. The query is tokenized: `["what", "is", "embeddings"]`.
+2. BM25 matches these tokens against its index:
+   - Does it know `"what"`? No.
+   - Does it know `"is"`? No.
+   - Does it know `"embeddings"`? Yes! It appears in both **Chunk 1** and **Chunk 2**.
+3. It starts calculating the BM25 mathematical score for each chunk:
+   - **Chunk 1 Score:** e.g., `12.4`
+   - **Chunk 2 Score:** e.g., `10.8`
+4. The engine sorts the chunks by score (descending) and returns the top matches (in our project, we retrieve the top 10 chunks).
+
+### Code Breakdown
+
+#### 1. Ingesting & Building the Index
+```python
+async def initialize_bm25():
+
+    points, _ = await qdrant_client.scroll(
+        collection_name=COLLECTION_NAME,
+        limit=10000,
+        with_payload=True,
+        with_vectors=False,
+    )
+
+    documents = []
+
+    for point in points:
+        documents.append(
+            {
+                "text": point.payload["text"],
+                "source": point.payload["source"],
+                "chunk_id": point.payload["chunk_id"],
+            }
+        )
+
+    tokenized_docs = [doc["text"].lower().split() for doc in documents]
+
+    bm25_index = BM25Okapi(tokenized_docs)
+
+    return bm25_index, documents
+```
