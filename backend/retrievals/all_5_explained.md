@@ -46,3 +46,16 @@ async def semantic_retrieval(query: str) -> list[dict]
 
 ### What is a BM25 Index & Why is it Used?
 At its core, a **BM25 Index** is an inverted index—a mathematical lookup table that maps individual words (tokens) to the documents they appear in. We use it for keyword search because it is highly optimized for finding exact matches, names, numbers, or technical jargon that semantic vector search might overlook.
+
+#### What Does it Store?
+The BM25 index doesn't store the actual document texts. Instead, it stores term statistics across the entire corpus:
+1. **Document Frequency (DF):** A mapping of which words appear in which document chunks.
+2. **Term Frequency (TF):** How many times each word appears inside each specific chunk.
+3. **Corpus Statistics:** The total number of chunks, and the average word length of all chunks in the system (used for length normalization).
+
+#### Where is the Index Stored & Why is there No Database?
+Unlike semantic search (which uses Qdrant) or graph search (which uses Neo4j), keyword search in this project **does not have a dedicated database**.
+* **Stored in RAM (Python Memory):** The BM25 index is constructed dynamically on startup and resides entirely in Python's memory (RAM) as a Python object.
+* **Why no database?** Because the document text corpus is relatively small, keeping the lightweight mathematical index in RAM is extremely fast, uses negligible memory, and eliminates the complexity of hosting and querying a third database server. 
+* **The Source of Truth:** Qdrant remains the primary database. On startup, the backend pulls the text payload from Qdrant, tokenizes it, and builds the RAM-based BM25 index on-the-fly.
+
