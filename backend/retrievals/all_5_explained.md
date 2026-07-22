@@ -151,3 +151,40 @@ async def initialize_bm25():
 
     return bm25_index, documents
 ```
+- **`qdrant_client.scroll`:** Pulls up to 10,000 points from Qdrant without requesting their dense vectors (`with_vectors=False`), saving memory.
+- **`documents.append`:** Loop maps Qdrant points into standard Python dictionaries containing text, source, and chunk ID.
+- **`tokenized_docs`:** Converts document texts to lowercase and splits them into lists of tokens (e.g., `["embeddings", "convert", "text"]`).
+- **`BM25Okapi`:** Builds the BM25 statistics index from the tokenized corpus, mapping terms to the documents they appear in.
+
+#### 2. Querying the Index
+```python
+async def bm25_retrieval(query: str, bm25_index, documents) -> list[dict]:
+
+    tokenized_query = query.lower().split()
+
+    scores = bm25_index.get_scores(tokenized_query)
+
+    results = []
+
+    for i in range(len(documents)):
+        results.append(
+            {
+                "text": documents[i]["text"],
+                "source": documents[i]["source"],
+                "chunk_id": documents[i]["chunk_id"],
+                "score": float(scores[i]),
+            }
+        )
+
+    results = sorted(results, key=lambda x: x["score"], reverse=True)
+
+    return results[:10]
+```
+- **`tokenized_query`:** Lowercases and tokenizes the incoming user question.
+- **`bm25_index.get_scores`:** Computes the BM25 relevance score of the query against every document in the index.
+- **`results.append`:** Formulates a temporary list containing document details and the query-specific lexical score.
+- **`sorted`:** Sorts the chunks in descending order of their scores and returns the top 10 matches.
+
+### Flow:
+* **Startup:** **Scroll Qdrant points** -> **Convert to simple document list** -> **Tokenize texts** -> **Instantiate BM25Okapi index in RAM**.
+* **Query Time:** **Tokenize input query** -> **Calculate BM25 scores** -> **Create temporary results list** -> **Sort by score descending** -> **Return top 10 chunks**.
