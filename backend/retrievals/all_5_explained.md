@@ -188,3 +188,8 @@ async def bm25_retrieval(query: str, bm25_index, documents) -> list[dict]:
 ### Flow:
 * **Startup:** **Scroll Qdrant points** -> **Convert to simple document list** -> **Tokenize texts** -> **Instantiate BM25Okapi index in RAM**.
 * **Query Time:** **Tokenize input query** -> **Calculate BM25 scores** -> **Create temporary results list** -> **Sort by score descending** -> **Return top 10 chunks**.
+
+---
+
+## hybrid_retrieval (combining semantic and keyword)
+this script normalizes the scores of both the retrievals, creates a combined results.
