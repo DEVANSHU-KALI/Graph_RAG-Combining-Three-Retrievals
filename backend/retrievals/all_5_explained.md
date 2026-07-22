@@ -1,6 +1,6 @@
 This file includes explanations of all the three retrieval codes, also including the reranker code with work flow.
 
-## semantic_retrieval.py
+## semantic_retrieval.py (semantic understanding on data)
 apart from the imports lets get the logic directly.
 ```python
 async def semantic_retrieval(query: str) -> list[dict]
@@ -41,3 +41,8 @@ async def semantic_retrieval(query: str) -> list[dict]
 **query passed to the semantic_retrieval** -> **convert query to embeddings** -> **search qdrant for relevant info** -> **store that info in retreived_chunks list** -> **return that list**.
 
 ---
+
+## bm25_retreival.py (keyword understanding on data)
+
+### What is a BM25 Index & Why is it Used?
+At its core, a **BM25 Index** is an inverted index—a mathematical lookup table that maps individual words (tokens) to the documents they appear in. We use it for keyword search because it is highly optimized for finding exact matches, names, numbers, or technical jargon that semantic vector search might overlook.
