@@ -84,3 +84,27 @@ To make keyword search fast and accurate, this project uses the `BM25Okapi` clas
 
 #### What is `BM25Okapi`?
 It is a Python class implementing the standard BM25 formula. When you feed it a list of tokenized documents, it parses them, calculates the Term Frequency (TF) and Inverse Document Frequency (IDF) of every word, and stores this statistics database in RAM.
+
+#### A Walkthrough Example
+Let's see how this works using a tiny corpus of two document chunks:
+
+* **Chunk 1:** "Embeddings convert text into vectors"
+* **Chunk 2:** "Qdrant stores vector embeddings"
+
+##### Step 1: Tokenization
+Before building the index, the text is split into a list of lowercase words (tokens):
+* **Tokenized Chunk 1:** `["embeddings", "convert", "text", "into", "vectors"]`
+* **Tokenized Chunk 2:** `["qdrant", "stores", "vector", "embeddings"]`
+
+##### Step 2: Index Construction
+The `BM25Okapi` engine goes through every single token and maps where it appears:
+- **`embeddings`** $\rightarrow$ Appears in Chunk 1, Chunk 2
+- **`convert`** $\rightarrow$ Appears in Chunk 1
+- **`text`** $\rightarrow$ Appears in Chunk 1
+- **`into`** $\rightarrow$ Appears in Chunk 1
+- **`vectors`** $\rightarrow$ Appears in Chunk 1
+- **`qdrant`** $\rightarrow$ Appears in Chunk 2
+- **`stores`** $\rightarrow$ Appears in Chunk 2
+- **`vector`** $\rightarrow$ Appears in Chunk 2
+
+Notice that **everything** is indexed; nothing is discarded.
