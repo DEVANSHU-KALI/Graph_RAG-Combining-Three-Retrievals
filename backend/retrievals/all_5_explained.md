@@ -317,3 +317,19 @@ async def hybrid_retrieval(
 - **`BM25 loop`:** Iterates through the lexical results.
   - If a chunk is already in `combined_results`, it adds the normalized BM25 score to the existing `final_score`.
   - If the chunk was not found during semantic search, it creates a new entry with `semantic_score` set to `0.0`.
+
+```python
+    # -----------------------------
+    # Sort Results
+    # -----------------------------
+    hybrid_results = sorted(
+        combined_results.values(), key=lambda x: x["final_score"], reverse=True
+    )
+
+    return hybrid_results[:5]
+```
+- **`sorted`:** Sorts the dictionary values in descending order of their combined `final_score`.
+- **`hybrid_results[:5]`:** Returns only the top 5 most relevant unified chunks to limit context length and reduce LLM costs.
+
+### Flow:
+**Receive semantic & lexical chunks** -> **Apply Min-Max normalization** -> **Map semantic chunks to combined dictionary** -> **Merge lexical chunks (summing scores for overlapping items)** -> **Sort by final score descending** -> **Return top 5 chunks**.
