@@ -201,3 +201,23 @@ Semantic search scores (Cosine Similarity) are dense and fall strictly between `
 
 If you add them directly (e.g., Semantic score `0.85` + BM25 score `15.0`), the BM25 score will completely drown out the semantic search. It would be like trying to add kilograms to centimeters. 
 To fix this, we use **Min-Max Normalization** to rescale both scoring distributions to a common range between `0.0` and `1.0`.
+
+### A Walkthrough Example of Score Normalization
+
+Imagine the system retrieves these initial results for a query:
+* **Semantic Results:**
+  * Chunk A: score `0.85` (Max Semantic)
+  * Chunk B: score `0.70` (Min Semantic)
+* **BM25 Results:**
+  * Chunk B: score `15.0` (Max BM25)
+  * Chunk C: score `5.0` (Min BM25)
+
+##### Step 1: Normalize Semantic Scores
+We apply the Min-Max formula: $\text{NormScore} = \frac{\text{Score} - \text{Min}}{\text{Max} - \text{Min}}$
+* Chunk A: $\frac{0.85 - 0.70}{0.85 - 0.70} = 1.0$
+* Chunk B: $\frac{0.70 - 0.70}{0.85 - 0.70} = 0.0$
+
+##### Step 2: Normalize BM25 Scores
+We apply the same formula using BM25 min/max:
+* Chunk B: $\frac{15.0 - 5.0}{15.0 - 5.0} = 1.0$
+* Chunk C: $\frac{5.0 - 5.0}{15.0 - 5.0} = 0.0$
