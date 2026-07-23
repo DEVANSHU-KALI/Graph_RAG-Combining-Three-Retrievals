@@ -273,3 +273,21 @@ async def hybrid_retrieval(
 ```
 - **`normalize_scores`:** Rescales both lists so that they are on a comparable `[0.0, 1.0]` scale.
 - **`combined_results`:** An empty dictionary used to map chunk IDs to their combined metadata and scores.
+
+```python
+    # -----------------------------
+    # Add Semantic Results
+    # -----------------------------
+    for result in semantic_results:
+        chunk_id = result["chunk_id"]
+
+        combined_results[chunk_id] = {
+            "text": result["text"],
+            "source": result["source"],
+            "chunk_id": chunk_id,
+            "semantic_score": result["score"],
+            "bm25_score": 0.0,
+            "final_score": result["score"],
+        }
+```
+- **`Semantic loop`:** Populates the combined mapping dictionary. It initializes `bm25_score` to `0.0` and sets the initial `final_score` to the normalized semantic score.
