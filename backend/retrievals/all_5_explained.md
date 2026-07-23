@@ -291,3 +291,29 @@ async def hybrid_retrieval(
         }
 ```
 - **`Semantic loop`:** Populates the combined mapping dictionary. It initializes `bm25_score` to `0.0` and sets the initial `final_score` to the normalized semantic score.
+
+```python
+    # -----------------------------
+    # Add BM25 Results
+    # -----------------------------
+    for result in bm25_results:
+        chunk_id = result["chunk_id"]
+
+        if chunk_id in combined_results:
+            combined_results[chunk_id]["bm25_score"] = result["score"]
+
+            combined_results[chunk_id]["final_score"] += result["score"]
+
+        else:
+            combined_results[chunk_id] = {
+                "text": result["text"],
+                "source": result["source"],
+                "chunk_id": chunk_id,
+                "semantic_score": 0.0,
+                "bm25_score": result["score"],
+                "final_score": result["score"],
+            }
+```
+- **`BM25 loop`:** Iterates through the lexical results.
+  - If a chunk is already in `combined_results`, it adds the normalized BM25 score to the existing `final_score`.
+  - If the chunk was not found during semantic search, it creates a new entry with `semantic_score` set to `0.0`.
