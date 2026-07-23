@@ -191,5 +191,7 @@ async def bm25_retrieval(query: str, bm25_index, documents) -> list[dict]:
 
 ---
 
-## hybrid_retrieval (combining semantic and keyword)
-this script normalizes the scores of both the retrievals, creates a combined results.
+## hybrid_retrieval.py (combining semantic and keyword)
+
+### What Does This Script Do?
+In simple terms, this script acts as a bridge that merges the results of our two retrieval channels: **Semantic Search** (dense vector similarity from Qdrant) and **Keyword Search** (lexical word matching from BM25). It gathers the top chunks from both pathways, aligns their scores, adds the scores together for any chunks that appeared in both lists, and outputs the top 5 overall matches.
