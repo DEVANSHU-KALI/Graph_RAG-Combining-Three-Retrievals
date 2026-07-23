@@ -221,3 +221,37 @@ We apply the Min-Max formula: $\text{NormScore} = \frac{\text{Score} - \text{Min
 We apply the same formula using BM25 min/max:
 * Chunk B: $\frac{15.0 - 5.0}{15.0 - 5.0} = 1.0$
 * Chunk C: $\frac{5.0 - 5.0}{15.0 - 5.0} = 0.0$
+
+##### Step 3: Fusing the Scores
+Now, we add the normalized scores together for each unique chunk:
+* **Chunk A (Semantic only):** Final score = $1.0\text{ (Semantic)} + 0.0\text{ (BM25)} = 1.0$
+* **Chunk B (Found in both):** Final score = $0.0\text{ (Semantic)} + 1.0\text{ (BM25)} = 1.0$
+* **Chunk C (BM25 only):** Final score = $0.0\text{ (Semantic)} + 0.0\text{ (BM25)} = 0.0$
+
+Both Chunk A and Chunk B bubble to the top with a final score of `1.0`, while Chunk C is ranked last.
+
+### Code Breakdown
+
+#### 1. The Normalization Helper
+```python
+def normalize_scores(results: list[dict]) -> list[dict]:
+
+    if not results:
+        return []
+
+    scores = [result["score"] for result in results]
+
+    max_score = max(scores)
+    min_score = min(scores)
+
+    if max_score == min_score:
+        for result in results:
+            result["score"] = 1.0
+
+        return results
+
+    for result in results:
+        result["score"] = (result["score"] - min_score) / (max_score - min_score)
+
+    return results
+```
