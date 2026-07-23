@@ -195,3 +195,9 @@ async def bm25_retrieval(query: str, bm25_index, documents) -> list[dict]:
 
 ### What Does This Script Do?
 In simple terms, this script acts as a bridge that merges the results of our two retrieval channels: **Semantic Search** (dense vector similarity from Qdrant) and **Keyword Search** (lexical word matching from BM25). It gathers the top chunks from both pathways, aligns their scores, adds the scores together for any chunks that appeared in both lists, and outputs the top 5 overall matches.
+
+#### Why Do We Need Normalization? (The Score Alignment Problem)
+Semantic search scores (Cosine Similarity) are dense and fall strictly between `0.0` and `1.0`. BM25 keyword search scores are unbounded positive numbers (ranging from `0.0` to `25.0+` depending on term frequency). 
+
+If you add them directly (e.g., Semantic score `0.85` + BM25 score `15.0`), the BM25 score will completely drown out the semantic search. It would be like trying to add kilograms to centimeters. 
+To fix this, we use **Min-Max Normalization** to rescale both scoring distributions to a common range between `0.0` and `1.0`.
