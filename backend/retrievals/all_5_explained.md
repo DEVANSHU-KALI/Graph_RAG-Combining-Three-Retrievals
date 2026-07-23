@@ -255,3 +255,21 @@ def normalize_scores(results: list[dict]) -> list[dict]:
 
     return results
 ```
+- **`if not results`:** Prevents crashes if a search channel returns no chunks.
+- **`max_score == min_score`:** A guard against division-by-zero. If all retrieved documents have the exact same score, it sets their normalized scores to `1.0`.
+- **`results loop`:** Iterates through the list and replaces raw scores with the rescaled Min-Max values.
+
+#### 2. The Hybrid Fusion Function
+```python
+async def hybrid_retrieval(
+    semantic_results: list[dict], bm25_results: list[dict]
+) -> list[dict]:
+
+    semantic_results = normalize_scores(semantic_results)
+
+    bm25_results = normalize_scores(bm25_results)
+
+    combined_results = {}
+```
+- **`normalize_scores`:** Rescales both lists so that they are on a comparable `[0.0, 1.0]` scale.
+- **`combined_results`:** An empty dictionary used to map chunk IDs to their combined metadata and scores.
