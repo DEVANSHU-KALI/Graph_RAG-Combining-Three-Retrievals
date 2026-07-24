@@ -340,3 +340,12 @@ async def hybrid_retrieval(
 
 ### What Does This Script Do?
 In simple terms, this script extracts structured facts (relationships) from our **Neo4j Knowledge Graph**. It reads the user's query, calls the Groq API (`llama-3.1-8b-instant`) to identify the main concepts (entities) being discussed, searches the graph database to find how those concepts connect, formats the results into plain-text sentences, and returns the top 5 connections.
+
+#### Why Do We Need It? (Bridging Information Gaps)
+Traditional search engines (Semantic & BM25) retrieve isolated text chunks. If a critical connection is split across two different documents—for example, if Document A mentions *"FastAPI is a python framework"* and Document B mentions *"Qdrant connects with python frameworks"*—a standard retriever might retrieve only one of these documents and miss the connection entirely. 
+
+Knowledge Graph retrieval solves this by extracting network-like relationships (e.g., `FastAPI` $\rightarrow$ `[USED_WITH]` $\rightarrow$ `Qdrant`). It bridges facts across different documents to answer complex queries.
+
+
+### A Walkthrough Example of Graph Retrieval
+
