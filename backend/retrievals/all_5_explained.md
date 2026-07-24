@@ -349,3 +349,18 @@ Knowledge Graph retrieval solves this by extracting network-like relationships (
 
 ### A Walkthrough Example of Graph Retrieval
 
+Imagine the user enters the query: *"How does FastAPI connect with Qdrant?"*
+
+##### Step 1: Entity Extraction
+The query is sent to the entity extractor helper, which outputs a normalized list of key nouns:
+* **Output:** `["FastAPI", "Qdrant"]`
+
+##### Step 2: Cypher Match on Neo4j
+The backend executes a Cypher pattern-matching query on Neo4j to find relationships connected to either entity:
+* **Query:** Search for any nodes pointing to or from `FastAPI` or `Qdrant`.
+* **Neo4j Result:** Finds a connection: `(FastAPI)-[:USED_WITH]->(Qdrant)`.
+
+##### Step 3: Text Formatting & Metadata Assignment
+The raw graph node names and relationship labels are converted into a plain text statement:
+* **Formatted Statement:** `"FastAPI USED_WITH Qdrant"`
+* **Metadata:** Since this statement did not come from a text chunk, we set `chunk_id = None`, `source = "graph"`, and assign a default similarity score of `1.0`.
