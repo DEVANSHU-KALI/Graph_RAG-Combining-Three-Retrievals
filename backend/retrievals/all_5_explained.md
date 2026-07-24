@@ -333,3 +333,10 @@ async def hybrid_retrieval(
 
 ### Flow:
 **Receive semantic & lexical chunks** -> **Apply Min-Max normalization** -> **Map semantic chunks to combined dictionary** -> **Merge lexical chunks (summing scores for overlapping items)** -> **Sort by final score descending** -> **Return top 5 chunks**.
+
+---
+
+## graph_retrieval.py (knowledge graph retrieval)
+
+### What Does This Script Do?
+In simple terms, this script extracts structured facts (relationships) from our **Neo4j Knowledge Graph**. It reads the user's query, calls the Groq API (`llama-3.1-8b-instant`) to identify the main concepts (entities) being discussed, searches the graph database to find how those concepts connect, formats the results into plain-text sentences, and returns the top 5 connections.
