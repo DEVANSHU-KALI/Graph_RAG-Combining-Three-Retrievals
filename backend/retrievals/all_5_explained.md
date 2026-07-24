@@ -391,3 +391,31 @@ async def graph_retrieval(query: str) -> list[dict]:
     if not entities:
         return []
 ```
+- **`extract_entities(query)`:** Parses the query to find entity candidates.
+- **`if not entities`:** An optimization guard. If no entities are detected in the query, it immediately returns an empty list `[]` to avoid querying Neo4j.
+
+```python
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH (source)-[r]->(target)
+
+            WHERE
+                source.name IN $entities
+                OR
+                target.name IN $entities
+
+            RETURN
+                source.name AS source,
+                type(r) AS relationship,
+                target.name AS target
+            """,
+            entities=entities,
+        )
+```
+- **`driver.session()`:** Opens a session context block.
+- **`session.run()`:** Executes the Cypher query.
+- **`WHERE source.name IN $entities OR target.name IN $entities`:** Filters the graph traversal to only fetch relationships where either the starting node (source) or the ending node (target) matches one of the extracted query entities.
+
+
+---
