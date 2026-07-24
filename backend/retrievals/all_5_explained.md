@@ -364,3 +364,30 @@ The backend executes a Cypher pattern-matching query on Neo4j to find relationsh
 The raw graph node names and relationship labels are converted into a plain text statement:
 * **Formatted Statement:** `"FastAPI USED_WITH Qdrant"`
 * **Metadata:** Since this statement did not come from a text chunk, we set `chunk_id = None`, `source = "graph"`, and assign a default similarity score of `1.0`.
+
+##### Step 4: Output Trimming
+The script returns up to the top 5 formatted statements.
+
+### Code Breakdown
+
+#### 1. Setup and Driver Initialization
+```python
+from neo4j import GraphDatabase
+
+from backend.core.config import NEO4J_PASSWORD, NEO4J_URL, NEO4J_USERNAME
+from backend.entity_extractor import extract_entities
+
+driver = GraphDatabase.driver(NEO4J_URL, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+```
+- **`GraphDatabase.driver`:** Establishes the binary Bolt connection driver to the Neo4j database using the credentials loaded from our configuration.
+- **`extract_entities`:** Imports the LLM-powered helper function to parse entities out of the raw user query.
+
+#### 2. The Graph Retrieval Core
+```python
+async def graph_retrieval(query: str) -> list[dict]:
+
+    entities = extract_entities(query)
+
+    if not entities:
+        return []
+```
