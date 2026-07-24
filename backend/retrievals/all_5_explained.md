@@ -418,4 +418,31 @@ async def graph_retrieval(query: str) -> list[dict]:
 - **`WHERE source.name IN $entities OR target.name IN $entities`:** Filters the graph traversal to only fetch relationships where either the starting node (source) or the ending node (target) matches one of the extracted query entities.
 
 
----
+```python
+        graph_results = []
+
+        for record in result:
+            graph_results.append(
+                {
+                    "text": (
+                        f"{record['source']} "
+                        f"{record['relationship']} "
+                        f"{record['target']}"
+                    ),
+                    "source": "graph",
+                    "chunk_id": None,
+                    "score": 1.0,
+                }
+            )
+
+    return graph_results[:5]
+```
+- **`graph_results.append`:** Loop iterates through the query results and structures them to match our project's general chunk format:
+  * `text`: Interpolated string joining source node, relationship label, and target node (e.g., `"A RELATED_TO B"`).
+  * `source`: Marked as `"graph"` for UI citation tracking.
+  * `chunk_id`: Assigned `None` since it is not a physical file chunk.
+  * `score`: Assigned `1.0` as a default placeholder score.
+- **`graph_results[:5]`:** Trims the results to return a maximum of 5 relational statements.
+
+### Flow:
+**Extract entities from query** -> **Open Neo4j database session** -> **Execute Cypher MATCH query** -> **Convert graph relationships to plain-text statements** -> **Append standard dictionary metadata** -> **Return top 5 graph statements**.
