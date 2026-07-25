@@ -458,3 +458,19 @@ In simple terms, this script filters and re-orders our combined retrieved result
 Our first-stage retrieval channels (like semantic vector search) use **Bi-Encoders**. 
 * **Bi-Encoders:** Process the query and document chunks *separately* to generate vector embeddings. During retrieval, they calculate similarity using simple, fast vector math. This is incredibly fast (perfect for scanning millions of documents), but it cannot capture the deep word-for-word context between the query and documents.
 * **Cross-Encoders:** Feed both the query and document *together* into the transformer model. This allows the model's self-attention mechanisms to evaluate how every single word in the query interacts with every single word in the document. This is highly accurate at determining relevance, but computationally expensive.
+
+**The Solution:** We use a two-stage retrieval pipeline. First, we use fast Bi-encoders to narrow down the dataset to 10 candidates (Hybrid top 5 + Graph top 5). Second, we use the Cross-Encoder to perform high-precision reranking on just those 10 candidates, yielding the best of both worlds: high speed and maximum accuracy.
+
+### A Walkthrough Example of Reranking
+
+Imagine the user enters the query: *"What is a vector database?"*
+We feed the Cross-Encoder these 3 retrieved chunks:
+* **Chunk A:** *"Qdrant is a specialized vector database designed to index high-dimensional vectors."*
+* **Chunk B:** *"Neo4j is a graph database storing nodes and relationships."*
+* **Chunk C:** *"FastAPI is a web framework built for writing Python APIs."*
+
+##### Step 1: Pair Formation
+The script formats the query and chunks into evaluation pairs:
+* Pair 1: `("What is a vector database?", "Qdrant is a specialized vector...")`
+* Pair 2: `("What is a vector database?", "Neo4j is a graph database...")`
+* Pair 3: `("What is a vector database?", "FastAPI is a web framework...")`
