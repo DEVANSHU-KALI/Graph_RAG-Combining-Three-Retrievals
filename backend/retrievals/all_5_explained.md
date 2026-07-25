@@ -537,3 +537,18 @@ async def rerank_results(
             }
         )
 ```
+- **`reranker.predict(pairs)`:** Runs inference on the model to predict a matching score for each pair.
+- **`zip`:** Pairs each original chunk dictionary with its calculated cross-encoder score.
+- **`reranked_results.append`:** Appends the new `rerank_score` (cast to a Python float) to the original chunk attributes.
+
+```python
+    reranked_results = sorted(
+        reranked_results,
+        key=lambda x: x["rerank_score"],
+        reverse=True
+    )
+
+    return reranked_results[:3]
+```
+- **`sorted`:** Sorts the chunks in descending order based on `rerank_score`.
+- **`reranked_results[:3]`:** Returns only the top 3 highest-scoring chunks, which are then passed to the generator prompt.
