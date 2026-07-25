@@ -516,3 +516,24 @@ async def rerank_results(
         for chunk in retrieved_chunks
     ]
 ```
+- **`pairs`:** Loops through all retrieved chunks and creates a list of tuples containing the query string and the chunk text payload, as required by the Cross-Encoder.
+
+```python
+    scores = reranker.predict(
+        pairs
+    )
+
+    reranked_results = []
+
+    for chunk, score in zip(
+        retrieved_chunks,
+        scores
+    ):
+
+        reranked_results.append(
+            {
+                **chunk,
+                "rerank_score": float(score)
+            }
+        )
+```
