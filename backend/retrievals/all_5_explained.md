@@ -474,3 +474,27 @@ The script formats the query and chunks into evaluation pairs:
 * Pair 1: `("What is a vector database?", "Qdrant is a specialized vector...")`
 * Pair 2: `("What is a vector database?", "Neo4j is a graph database...")`
 * Pair 3: `("What is a vector database?", "FastAPI is a web framework...")`
+
+##### Step 2: Scoring
+The Cross-Encoder model evaluates the pairs and outputs raw relevance scores (higher is better):
+* Pair 1 Score: `0.98`
+* Pair 2 Score: `0.45`
+* Pair 3 Score: `-0.85`
+
+##### Step 3: Sorting and Trimming
+The script appends these scores, sorts the chunks in descending order, and trims the list to return the top 3:
+* **Output:** Chunk A (first), Chunk B (second). Chunk C is discarded as it falls out of the top 3 threshold.
+
+### Code Breakdown
+
+#### 1. Setup and Model Loading
+```python
+from sentence_transformers import CrossEncoder
+
+# -----------------------------
+# Load Reranker Model
+# -----------------------------
+reranker = CrossEncoder(
+    "BAAI/bge-reranker-base"
+)
+```
