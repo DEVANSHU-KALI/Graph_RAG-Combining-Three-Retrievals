@@ -552,3 +552,6 @@ async def rerank_results(
 ```
 - **`sorted`:** Sorts the chunks in descending order based on `rerank_score`.
 - **`reranked_results[:3]`:** Returns only the top 3 highest-scoring chunks, which are then passed to the generator prompt.
+
+### Flow:
+**Format query-document pairs** -> **Run Cross-Encoder model inference** -> **Map scores back to chunks** -> **Sort chunks descending by rerank score** -> **Return top 3 chunks**.
