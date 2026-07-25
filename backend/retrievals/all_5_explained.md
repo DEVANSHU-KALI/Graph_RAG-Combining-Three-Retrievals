@@ -446,3 +446,15 @@ async def graph_retrieval(query: str) -> list[dict]:
 
 ### Flow:
 **Extract entities from query** -> **Open Neo4j database session** -> **Execute Cypher MATCH query** -> **Convert graph relationships to plain-text statements** -> **Append standard dictionary metadata** -> **Return top 5 graph statements**.
+
+---
+
+## reranker.py (reranking retrieved chunks)
+
+### What Does This Script Do?
+In simple terms, this script filters and re-orders our combined retrieved results to find the absolute best matches. It takes the user's query and the list of chunks gathered by our retrieval channels, runs them through a specialized **Cross-Encoder Reranking Model** (`BAAI/bge-reranker-base`), scores how relevant each chunk is to the specific query, sorts them by relevance, and outputs only the top 3 chunks to feed to the LLM generator.
+
+#### Why Do We Need It? (Bi-Encoder vs. Cross-Encoder)
+Our first-stage retrieval channels (like semantic vector search) use **Bi-Encoders**. 
+* **Bi-Encoders:** Process the query and document chunks *separately* to generate vector embeddings. During retrieval, they calculate similarity using simple, fast vector math. This is incredibly fast (perfect for scanning millions of documents), but it cannot capture the deep word-for-word context between the query and documents.
+* **Cross-Encoders:** Feed both the query and document *together* into the transformer model. This allows the model's self-attention mechanisms to evaluate how every single word in the query interacts with every single word in the document. This is highly accurate at determining relevance, but computationally expensive.
