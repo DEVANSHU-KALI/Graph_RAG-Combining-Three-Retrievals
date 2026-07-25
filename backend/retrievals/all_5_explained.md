@@ -498,3 +498,21 @@ reranker = CrossEncoder(
     "BAAI/bge-reranker-base"
 )
 ```
+- **`CrossEncoder`:** Imports the model class from the `sentence-transformers` library.
+- **`BAAI/bge-reranker-base`:** Loads the specific pre-trained cross-encoder weights from Hugging Face on startup.
+
+#### 2. Reranking Function
+```python
+async def rerank_results(
+    query: str,
+    retrieved_chunks: list[dict]
+) -> list[dict]:
+
+    pairs = [
+        (
+            query,
+            chunk["text"]
+        )
+        for chunk in retrieved_chunks
+    ]
+```
