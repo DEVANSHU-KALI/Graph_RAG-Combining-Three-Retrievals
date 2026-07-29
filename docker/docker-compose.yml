@@ -20,12 +20,18 @@ services:
       
     environment:
       NEO4J_AUTH: neo4j/password
-      
+
     volumes:
       - neo4j_data:/data
 
 volumes:
   neo4j_data:
+
+#----------------------------------------------------------
+# if you want to start both the containers at the same time, execute this file directly.
+# if not and you want both the containers to be started separately, here's how you can do that:
+# seperate docker-compose files for each service, place then in different places and start using them.
+# in my case, I have the qdrant in another path, so I only used this file for the neo4j database.
 
 # version: '3.9'
 
