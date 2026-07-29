@@ -161,3 +161,7 @@ In a new terminal window (with the virtual environment activated), start the Str
 streamlit run frontend/app.py
 ```
 Open [http://localhost:8501](http://localhost:8501) in your browser to chat with your Hybrid GraphRAG Chatbot.
+
+---
+
+> Note: Limitations and its solutions are mentioned in the `things_to_know.md` file, understand them and make your project better.
