@@ -112,3 +112,21 @@ You might wonder why we use a cloud-based API model for building the graph but a
 | **Task Complexity** | **High:** Requires structured entity extraction, strict JSON compliance, and high semantic parsing logic. | **Moderate:** Needs to synthesize an answer from a provided context under strict constraints. |
 | **Execution Frequency** | **Low:** Done only once offline during the initial setup/ingestion phase. | **High:** Executed every time a user types a message in the chat. |
 | **LLM Requirement** | **API Cloud Model:** A large, highly capable model is necessary to avoid extraction errors and JSON schema breaks. | **Local Model:** Cost-free, private, and highly context-loyal. Local models are easily constrained to only answer from provided text. |
+
+---
+
+## 5. Known Limitations & Solutions
+
+Every system design comes with engineering trade-offs. Below are the key limitations of the current GraphRAG architecture and their proposed technical solutions.
+
+### A. Unconstrained Relationship Schema (Relationship Explosion)
+* **The Limitation:** During graph construction, the LLM is allowed to generate open-ended relationship names. This leads to duplicate/synonymous relationship types linking the same entities (e.g., `FastAPI -[COMMUNICATES_WITH]-> Qdrant`, `FastAPI -[INTEGRATES_WITH]-> Qdrant`, and `FastAPI -[CONNECTS_TO]-> Qdrant`). This increases graph sparsity and degrades retrieval accuracy, as Cypher queries looking for a specific relationship label will miss structurally identical relations named slightly differently.
+* **The Solution:** Enforce a strict **Relationship Ontology** (predefined schema). The LLM prompt inside `graph_builder.py` should include a closed list of allowed relationships (e.g., `["USED_WITH", "PART_OF", "DEPENDS_ON", "VERSION_OF", "RELATED_TO"]`). The LLM must categorize connections into one of these types, using `RELATED_TO` as a fallback.
+
+### B. Groq API Rate Limiting (TPM/RPM Caps)
+* **The Limitation:** Constructing the graph from text chunks relies on free-tier APIs which enforce strict token and request limits. The mandatory `time.sleep(15)` rate-limiting delay between chunks makes graph construction extremely slow for large datasets.
+* **The Solution:** Implement automated retry logic using **Exponential Backoff** (retrying requests with progressively longer wait times only when hitting HTTP `429` codes). Alternatively, run a local, un-quantized Llama-3-8B model overnight dedicated purely to extraction tasks.
+
+### C. In-Memory BM25 Scale Constraints
+* **The Limitation:** The BM25 lexical index is constructed dynamically and stored entirely in RAM when the FastAPI server boots. If the document corpus grows to hundreds of thousands of chunks, this will consume a large amount of memory and slow down server startup.
+* **The Solution:** Migrate from the in-memory Python `rank-bm25` library to a dedicated, high-performance search service (like Meilisearch or Elasticsearch), or pre-calculate and store the BM25 stats in a compressed binary index file (e.g., `.pkl` or `.json`) to avoid re-indexing from scratch on boot.
