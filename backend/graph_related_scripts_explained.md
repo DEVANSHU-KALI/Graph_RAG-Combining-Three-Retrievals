@@ -52,3 +52,28 @@ that is how we are going to extract the response from that llm.
 ---
 
 ## graph_builder.py
+
+### What Does This Script Do & Why is it Used?
+In simple terms, this script is our offline **Knowledge Graph builder**. It extracts structured entities and relationships from our unstructured text data and stores them in our **Neo4j** graph database.
+
+#### Reason for its Existence
+When users ask questions, the chatbot needs to find connections between different concepts (e.g., *"How does FastAPI connect with Qdrant?"*). 
+We cannot perform LLM-based entity-relationship extraction on hundreds of documents in real-time during a chat because it would take minutes and exceed API rate limits. Instead, this script runs **offline** (once, beforehand) as an ETL pipeline to parse our text chunks, build the graph nodes and edges, and store them permanently in Neo4j so they can be queried in milliseconds during runtime.
+
+### Code Breakdown
+
+#### 1. Imports and Client Initialization
+```python
+import asyncio
+import json
+import time
+
+from openai import OpenAI
+
+from backend.core.config import GROQ_API_KEY
+from backend.core.logging import logger
+from backend.database.neo4j import create_entity, create_relationship
+from backend.database.qdrant import COLLECTION_NAME, qdrant_client
+
+client = OpenAI(base_url="https://api.groq.com/openai/v1", api_key=GROQ_API_KEY)
+```
