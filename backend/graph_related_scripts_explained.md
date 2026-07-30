@@ -144,3 +144,40 @@ async def load_chunks():
   - **`limit=10000`:** Sets a safe upper limit to retrieve up to 10,000 database points.
   - **`with_payload=True`:** Instructs the database to return the metadata payload (which holds our raw document chunk text).
   - **`with_vectors=False`:** Disables vector loading. Since we only need the raw text payloads to extract nodes/edges, loading the heavy 768-dimensional float vectors would waste network bandwidth and system RAM.
+- **`chunks = [point.payload["text"] for point in points]`:** 
+  - **List Comprehension:** This is a shorthand Python syntax for a loop that builds a new list. 
+  - **Why we do it:** The database returns a list of complex `PointStruct` objects. We only care about the raw string contents of the document chunk. Instead of writing a verbose 4-line `for` loop to append strings to a new list, this line iterates through every retrieved `point`, extracts the raw text from the payload dictionary (`point.payload["text"]`), and packages it into a clean list of strings (`chunks`).
+- **`logger.info(...)`:** Prints an informational message in the backend console showing the total number of chunks successfully fetched from Qdrant.
+- **`return chunks`:** Returns the finalized list of raw text strings to the caller.
+
+#### 4. Building the Graph Loop (`build_graph` & `main`)
+```python
+def build_graph(chunks: list[str]) -> None:
+
+    for chunk in chunks:
+        try:
+            graph_data = extract_graph_from_chunk(chunk)
+
+            entities = graph_data.get("entities", [])
+            relationships = graph_data.get("relationships", [])
+
+            # Create Nodes
+            for entity in entities:
+                create_entity(entity)
+
+            # Create Relationships
+            for relationship in relationships:
+                create_relationship(
+                    source=relationship["source"],
+                    relationship=relationship["relation"],
+                    target=relationship["target"],
+                )
+
+            logger.info("Chunk graph stored successfully")
+
+            # Rate Limiting
+            time.sleep(15)
+
+        except Exception as error:
+            logger.error(f"Graph Extraction Error: {error}")
+```
