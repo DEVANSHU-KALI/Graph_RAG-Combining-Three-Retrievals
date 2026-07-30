@@ -138,3 +138,9 @@ async def load_chunks():
 
     return chunks
 ```
+- **`points, _ = await qdrant_client.scroll(...)`:** 
+  - **Tuple Unpacking and the Underscore `_`:** The `.scroll()` method returns a tuple containing two items: `(list_of_retrieved_points, next_page_offset_cursor)`. In Python, the underscore `_` is a standard convention used as a "throwaway" or dummy variable name. We assign the second item of the tuple to `_` because we are loading all chunks in a single bulk operation and do not need to use pagination or track the offset cursor.
+  - **`collection_name=COLLECTION_NAME`:** Specifies the target Qdrant collection to retrieve from.
+  - **`limit=10000`:** Sets a safe upper limit to retrieve up to 10,000 database points.
+  - **`with_payload=True`:** Instructs the database to return the metadata payload (which holds our raw document chunk text).
+  - **`with_vectors=False`:** Disables vector loading. Since we only need the raw text payloads to extract nodes/edges, loading the heavy 768-dimensional float vectors would waste network bandwidth and system RAM.
