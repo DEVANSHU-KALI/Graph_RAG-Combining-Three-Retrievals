@@ -117,3 +117,24 @@ Text to extract from:
 
     return json.loads(response.choices[0].message.content)
 ```
+- **`prompt`:** Instructs the LLM to analyze a text chunk and return a JSON containing two main keys: `entities` (list of concepts) and `relationships` (objects specifying a source node, target node, and the relationship connection type).
+- **`response_format={"type": "json_object"}`:** Configures the API call to force the LLM to output a valid JSON format, preventing parsing crashes in our python script.
+- **`json.loads(...)`:** Converts the raw JSON string returned by the LLM into a standard Python dictionary.
+
+#### 3. Loading Chunks from Qdrant (`load_chunks`)
+```python
+async def load_chunks():
+
+    points, _ = await qdrant_client.scroll(
+        collection_name=COLLECTION_NAME,
+        limit=10000,
+        with_payload=True,
+        with_vectors=False,
+    )
+
+    chunks = [point.payload["text"] for point in points]
+
+    logger.info(f"Loaded {len(chunks)} chunks from Qdrant")
+
+    return chunks
+```
