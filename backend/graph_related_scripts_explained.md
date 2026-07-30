@@ -191,3 +191,21 @@ def build_graph(chunks: list[str]) -> None:
   - Once the database confirms all nodes exist in the graph space, we loop through the relationships list and call `create_relationship(source, relation, target)`. This executes Cypher queries to draw the directed edges (arrows) linking the corresponding entity nodes together.
 - **`time.sleep(15)` (Rate Limiting Guard):**
   - The Groq API (on its free tier) enforces strict Request Limits (RPM) and Token Limits (TPM). Running this loop at full machine speed would immediately hit these limits, triggering an `HTTP 429 Too Many Requests` API error and terminating the script. The 15-second delay acts as a governor, ensuring that batch indexing remains completely stable and error-free.
+
+```python
+async def main():
+
+    chunks = await load_chunks()
+
+    build_graph(chunks)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+- **`load_chunks`:** Aynchronously loads the raw text chunks from Qdrant.
+- **`build_graph`:** Synchronously parses each chunk and writes the nodes and edges to Neo4j.
+- **`asyncio.run(main())`:** Initializes and executes the main async loop.
+
+### Flow:
+**Load text chunks from Qdrant payload (without vectors)** $\rightarrow$ **Loop through chunks** $\rightarrow$ **Call Groq LLM JSON model to extract entities and relations** $\rightarrow$ **Create Entity nodes in Neo4j** $\rightarrow$ **Create Relationship edges in Neo4j** $\rightarrow$ **Sleep 15 seconds (rate limit guard)** $\rightarrow$ **Repeat until all chunks are parsed**.
