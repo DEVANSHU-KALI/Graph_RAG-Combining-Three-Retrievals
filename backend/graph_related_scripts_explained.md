@@ -77,3 +77,43 @@ from backend.database.qdrant import COLLECTION_NAME, qdrant_client
 
 client = OpenAI(base_url="https://api.groq.com/openai/v1", api_key=GROQ_API_KEY)
 ```
+- **`create_entity` and `create_relationship`:** Imported from our Neo4j database helper script to insert nodes and relationships.
+- **`qdrant_client` and `COLLECTION_NAME`:** Used to read the text chunks that are already stored in our Qdrant vector database.
+- **`client = OpenAI(...)`:** Initializes the OpenAI wrapper client pointing to the Groq API endpoint to leverage their high-speed Llama-3.1 model.
+
+#### 2. LLM Graph Extraction (`extract_graph_from_chunk`)
+```python
+def extract_graph_from_chunk(chunk: str) -> dict:
+
+    prompt = f"""
+    You are an advanced system designed to extract entity-relationship graphs from text.
+        Return ONLY a valid JSON object matching the schema below. No explanations, no markdown block wrappers.
+        Ensure all JSON keys and string values are strictly enclosed in double-quotes.
+
+        Schema:
+        {{
+            "entities": ["ENTITY_NAME_1", "ENTITY_NAME_2"],
+            "relationships": [
+                {{
+                    "source": "ENTITY_NAME_1",
+                    "target": "ENTITY_NAME_2",
+                    "relation": "RELATIONSHIP_TYPE"
+                }}
+            ]
+        }}
+        Guidelines:
+        1. Normalize entities (convert to Title Case, e.g., "Sarcoplasmic Reticulum", "Cosine Similarity").
+        2. Write relationships in UPPERCASE with underscores (e.g., "PART_OF", "STORES", "INFLUENCES").
+
+Text to extract from:
+{chunk}
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
+    )
+
+    return json.loads(response.choices[0].message.content)
+```
