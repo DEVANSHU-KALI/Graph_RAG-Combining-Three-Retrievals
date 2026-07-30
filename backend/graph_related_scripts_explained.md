@@ -181,3 +181,13 @@ def build_graph(chunks: list[str]) -> None:
         except Exception as error:
             logger.error(f"Graph Extraction Error: {error}")
 ```
+- **`for chunk in chunks`:** Loops through each raw text chunk one by one. This is necessary because extracting knowledge from an entire corpus at once would exceed context window limits and dilute the semantic precision of the LLM's entity-relationship predictions.
+- **`graph_data = extract_graph_from_chunk(chunk)`:** Calls the LLM helper function to parse the current chunk and extract raw entity-relation data.
+- **`entities` & `relationships` extraction:** We use the Python `.get("entities", [])` and `.get("relationships", [])` methods. The second argument acts as a fallback default. If the LLM generates a slightly malformed JSON that completely misses either key, the script falls back to an empty list `[]` instead of throwing a `KeyError` and crashing the entire loop.
+- **Creating Nodes First (`create_entity`):**
+  - **The Logic:** We iterate through the extracted entities first and call `create_entity()` to insert node elements in Neo4j.
+  - **Why this order matters:** In a graph database, you cannot connect two elements with a relationship edge if the nodes themselves do not exist yet. If we tried to write a relationship between "FastAPI" and "Qdrant" before registering both as nodes, Neo4j would raise write failures or create duplicate, corrupted structures. Creating all nodes *first* acts as a dependency validation step.
+- **Creating Relationships Second (`create_relationship`):**
+  - Once the database confirms all nodes exist in the graph space, we loop through the relationships list and call `create_relationship(source, relation, target)`. This executes Cypher queries to draw the directed edges (arrows) linking the corresponding entity nodes together.
+- **`time.sleep(15)` (Rate Limiting Guard):**
+  - The Groq API (on its free tier) enforces strict Request Limits (RPM) and Token Limits (TPM). Running this loop at full machine speed would immediately hit these limits, triggering an `HTTP 429 Too Many Requests` API error and terminating the script. The 15-second delay acts as a governor, ensuring that batch indexing remains completely stable and error-free.
