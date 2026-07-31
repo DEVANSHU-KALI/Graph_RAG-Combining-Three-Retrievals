@@ -59,3 +59,25 @@ app.add_middleware(LoggingMiddleware)
 - **`app.add_middleware(LoggingMiddleware)`:** Mounts our request logging middleware globally. Every HTTP request sent to the API will pass through `LoggingMiddleware` to start a timer, trace the path, and log execution latency.
 
 ---
+
+#### C. Request Schema Validation
+```python
+class QueryRequest(BaseModel):
+    query: str = Field(min_length=1)
+```
+- **`QueryRequest(BaseModel)`:** Inherits from Pydantic's `BaseModel` to define the expected structure of incoming POST requests.
+- **`query: str = Field(min_length=1)`:** Validates that the payload contains a key named `"query"` containing a string with a minimum length of 1 character, preventing empty queries from reaching the processing pipeline.
+
+---
+
+#### D. Route Endpoints
+```python
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
+@app.post("/chat")
+async def chat_endpoint(request: QueryRequest):
+    result = await generate_answer(request.query, bm25_index, documents)
+    return result
+```
