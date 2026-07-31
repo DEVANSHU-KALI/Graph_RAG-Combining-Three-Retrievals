@@ -81,3 +81,14 @@ async def chat_endpoint(request: QueryRequest):
     result = await generate_answer(request.query, bm25_index, documents)
     return result
 ```
+- **`@app.get("/health")`:** A simple health-check route that returns `{"status": "healthy"}`. Used by container orchestration tools or monitoring agents to verify the server is active.
+- **`@app.post("/chat")`:** The main entry gateway for the chatbot.
+  * It intercepts POST requests containing the JSON payload `{"query": "..."}`.
+  * It awaits the core pipeline function `generate_answer(query, bm25_index, documents)` in `rag_pipeline.py`.
+  * It passes the globally cached BM25 index and documents list to the pipeline.
+  * It returns the structured RAG answer, source citations, and raw contexts as a JSON response to the Streamlit UI.
+
+---
+
+### Backend execution flow:
+**FastAPI server starts** $\rightarrow$ **Execute Lifespan setup (fetch Qdrant payloads, compile BM25 index in RAM)** $\rightarrow$ **Wait for HTTP requests** $\rightarrow$ **Intercept POST `/chat` payload** $\rightarrow$ **Validate schema via Pydantic** $\rightarrow$ **Forward query to `generate_answer` along with the in-memory BM25 index** $\rightarrow$ **Return JSON payload containing generated answer & citations to frontend client**.
