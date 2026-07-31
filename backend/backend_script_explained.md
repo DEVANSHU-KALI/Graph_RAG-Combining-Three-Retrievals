@@ -39,3 +39,23 @@ async def lifespan(app: FastAPI):
 
     yield
 ```
+- **`bm25_index = None` & `documents = None`:** Initializes global variables in the module scope to store the BM25 data mapping.
+- **`@asynccontextmanager`:** A Python decorator used to define setup and teardown logic for the application lifespan.
+- **`lifespan(app: FastAPI)`:** 
+  * Everything before the `yield` statement executes **once** when the FastAPI server starts up. Here, it calls `initialize_bm25()` which scrolls through Qdrant, tokenizes document texts, builds the BM25 lookup model, and caches it in memory.
+  * The `yield` statement pauses execution, transferring control to the FastAPI application to serve client requests.
+  * *Why we do it:* Pre-building the BM25 index on boot avoids re-calculating statistics for every chat query, reducing API response times.
+
+---
+
+#### B. App and Middleware Setup
+```python
+app = FastAPI(title="GraphRAG API", lifespan=lifespan)
+
+# Middleware
+app.add_middleware(LoggingMiddleware)
+```
+- **`app = FastAPI(...)`:** Instantiates the FastAPI application core, registering our custom `lifespan` handler.
+- **`app.add_middleware(LoggingMiddleware)`:** Mounts our request logging middleware globally. Every HTTP request sent to the API will pass through `LoggingMiddleware` to start a timer, trace the path, and log execution latency.
+
+---
