@@ -32,3 +32,19 @@ client = AsyncOpenAI(base_url="http://localhost:8080/v1", api_key="dummy")
 
 ---
 
+#### 3. Reranking and Context Compiling
+```python
+    # Reranking
+    reranked_chunks = await rerank_results(query, retrieved_chunks)
+
+    # Build Context
+    context = "\n\n".join(chunk["text"] for chunk in reranked_chunks)
+
+    # Citations
+    citations = list(set(chunk["source"] for chunk in reranked_chunks))
+```
+- **`rerank_results`:** Sends the candidate pool to the Cross-Encoder model. It returns only the top 3 highest-relevance chunks.
+- **`context`:** Joins the text payloads of these top 3 chunks using double newlines to form the reference context for the LLM.
+- **`citations`:** Extracts unique source filenames (e.g., `biology.txt`, `physics.txt`) from the metadata of the winning chunks, providing trace citations.
+
+---
