@@ -31,3 +31,4 @@ client = AsyncOpenAI(base_url="http://localhost:8080/v1", api_key="dummy")
 - **`client = AsyncOpenAI(...)`:** Creates an asynchronous OpenAI-compatible client. It points to `http://localhost:8080/v1` which is the local API port exposed by our `llama.cpp` server running the quantized Qwen model.
 
 ---
+
