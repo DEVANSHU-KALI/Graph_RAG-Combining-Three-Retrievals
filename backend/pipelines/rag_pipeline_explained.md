@@ -94,3 +94,6 @@ Question:
 
 ---
 
+### Pipeline Flow:
+**FastAPI forwards query** $\rightarrow$ **Execute Semantic & BM25 search** $\rightarrow$ **Apply Min-Max normalization & merge results (Hybrid)** $\rightarrow$ **Query Neo4j Graph for query entities** $\rightarrow$ **Combine Hybrid chunks & Graph statements** $\rightarrow$ **Rerank candidate pool using Cross-Encoder** $\rightarrow$ **Select top 3 chunks** $\rightarrow$ **Construct context-bounded prompt** $\rightarrow$ **Query local Qwen model** $\rightarrow$ **Return JSON payload containing generated response, citations, and contexts**.
+
