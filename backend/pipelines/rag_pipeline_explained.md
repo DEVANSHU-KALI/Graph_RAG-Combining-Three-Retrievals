@@ -48,3 +48,49 @@ client = AsyncOpenAI(base_url="http://localhost:8080/v1", api_key="dummy")
 - **`citations`:** Extracts unique source filenames (e.g., `biology.txt`, `physics.txt`) from the metadata of the winning chunks, providing trace citations.
 
 ---
+
+#### 4. The Constrained Prompt
+```python
+    prompt = f"""
+You are a helpful AI assistant.
+
+Answer ONLY from the provided context.
+
+If the answer is not present
+in the context, say:
+
+"I could not find the answer
+in the provided documents."
+
+Context:
+{context}
+
+Question:
+{query}
+"""
+```
+* **`Answer ONLY...`:** Instructs the LLM to strictly base its answer on the retrieved contexts. This is a standard guard against hallucination.
+* **`I could not find the answer...`:** Instructs the model to output a standard fallback sentence if the context does not contain the answer, rather than trying to guess from its base training knowledge.
+
+---
+
+#### 5. Local LLM Generation
+```python
+    response = await client.chat.completions.create(
+        model="raaedk/Qwen2.5-7B-Instruct-Q4_K_M-GGUF",
+        messages=[{"role": "user", "content": prompt}],
+    )
+
+    answer = response.choices[0].message.content
+
+    return {
+        "answer": answer,
+        "citations": citations,
+        "contexts": [chunk["text"] for chunk in reranked_chunks],
+    }
+```
+- **`client.chat.completions.create`:** Calls our local `llama.cpp` server asynchronously, sending our prompt to the Qwen model.
+- **Return Dictionary:** Packages the LLM's answer text, the citations list, and the raw source contexts to return to the caller (FastAPI or evaluation scripts).
+
+---
+
