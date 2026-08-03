@@ -1,4 +1,6 @@
 This file contains the explanation of rag_pipeline.py
 
 ## rag_pipeline.py
-This script holds the logic to connect all the retrieval returns, rerank them and pass them to the llm to get the final answer!.
+
+### What Does This Script Do & Why is it Used?
+In simple terms, this script is the **brain of our chat pipeline**. It orchestrates the entire runtime query process: it runs the search queries across our databases, combines and ranks the results, structures a strict prompt, and calls our local LLM to write the final, citation-backed answer.
