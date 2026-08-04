@@ -94,6 +94,32 @@ Question:
 
 ---
 
+## Tracing and Observability (LangSmith)
+
+### What is Tracing & Why Do We Use It?
+RAG pipelines involve multiple asynchronous operations (vector searches, keyword searches, entity extraction prompts, Cypher calls, and local LLM calls). If a query fails, returns bad context, or is extremely slow, it is very difficult to debug where the bottleneck occurred just by looking at a terminal log.
+
+**LangSmith** provides visual debugging, tracing, and monitoring. By wrapping our core execution loop in a trace decorator, every input, output, latency measurement, and intermediate variable is automatically sent to the LangSmith web console.
+
+### The `@traceable` Decorator
+In `rag_pipeline.py`, we import `traceable` and apply it as a decorator to our main function:
+```python
+from langsmith import traceable
+
+@traceable
+async def generate_answer(query: str, bm25_index, documents):
+```
+* **How it works:** When Python runs the `@traceable` wrapper:
+  1. It intercepts the call to `generate_answer()`, logging the starting timestamp and input parameters.
+  2. It tracks the execution of all nested helper functions (such as Qdrant queries and Neo4j Cypher calls).
+  3. If the pipeline succeeds, it logs the final generated response dictionary.
+  4. If the pipeline crashes, it captures the complete traceback and exception details, allowing you to debug exactly which node failed.
+* **Environment Configuration:** For this tracing to activate, the backend reads specific variables from the `.env` file:
+  * `LANGCHAIN_TRACING_V2=true` (Enables the tracing agent).
+  * `LANGCHAIN_API_KEY=your_key` (Authenticates with your LangSmith account).
+  * `LANGCHAIN_PROJECT=your_project_name` (Groups logs under a specific dashboard project).
+
+---
+
 ### Pipeline Flow:
 **FastAPI forwards query** $\rightarrow$ **Execute Semantic & BM25 search** $\rightarrow$ **Apply Min-Max normalization & merge results (Hybrid)** $\rightarrow$ **Query Neo4j Graph for query entities** $\rightarrow$ **Combine Hybrid chunks & Graph statements** $\rightarrow$ **Rerank candidate pool using Cross-Encoder** $\rightarrow$ **Select top 3 chunks** $\rightarrow$ **Construct context-bounded prompt** $\rightarrow$ **Query local Qwen model** $\rightarrow$ **Return JSON payload containing generated response, citations, and contexts**.
-
