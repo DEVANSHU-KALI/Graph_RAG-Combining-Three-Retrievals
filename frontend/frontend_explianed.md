@@ -33,3 +33,28 @@ st.title("Hybrid GraphRAG Chatbot")
 - **`httpx`:** A modern HTTP client library for Python. We use it to send asynchronous/synchronous network requests to our FastAPI backend.
 - **`streamlit as st`:** The Streamlit library namespace.
 - **`st.title`:** A Streamlit widget that renders a formatted `<h1>` title banner at the top of the webpage.
+
+---
+
+#### B. Backend Configuration & User Input
+```python
+# Backend API URL
+API_URL = "http://localhost:8000/chat"
+
+# User Input
+query = st.text_input("Ask a Question")
+```
+- **`API_URL`:** The address pointing to our FastAPI server's chat endpoint.
+- **`st.text_input("Ask a Question")`:** Renders a text box. When the user types a query and presses Enter, the string is assigned to the `query` variable, which triggers a page reload and executes the downstream code.
+
+---
+
+#### C. Request Processing & Loading Indicators
+```python
+if query:
+    with st.spinner("Retrieving and generating answer..."):
+        try:
+            payload = {"query": query}
+
+            response = httpx.post(API_URL, json=payload, timeout=60.0)
+```
