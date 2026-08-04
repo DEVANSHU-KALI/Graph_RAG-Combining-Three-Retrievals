@@ -83,3 +83,20 @@ if query:
 - **`for source in data["citations"]`:** Loops through the citation list (e.g., `["biology.txt", "astronomy.txt"]`) and prints them as bullet points (`st.write(f"- {source}")`), indicating exactly which files were used to answer the question.
 
 ---
+
+#### E. Error Diagnostics
+```python
+            else:
+                st.error(f"Backend Error: {response.status_code}")
+
+        except Exception as error:
+            st.error(f"Connection Failed: {error}")
+```
+- **`st.error(...)`:** Renders a red error banner if:
+  * The backend returns a non-200 code (e.g., `500 Internal Server Error`).
+  * The connection fails completely (e.g., if the FastAPI server is offline, raising a `ConnectionRefusedError` exception).
+
+---
+
+### UI Execution Flow:
+**User enters query in web page** $\rightarrow$ **Streamlit triggers page reload** $\rightarrow$ **Render loading spinner** $\rightarrow$ **Send HTTP POST request to `http://localhost:8000/chat`** $\rightarrow$ **Wait for backend response** $\rightarrow$ **Parse JSON response payload** $\rightarrow$ **Render answer text block** $\rightarrow$ **Loop and display source citations** $\rightarrow$ **Remove loading spinner**.
