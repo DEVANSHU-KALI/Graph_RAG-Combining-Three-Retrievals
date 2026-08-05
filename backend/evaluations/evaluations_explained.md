@@ -17,3 +17,33 @@ Evaluations run a test dataset through the pipeline, grading search results and 
 
 ---
 
+## 2. Evaluation Frameworks and Chosen Metrics
+
+Our project leverages two popular RAG evaluation frameworks: **Ragas** and **DeepEval**, using Groq's `llama-3.1-8b-instant` as our judge model. 
+
+Instead of running every metric available, we selected **5 specific metrics** to prevent resource exhaustion:
+
+| Framework | Metric | What It Measures | Target |
+| :--- | :--- | :--- | :--- |
+| **DeepEval** | **Hallucination** | Compares the generated answer against the retrieved context. Scores close to `0.0` represent high groundedness; scores close to `1.0` indicate hallucinated claims. | Generation |
+| **Ragas** | **Faithfulness** | Verifies if all factual statements in the generated response can be directly inferred from the retrieved contexts. | Generation |
+| **Ragas** | **Answer Relevancy** | Assesses if the generated response directly answers the user query, penalizing redundant or off-topic information. | Generation |
+| **Ragas** | **Context Precision** | Measures if the most relevant retrieved text chunks were ranked at the top of the context block. | Retrieval |
+| **Ragas** | **Context Recall** | Compares the retrieved context against the human-written Ground Truth to verify if the search pipeline gathered all necessary facts. | Retrieval |
+
+---
+
+## 3. The Rate-Limiting Problem & Solution
+
+### The Problem
+Automated evaluation requires the judge LLM to perform multiple reasoning steps per metric (e.g., extracting factual claims, checking alignment, generating reasoning steps). For a dataset of just 3 questions evaluated across 5 metrics, the system can trigger **dozens of API calls** in quick succession.
+
+Under Groq’s free-tier limits, running these scripts at full speed immediately triggers **HTTP 429 (Too Many Requests)** errors and crashes the pipeline.
+
+### The Solutions Implemented
+To ensure stable, error-free execution, we implemented three solutions:
+1. **Metric Limitation:** We strictly restricted our evaluation to the 5 critical metrics listed above, avoiding unnecessary API calls.
+2. **In-Memory Rate Limiting:** We wrapped the judge client with LangChain’s `InMemoryRateLimiter` set to `0.2 requests_per_second`. This guarantees a **5-second delay** between API requests.
+3. **Execution Sleep Buffers:** In `deepeval_evaluation.py`, we added an explicit `await asyncio.sleep(10)` delay between test cases to allow the API limits to reset.
+
+---
