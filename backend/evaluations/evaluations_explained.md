@@ -245,3 +245,15 @@ You will notice that `context_precision` for Questions 2 and 3, and `faithfulnes
   When Groq rejected the token-heavy requests with an HTTP `429 (Too Many Requests)` rate-limit exception, Ragas caught the error. Instead of crashing the entire script and discarding the rest of the run, Ragas gracefully recorded a `NaN` (Not a Number) value for the failing metrics on those specific rows, allowing the script to finish and save the successful metrics.
 
 ---
+
+## 9. Execution Flow Charts
+
+### DeepEval Pipeline Flow:
+```text
+Initialize BM25 -> Loop Test Cases -> Await RAG Response -> Construct Test Case -> Trigger LLM Hallucination Judgement (via rate-limiter) -> Append Score -> Sleep 10s -> Output CSV
+```
+
+### Ragas Pipeline Flow:
+```text
+Initialize BM25 -> Run all questions through RAG -> Build HuggingFace Dataset -> Initialize rate-limited LLM Judge -> Execute evaluate() (Calculates Faithfulness, Relevancy, Precision, Recall) -> Clean newlines -> Output CSV
+```
