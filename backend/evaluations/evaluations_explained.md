@@ -82,3 +82,38 @@ PYTHONPATH=. python backend/evaluations/ragas_evaluation.py
 ```
 
 ---
+
+## 6. Evaluation Results Generated
+
+Upon execution, the scripts generate CSV files summarizing the run metrics:
+* **DeepEval Output (`deepeval_results.csv`):** Stores columns `question` and the calculated `hallucination` score.
+* **Ragas Output (`evaluation_results.csv`):** Stores columns `question`, `answer`, `contexts`, `ground_truth`, and the calculated Ragas metric scores (`faithfulness`, `answer_relevancy`, `context_precision`, `context_recall`).
+
+---
+
+## 7. Code Breakdown
+
+### A. DeepEval Script (`deepeval_evaluation.py`)
+* **File:** [deepeval_evaluation.py](file:///d:/projects/graph_rag/backend/evaluations/deepeval_evaluation.py)
+
+#### 1. Custom Groq Judge Model
+```python
+class GroqEvaluator(DeepEvalBaseLLM):
+    def __init__(self, model_name="llama-3.1-8b-instant"):
+        self.model_name = model_name
+        
+        # Configure rate limiter for Groq to stay under 30 RPM
+        rate_limiter = InMemoryRateLimiter(
+            requests_per_second=0.2,
+            check_every_n_seconds=0.1,
+            max_bucket_size=10,
+        )
+        
+        self.client = ChatOpenAI(
+            model=model_name,
+            api_key=GROQ_API_KEY,
+            base_url="https://api.groq.com/openai/v1",
+            rate_limiter=rate_limiter,
+            max_retries=10,
+        )
+```
