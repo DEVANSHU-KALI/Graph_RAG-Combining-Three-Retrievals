@@ -150,3 +150,56 @@ async def main():
 - **`asyncio.sleep(10)`:** Adds a 10-second pause between evaluation test cases to ensure the RPM counters cool down.
 
 ---
+
+### B. Ragas Script (`ragas_evaluation.py`)
+* **File:** [ragas_evaluation.py](file:///d:/projects/graph_rag/backend/evaluations/ragas_evaluation.py)
+
+#### 1. Dataset Compilation
+```python
+async def build_dataset(bm25_index, documents):
+    rows = []
+    for sample in evaluation_dataset:
+        result = await generate_answer(sample["question"], bm25_index, documents)
+        rows.append(
+            {
+                "question": sample["question"],
+                "answer": result["answer"],
+                "contexts": result["contexts"],
+                "ground_truth": sample["ground_truth"],
+            }
+        )
+    return rows
+```
+- **`build_dataset`:** Iterates through our test dataset, runs each question through our RAG pipeline, and stores the query, contexts, answer, and ground truth in a structured list.
+
+#### 2. Running Ragas Evaluations
+```python
+    rows = await build_dataset(bm25_index, documents)
+    dataset = Dataset.from_list(rows)
+
+    rate_limiter = InMemoryRateLimiter(
+        requests_per_second=0.2,
+        check_every_n_seconds=0.1,
+        max_bucket_size=10,
+    )
+
+    evaluator_llm = ChatOpenAI(
+        model="llama-3.1-8b-instant",
+        api_key=GROQ_API_KEY,
+        base_url="https://api.groq.com/openai/v1",
+        rate_limiter=rate_limiter,
+        max_retries=10,
+    )
+
+    results = evaluate(
+        dataset=dataset,
+        metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
+        llm=evaluator_llm,
+        embeddings=embedding_model,
+    )
+```
+- **`Dataset.from_list`:** Converts the data dictionaries into a HuggingFace dataset format required by Ragas.
+- **`rate_limiter` & `evaluator_llm`:** Sets up the rate-limited `ChatOpenAI` client pointing to Groq.
+- **`evaluate()`:** Executes the Ragas framework, measuring the 4 specified metrics using our Groq judge and our local HuggingFace embeddings model.
+
+---
