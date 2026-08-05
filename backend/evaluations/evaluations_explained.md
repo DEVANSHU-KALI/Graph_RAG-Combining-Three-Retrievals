@@ -117,3 +117,36 @@ class GroqEvaluator(DeepEvalBaseLLM):
             max_retries=10,
         )
 ```
+- **`DeepEvalBaseLLM`:** We extend DeepEval's base LLM class to register our own custom model instead of using default OpenAI models.
+- **`InMemoryRateLimiter`:** Restricts requests to exactly `0.2` requests per second (1 request every 5 seconds) to respect the Groq free tier limit of 30 RPM.
+- **`ChatOpenAI`:** Wraps Groq using LangChain's OpenAI-compatible interface, applying our rate limiter.
+
+#### 2. Evaluation Loop
+```python
+async def main():
+    bm25_index, documents = await initialize_bm25()
+    groq_llm = GroqEvaluator()
+    metric = HallucinationMetric(threshold=0.5, model=groq_llm)
+
+    results = []
+
+    for sample in evaluation_dataset:
+        response = await generate_answer(sample["question"], bm25_index, documents)
+
+        test_case = LLMTestCase(
+            input=sample["question"],
+            actual_output=response["answer"],
+            context=response["contexts"],
+        )
+
+        metric.measure(test_case)
+        results.append({"question": sample["question"], "hallucination": metric.score})
+        await asyncio.sleep(10)
+```
+- **`initialize_bm25`:** Loads the index once so our RAG pipeline runs correctly.
+- **`HallucinationMetric(model=groq_llm)`:** Initializes DeepEval's metric using our rate-limited Groq model as the judge.
+- **`LLMTestCase`:** Prepares the inputs required by DeepEval (Question, Answer, and Contexts).
+- **`metric.measure`:** Tells the judge LLM to evaluate the test case.
+- **`asyncio.sleep(10)`:** Adds a 10-second pause between evaluation test cases to ensure the RPM counters cool down.
+
+---
