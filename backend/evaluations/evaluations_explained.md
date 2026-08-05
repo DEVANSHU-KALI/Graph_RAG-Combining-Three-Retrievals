@@ -47,3 +47,38 @@ To ensure stable, error-free execution, we implemented three solutions:
 3. **Execution Sleep Buffers:** In `deepeval_evaluation.py`, we added an explicit `await asyncio.sleep(10)` delay between test cases to allow the API limits to reset.
 
 ---
+
+## 4. The Evaluation Dataset (`evaluation_dataset.py`)
+
+* **File:** [evaluation_dataset.py](file:///d:/projects/graph_rag/backend/evaluations/evaluation_dataset.py)
+
+The dataset contains a list of dictionaries, representing our testing benchmark. Each sample contains the user's `question` and a human-compiled `ground_truth` answer:
+
+```python
+evaluation_dataset = [
+    {
+        "id": 1,
+        "question": "What is overfitting?",
+        "ground_truth": "Overfitting occurs when a machine learning model memorizes training data...",
+    },
+    ...
+]
+```
+
+---
+
+## 5. How to Run the Evaluations
+
+To run the evaluations locally, navigate to the project root directory, activate your virtual environment, and run the following terminal commands:
+
+### Run DeepEval Evaluation:
+```bash
+PYTHONPATH=. python backend/evaluations/deepeval_evaluation.py
+```
+
+### Run Ragas Evaluation:
+```bash
+PYTHONPATH=. python backend/evaluations/ragas_evaluation.py
+```
+
+---
